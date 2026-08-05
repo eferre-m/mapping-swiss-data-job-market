@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dossier CH — Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --ink:#111417;
+    --paper:#F4F4F1;
+    --line:#111417;
+    --red:#D6372C;
+    --grey:#8A8D91;
+    --grey-light:#DCDCD8;
+    --green:#3E6B4F;
+    --amber:#B4791F;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Archivo',Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:28px 24px 100px;}
+
+  .masthead{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    border-bottom:4px solid var(--ink); padding-bottom:14px; margin-bottom:6px;
+  }
+  .masthead h1{font-size:26px; font-weight:900; letter-spacing:-0.02em; margin:0; text-transform:uppercase;}
+  .masthead .meta{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--grey); text-align:right; line-height:1.5;}
+  .subline{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--grey); margin-bottom:18px; text-transform:uppercase; letter-spacing:0.04em;}
+  .note{
+    font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--grey); background:#fff;
+    border:1.5px solid var(--grey-light); padding:10px 14px; margin-bottom:24px; line-height:1.6;
+  }
+  .note strong{color:var(--ink);}
+
+  .section-num{display:flex; align-items:center; gap:10px; margin:30px 0 12px; cursor:pointer;}
+  .section-num .n{font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:12px; background:var(--ink); color:var(--paper); padding:3px 8px;}
+  .section-num .t{font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:0.05em; flex:1;}
+  .section-num .toggle{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--grey);}
+  .section-body{display:none;}
+  .section-body.open{display:block;}
+
+  label{display:block; font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--grey); margin-bottom:4px;}
+  input[type=text], input[type=file], select, textarea{
+    width:100%; border:none; border-bottom:2px solid var(--ink); background:transparent;
+    font-family:'Archivo',sans-serif; font-size:14px; padding:6px 2px; color:var(--ink);
+  }
+  input:focus, select:focus, textarea:focus{outline:none; border-bottom-color:var(--red);}
+  textarea{border:2px solid var(--ink); padding:10px; min-height:70px; resize:vertical; line-height:1.5; font-size:13px;}
+
+  button{
+    font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:0.05em;
+    font-size:12px; font-weight:600; border:2px solid var(--ink); background:var(--ink); color:var(--paper);
+    padding:10px 18px; cursor:pointer; transition:all .12s ease;
+  }
+  button:hover{background:var(--red); border-color:var(--red);}
+  button.ghost{background:transparent; color:var(--ink);}
+  button.ghost:hover{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+  button.small{padding:5px 10px; font-size:10px;}
+  button:disabled{opacity:.35; cursor:not-allowed;}
+  .actions{display:flex; gap:10px; flex-wrap:wrap; margin:14px 0 6px; align-items:center;}
+
+  table{width:100%; border-collapse:collapse; margin-top:6px;}
+  th{font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; text-align:left; color:var(--grey); border-bottom:2px solid var(--ink); padding:6px 8px;}
+  td{font-size:12px; padding:8px; border-bottom:1px solid var(--grey-light); vertical-align:top;}
+  tr.offer-row{cursor:pointer;}
+  tr.offer-row:hover td{background:#ECECE8;}
+  tr.offer-row.selected td{background:#111417; color:#fff;}
+  tr.offer-row.selected .jobid{color:#ccc;}
+  .jobid{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--grey);}
+  .match-badge{font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:12px; padding:2px 6px;}
+  .match-high{color:var(--green);}
+  .match-mid{color:var(--amber);}
+  .match-low{color:var(--red);}
+  .empty-state{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--grey); text-align:center; padding:30px 0;}
+
+  select.status-select{width:auto; border:2px solid var(--ink); padding:4px 6px; font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase;}
+
+  .detail{border:2px solid var(--ink); background:#fff; padding:18px; margin:10px 0 24px;}
+  .detail h3{margin:0 0 4px; font-size:15px;}
+  .detail .sub{font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--grey); margin-bottom:16px;}
+  .field-block{margin-bottom:18px;}
+  .field-block .label{font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--grey); margin-bottom:8px; display:block;}
+
+  .pills{display:flex; flex-wrap:wrap; gap:6px;}
+  .pill{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; padding:5px 10px; border:1.5px solid var(--grey-light);
+    background:#fff; color:var(--grey); cursor:pointer; user-select:none; position:relative;
+  }
+  .pill.p-required{background:var(--red); border-color:var(--red); color:#fff;}
+  .pill.p-nice{background:var(--amber); border-color:var(--amber); color:#fff;}
+  .pill.p-soft{background:var(--green); border-color:var(--green); color:#fff;}
+  .pill.p-corrected::after{content:'✎'; margin-left:5px; opacity:.85;}
+  .pill .cefr{font-weight:700; margin-left:5px;}
+  .pill-title{font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--grey); margin-top:8px;}
+
+  .legend{display:flex; gap:16px; flex-wrap:wrap; font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--grey); margin:4px 0 16px;}
+  .legend span{display:inline-flex; align-items:center; gap:5px;}
+  .swatch{width:10px; height:10px; display:inline-block; border:1.5px solid var(--grey-light);}
+  .sw-required{background:var(--red); border-color:var(--red);}
+  .sw-nice{background:var(--amber); border-color:var(--amber);}
+  .sw-soft{background:var(--green); border-color:var(--green);}
+  .sw-none{background:#fff; border-color:var(--grey-light);}
+
+  .add-row{display:flex; gap:8px; margin-top:10px;}
+  .add-row input{flex:1;}
+  .csv-line{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; background:var(--paper); border:1.5px dashed var(--grey);
+    padding:8px 10px; margin-top:8px; word-break:break-all; display:none;
+  }
+  .csv-line.show{display:block;}
+
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--ink); color:var(--paper); padding:10px 18px; font-family:'IBM Plex Mono',monospace;
+    font-size:12px; opacity:0; transition:all .25s ease; pointer-events:none;
+    max-width:600px; word-break:break-word; text-align:center;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <h1>Dossier CH — Review</h1>
+    <div class="meta">Visual verification layer<br>Reads what parse.py already decided</div>
+  </div>
+  <div class="subline" id="storageState">loading…</div>
+  <div class="note">
+    This tool <strong>never re-analyzes the text</strong> — it only shows visually what
+    <code>pipeline.py</code> / <code>parse.py</code> already detected, so you can verify at a glance and correct.
+    Corrections you make here (✎) are saved in the dossier and <strong>never lost</strong> on re-parse.
+    <br><br>
+    ⚠ Always start by importing the <strong>dossier.json</strong> generated by <code>pipeline.py</code> and your
+    <strong>profile.json</strong>. The browser keeps a working copy while you work, but export regularly —
+    that export is what feeds the Python pipeline back.
+    <br><br>
+    Want to set up your profile before capturing any offers? Use <strong>"Import catalogs (CSV) ←"</strong> and
+    select <code>catalogs/skills.csv</code>, <code>catalogs/languages.csv</code> and
+    <code>catalogs/soft_skills.csv</code> (you can select all three at once) — that populates the "My Profile"
+    section on its own, no dossier needed.
+  </div>
+
+  <div class="actions">
+    <input type="file" id="fileImportDossier" accept=".json" style="display:none;">
+    <button id="btnImportDossier">Import dossier.json ←</button>
+    <input type="file" id="fileImportProfile" accept=".json" style="display:none;">
+    <button class="ghost" id="btnImportProfile">Import profile.json ←</button>
+    <input type="file" id="fileImportCatalogs" accept=".csv" multiple style="display:none;">
+    <button class="ghost" id="btnImportCatalogs">Import catalogs (CSV) ←</button>
+    <button class="ghost" id="btnExportDossier">Export dossier.json →</button>
+    <button class="ghost" id="btnExportProfile">Export profile.json →</button>
+    <button class="ghost" id="btnExportCsv">Export CSV (for Google Sheet) →</button>
+  </div>
+
+  <!-- ===== PERFIL ===== -->
+  <div class="section-num" data-section="profile">
+    <span class="n">01</span><span class="t">My Profile</span><span class="toggle">▸ show</span>
+  </div>
+  <div class="section-body" id="section-profile">
+    <div class="field-block">
+      <span class="label">Skills I have — click to toggle</span>
+      <div class="pills" id="profileSkillsPills"></div>
+    </div>
+    <div class="field-block">
+      <span class="label">Languages — actual CEFR level</span>
+      <div id="profileLangsList"></div>
+    </div>
+    <div class="field-block">
+      <span class="label">Soft skills — click to toggle</span>
+      <div class="pills" id="profileSoftPills"></div>
+    </div>
+    <div class="actions"><button id="btnSaveProfile">Save profile →</button></div>
+  </div>
+
+  <!-- ===== OFERTAS ===== -->
+  <div class="section-num" data-section="offers" style="cursor:default;">
+    <span class="n">02</span><span class="t">Captured offers</span>
+  </div>
+  <table>
+    <thead><tr><th>Job ID</th><th>Company</th><th>City</th><th>Match</th><th>Status</th></tr></thead>
+    <tbody id="offersBody"></tbody>
+  </table>
+  <div class="empty-state" id="emptyState">No offers loaded — import dossier.json.</div>
+
+  <div id="detailContainer"></div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+let dossier = [];
+let profile = {skills:{}, languages:{}, soft_skills:{}};
+let dossierSkills = new Map(), dossierLangs = new Map(), dossierSoft = new Map();   // derived from parsed offers
+let csvSkills = new Map(), csvLangs = new Map(), csvSoft = new Map();               // derived from imported catalog CSVs
+let skillCatalog = [];
+let langCatalog = [];
+let softCatalog = [];
+let selectedJobId = null;
+let lastCsvSuggestion = null; // {jobId, text} — transient, not persisted
+
+const CEFR_LEVELS = ["A1","A2","B1","B2","C1","C2","Native"];
+const STATUS_OPTIONS = ["Not applied","Applied","Interview","Offer","Rejected","Withdrawn"];
+const CEFR_ORDER = {A1:1,A2:2,B1:3,B2:4,C1:5,C2:6,Native:7};
+
+function escapeHtml(s){ return (s||'').toString().replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function showToast(msg, duration){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(()=>t.classList.remove('show'), duration || 2400);
+}
+
+// ---- Catalog derivation: two independent sources, merged for display ----
+// 1) from parsed offers already in the dossier (always available once you've captured something)
+// 2) from directly-imported catalog CSVs (lets you set up your profile with zero offers captured)
+function rebuildCatalogsFromDossier(){
+  dossierSkills = new Map(); dossierLangs = new Map(); dossierSoft = new Map();
+  dossier.forEach(e=>{
+    Object.entries(e.parsed.skills||{}).forEach(([id,d])=>dossierSkills.set(id,d.label));
+    Object.entries(e.parsed.languages||{}).forEach(([id,d])=>dossierLangs.set(id,d.label));
+    Object.entries(e.parsed.soft_skills||{}).forEach(([id,d])=>dossierSoft.set(id,d.label));
+  });
+  mergeCatalogs();
+}
+function mergeCatalogs(){
+  const s = new Map([...dossierSkills, ...csvSkills]);
+  const l = new Map([...dossierLangs, ...csvLangs]);
+  const sf = new Map([...dossierSoft, ...csvSoft]);
+  skillCatalog = [...s.entries()].map(([id,label])=>({id,label})).sort((a,b)=>a.label.localeCompare(b.label));
+  langCatalog = [...l.entries()].map(([id,label])=>({id,label})).sort((a,b)=>a.label.localeCompare(b.label));
+  softCatalog = [...sf.entries()].map(([id,label])=>({id,label})).sort((a,b)=>a.label.localeCompare(b.label));
+}
+
+// Minimal CSV parser — handles quoted fields with embedded commas, good enough for our catalogs.
+function parseCsv(text){
+  const rows = [];
+  let row = [], field = '', inQuotes = false;
+  for(let i=0;i<text.length;i++){
+    const c = text[i];
+    if(inQuotes){
+      if(c === '"'){
+        if(text[i+1] === '"'){ field += '"'; i++; } else { inQuotes = false; }
+      }else{ field += c; }
+    }else{
+      if(c === '"'){ inQuotes = true; }
+      else if(c === ','){ row.push(field); field=''; }
+      else if(c === '\n'){ row.push(field); rows.push(row); row=[]; field=''; }
+      else if(c === '\r'){ /* skip */ }
+      else{ field += c; }
+    }
+  }
+  if(field.length || row.length){ row.push(field); rows.push(row); }
+  if(!rows.length) return [];
+  const header = rows[0];
+  return rows.slice(1).filter(r=>r.length>1 || r[0]).map(r=>{
+    const obj = {};
+    header.forEach((h,idx)=> obj[h.trim()] = (r[idx]||'').trim());
+    return obj;
+  });
+}
+
+// ---- Persistence (working copy in the browser; export/import JSON = real memory) ----
+async function persistDossier(){
+  try{ await window.storage.set('review_dossier', JSON.stringify(dossier)); }catch(e){ console.error(e); }
+  document.getElementById('storageState').textContent = dossier.length + ' offers in the dossier';
+}
+async function persistProfile(){
+  try{ await window.storage.set('review_profile', JSON.stringify(profile)); }catch(e){ console.error(e); }
+}
+async function persistCsvCatalogs(){
+  try{
+    await window.storage.set('review_csv_catalogs', JSON.stringify({
+      skills: [...csvSkills], languages: [...csvLangs], soft_skills: [...csvSoft],
+    }));
+  }catch(e){ console.error(e); }
+}
+async function loadState(){
+  try{
+    const r = await window.storage.get('review_dossier');
+    dossier = r && r.value ? JSON.parse(r.value) : [];
+  }catch(e){ dossier = []; }
+  try{
+    const r2 = await window.storage.get('review_profile');
+    profile = r2 && r2.value ? JSON.parse(r2.value) : {skills:{}, languages:{}, soft_skills:{}};
+  }catch(e){ profile = {skills:{}, languages:{}, soft_skills:{}}; }
+  try{
+    const r3 = await window.storage.get('review_csv_catalogs');
+    const c = r3 && r3.value ? JSON.parse(r3.value) : {skills:[],languages:[],soft_skills:[]};
+    csvSkills = new Map(c.skills||[]); csvLangs = new Map(c.languages||[]); csvSoft = new Map(c.soft_skills||[]);
+  }catch(e){ csvSkills = new Map(); csvLangs = new Map(); csvSoft = new Map(); }
+  rebuildCatalogsFromDossier();
+  document.getElementById('storageState').textContent = dossier.length + ' offers in the dossier';
+  renderOffers();
+  renderProfile();
+}
+
+// ---- Import / Export ----
+document.getElementById('btnImportDossier').onclick = ()=> document.getElementById('fileImportDossier').click();
+document.getElementById('fileImportDossier').onchange = async (e)=>{
+  const file = e.target.files[0]; if(!file) return;
+  try{
+    const data = JSON.parse(await file.text());
+    if(!Array.isArray(data)){ showToast('Invalid format — an array was expected'); return; }
+    dossier = data;
+    rebuildCatalogsFromDossier();
+    await persistDossier();
+    renderOffers();
+    renderProfile();
+    showToast(`Imported ${dossier.length} offers`);
+  }catch(err){ console.error(err); showToast('Could not read the file'); }
+  e.target.value = '';
+};
+
+document.getElementById('btnImportProfile').onclick = ()=> document.getElementById('fileImportProfile').click();
+document.getElementById('fileImportProfile').onchange = async (e)=>{
+  const file = e.target.files[0]; if(!file) return;
+  try{
+    const data = JSON.parse(await file.text());
+    profile = {skills:data.skills||{}, languages:data.languages||{}, soft_skills:data.soft_skills||{}};
+    await persistProfile();
+    renderProfile();
+    renderOffers();
+    if(selectedJobId) renderDetail(selectedJobId);
+    showToast('Profile imported');
+  }catch(err){ console.error(err); showToast('Could not read the file'); }
+  e.target.value = '';
+};
+
+document.getElementById('btnImportCatalogs').onclick = ()=> document.getElementById('fileImportCatalogs').click();
+document.getElementById('fileImportCatalogs').onchange = async (e)=>{
+  const files = [...e.target.files]; if(!files.length) return;
+  let loaded = [];
+  for(const file of files){
+    try{
+      const rows = parseCsv(await file.text());
+      if(!rows.length) continue;
+      if('skill_id' in rows[0]){
+        rows.forEach(r=> csvSkills.set(r.skill_id, r.canonical_name));
+        loaded.push(`skills.csv (${rows.length})`);
+      }else if('lang_id' in rows[0]){
+        rows.forEach(r=> csvLangs.set(r.lang_id, r.canonical_name));
+        loaded.push(`languages.csv (${rows.length})`);
+      }else if('soft_id' in rows[0]){
+        rows.forEach(r=> csvSoft.set(r.soft_id, r.canonical_name));
+        loaded.push(`soft_skills.csv (${rows.length})`);
+      }else{
+        showToast(`Unrecognized CSV: ${file.name}`);
+      }
+    }catch(err){ console.error(err); showToast(`Could not read ${file.name}`); }
+  }
+  mergeCatalogs();
+  await persistCsvCatalogs();
+  renderProfile();
+  showToast(loaded.length ? `Loaded ${loaded.join(', ')}` : 'Nothing recognized in the selected files');
+  e.target.value = '';
+};
+
+function downloadJson(obj, filename){
+  const blob = new Blob([JSON.stringify(obj, null, 2)], {type:'application/json;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+document.getElementById('btnExportDossier').onclick = ()=>{
+  if(!dossier.length){ showToast('Nothing to export yet'); return; }
+  downloadJson(dossier, 'dossier.json');
+  showToast('dossier.json exported — re-run pipeline.py whenever you like');
+};
+document.getElementById('btnExportProfile').onclick = ()=>{
+  downloadJson(profile, 'profile.json');
+  showToast('profile.json exported');
+};
+document.getElementById('btnExportCsv').onclick = ()=>{
+  if(!dossier.length){ showToast('Nothing to export yet'); return; }
+  const skillIds = skillCatalog.map(s=>s.id);
+  const langIds = langCatalog.map(l=>l.id);
+  const header = ['job_id','date_captured','company_raw','city','canton','workload','workmode',
+    'match_percent','application_status','notes',
+    ...skillIds.map(id=>'skill_'+id), ...langIds.map(id=>'lang_'+id+'_cefr')];
+  const rows = [header];
+  dossier.forEach(e=>{
+    const row = [
+      e.job_id, e.date_captured||'', e.company_raw||'',
+      e.parsed.city.value||'', e.parsed.canton.value||'', e.parsed.workload.value||'', e.parsed.workmode.value||'',
+      e.match_percent==null?'':e.match_percent, e.application_status||'', (e.notes||'').replace(/\n/g,' '),
+    ];
+    skillIds.forEach(id=>{
+      const found = (e.corrections.skills||{})[id];
+      row.push(found===undefined ? (e.parsed.skills[id]?e.parsed.skills[id].found:false) : found);
+    });
+    langIds.forEach(id=>{
+      row.push(e.parsed.languages[id] ? (e.parsed.languages[id].cefr_required||'') : '');
+    });
+    rows.push(row);
+  });
+  const csv = rows.map(r=>r.map(v=>{
+    const s = String(v??'');
+    return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s;
+  }).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'dossier_export.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('CSV exported');
+};
+
+// ---- Sections toggle ----
+document.querySelectorAll('.section-num[data-section]').forEach(h=>{
+  h.onclick = ()=>{
+    const key = h.dataset.section;
+    const body = document.getElementById('section-'+key);
+    if(!body) return;
+    body.classList.toggle('open');
+    h.querySelector('.toggle').textContent = body.classList.contains('open') ? '▾ hide' : '▸ show';
+  };
+});
+
+// ---- Profile: render ----
+function renderProfile(){
+  const skillsWrap = document.getElementById('profileSkillsPills');
+  skillsWrap.innerHTML = skillCatalog.map(s=>`
+    <div class="pill ${profile.skills[s.id]?'p-soft':''}" data-kind="skill" data-id="${s.id}">${escapeHtml(s.label)}</div>
+  `).join('') || '<span class="pill-title">Import a dossier first to see available skills</span>';
+
+  const langsWrap = document.getElementById('profileLangsList');
+  langsWrap.innerHTML = langCatalog.map(l=>`
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;width:110px;">${escapeHtml(l.label)}</span>
+      <select data-lang="${l.id}" style="width:auto;">
+        <option value="">— no level —</option>
+        ${CEFR_LEVELS.map(lvl=>`<option value="${lvl}" ${profile.languages[l.id]===lvl?'selected':''}>${lvl}</option>`).join('')}
+      </select>
+    </div>
+  `).join('') || '<span class="pill-title">Import a dossier first</span>';
+
+  const softWrap = document.getElementById('profileSoftPills');
+  softWrap.innerHTML = softCatalog.map(s=>`
+    <div class="pill ${profile.soft_skills[s.id]?'p-soft':''}" data-kind="soft" data-id="${s.id}">${escapeHtml(s.label)}</div>
+  `).join('') || '<span class="pill-title">Import a dossier first</span>';
+
+  skillsWrap.querySelectorAll('.pill').forEach(p=>{
+    p.onclick = ()=>{ profile.skills[p.dataset.id] = !profile.skills[p.dataset.id]; renderProfile(); };
+  });
+  softWrap.querySelectorAll('.pill').forEach(p=>{
+    p.onclick = ()=>{ profile.soft_skills[p.dataset.id] = !profile.soft_skills[p.dataset.id]; renderProfile(); };
+  });
+  langsWrap.querySelectorAll('select').forEach(sel=>{
+    sel.onchange = ()=>{ profile.languages[sel.dataset.lang] = sel.value || null; };
+  });
+}
+document.getElementById('btnSaveProfile').onclick = async ()=>{
+  await persistProfile();
+  recomputeAllMatches();
+  renderOffers();
+  if(selectedJobId) renderDetail(selectedJobId);
+  showToast('Profile saved — match % recalculated');
+};
+
+// ---- Match % (same criteria as pipeline.py, for instant feedback in the browser) ----
+function computeMatch(entry){
+  const corr = entry.corrections || {skills:{},languages:{},soft_skills:{},manual_skills:[]};
+  let total = 0, matched = 0;
+
+  Object.entries(entry.parsed.skills||{}).forEach(([id,d])=>{
+    const found = corr.skills && corr.skills[id]!==undefined ? corr.skills[id] : d.found;
+    if(!found) return;
+    const w = d.status===2 ? 2 : 1;
+    total += w;
+    if(profile.skills[id]) matched += w;
+  });
+  (corr.manual_skills||[]).forEach(ex=>{
+    total += 1;
+    if(profile.skills[ex.id]) matched += 1;
+  });
+  Object.entries(entry.parsed.languages||{}).forEach(([id,d])=>{
+    const found = corr.languages && corr.languages[id]!==undefined ? corr.languages[id] : d.found;
+    if(!found) return;
+    const w = d.status===2 ? 2 : 1;
+    total += w;
+    const req = d.cefr_required, have = profile.languages[id];
+    if(req && have){ if(CEFR_ORDER[have] >= CEFR_ORDER[req]) matched += w; }
+    else if(have){ matched += w; }
+  });
+  Object.entries(entry.parsed.soft_skills||{}).forEach(([id,d])=>{
+    const found = corr.soft_skills && corr.soft_skills[id]!==undefined ? corr.soft_skills[id] : d.found;
+    if(!found) return;
+    total += 1;
+    if(profile.soft_skills[id]) matched += 1;
+  });
+
+  if(total===0) return null;
+  return Math.round(100*matched/total);
+}
+function recomputeAllMatches(){
+  dossier.forEach(e=> e.match_percent = computeMatch(e));
+}
+
+// ---- Offers table ----
+function matchClass(m){
+  if(m==null) return '';
+  if(m>=70) return 'match-high';
+  if(m>=40) return 'match-mid';
+  return 'match-low';
+}
+function renderOffers(){
+  const body = document.getElementById('offersBody');
+  const empty = document.getElementById('emptyState');
+  if(!dossier.length){ body.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+  body.innerHTML = dossier.map(e=>`
+    <tr class="offer-row ${e.job_id===selectedJobId?'selected':''}" data-id="${e.job_id}">
+      <td class="jobid">${escapeHtml(e.job_id)}</td>
+      <td>${escapeHtml(e.company_raw||e.parsed.company.value||'—')}</td>
+      <td>${escapeHtml(e.parsed.city.value||'—')}</td>
+      <td><span class="match-badge ${matchClass(e.match_percent)}">${e.match_percent==null?'—':e.match_percent+'%'}</span></td>
+      <td>
+        <select class="status-select" data-id="${e.job_id}">
+          ${STATUS_OPTIONS.map(s=>`<option ${e.application_status===s?'selected':''}>${s}</option>`).join('')}
+        </select>
+      </td>
+    </tr>
+  `).join('');
+  body.querySelectorAll('tr.offer-row').forEach(tr=>{
+    tr.addEventListener('click', (ev)=>{
+      if(ev.target.tagName==='SELECT') return;
+      selectedJobId = tr.dataset.id;
+      renderOffers();
+      renderDetail(selectedJobId);
+    });
+  });
+  body.querySelectorAll('select.status-select').forEach(sel=>{
+    sel.addEventListener('click', ev=>ev.stopPropagation());
+    sel.onchange = async ()=>{
+      const entry = dossier.find(e=>e.job_id===sel.dataset.id);
+      entry.application_status = sel.value;
+      await persistDossier();
+      showToast(sel.dataset.id + ' → ' + sel.value);
+    };
+  });
+}
+
+// ---- Offer detail (pills) ----
+function pillClassFor(status){
+  if(status===2) return 'p-required';
+  if(status===1) return 'p-nice';
+  return '';
+}
+function toggleCorrection(entry, group, id, currentFound){
+  entry.corrections[group] = entry.corrections[group] || {};
+  const alreadyCorrected = entry.corrections[group][id] !== undefined;
+  if(alreadyCorrected){
+    delete entry.corrections[group][id]; // second click: revert to what parse.py said
+  }else{
+    entry.corrections[group][id] = !currentFound;
+  }
+}
+
+function renderDetail(jobId){
+  const entry = dossier.find(e=>e.job_id===jobId);
+  const container = document.getElementById('detailContainer');
+  if(!entry){ container.innerHTML=''; return; }
+  entry.corrections = entry.corrections || {skills:{},languages:{},soft_skills:{},manual_skills:[]};
+  entry.corrections.manual_skills = entry.corrections.manual_skills || [];
+
+  const skillPills = Object.entries(entry.parsed.skills||{}).map(([id,d])=>{
+    const corrected = entry.corrections.skills[id]!==undefined;
+    const found = corrected ? entry.corrections.skills[id] : d.found;
+    const cls = found ? pillClassFor(d.status) : '';
+    return `<div class="pill ${cls} ${corrected?'p-corrected':''}" data-group="skills" data-id="${id}" title="${escapeHtml(d.source||'no match')}">${escapeHtml(d.label)}</div>`;
+  }).join('');
+
+  const manualSkillPills = entry.corrections.manual_skills.map(ex=>
+    `<div class="pill p-soft" data-group="manual_skills" data-id="${escapeHtml(ex.id)}" title="Added by hand — pending entry into the catalog">${escapeHtml(ex.label)} ✕</div>`
+  ).join('');
+
+  const langPills = Object.entries(entry.parsed.languages||{}).map(([id,d])=>{
+    const corrected = entry.corrections.languages[id]!==undefined;
+    const found = corrected ? entry.corrections.languages[id] : d.found;
+    const cls = found ? pillClassFor(d.status) : '';
+    const cefr = d.cefr_required ? `<span class="cefr">${d.cefr_required}</span>` : '';
+    return `<div class="pill ${cls} ${corrected?'p-corrected':''}" data-group="languages" data-id="${id}" title="${escapeHtml(d.source||'no match')}">${escapeHtml(d.label)}${cefr}</div>`;
+  }).join('');
+
+  const softPills = Object.entries(entry.parsed.soft_skills||{}).map(([id,d])=>{
+    const corrected = entry.corrections.soft_skills[id]!==undefined;
+    const found = corrected ? entry.corrections.soft_skills[id] : d.found;
+    const cls = found ? 'p-soft' : '';
+    return `<div class="pill ${cls} ${corrected?'p-corrected':''}" data-group="soft_skills" data-id="${id}" title="${escapeHtml(d.source||'no match')}">${escapeHtml(d.label)}</div>`;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="detail">
+      <h3>${escapeHtml(entry.company_raw||entry.parsed.company.value||'No company')}</h3>
+      <div class="sub">${escapeHtml(entry.job_id)} · ${escapeHtml(entry.parsed.city.value||'unknown city')}${entry.parsed.canton.value?' ('+escapeHtml(entry.parsed.canton.value)+')':''} · ${escapeHtml(entry.parsed.workload.value||'workload not detected')} · ${escapeHtml(entry.parsed.workmode.value||'work mode not detected')}</div>
+
+      <div class="legend">
+        <span><span class="swatch sw-required"></span>required</span>
+        <span><span class="swatch sw-nice"></span>nice-to-have</span>
+        <span><span class="swatch sw-soft"></span>detected / in your profile</span>
+        <span><span class="swatch sw-none"></span>not detected</span>
+        <span>✎ = manually corrected</span>
+      </div>
+
+      <div class="field-block">
+        <span class="label">Technical skills</span>
+        <div class="pills">${skillPills}${manualSkillPills}</div>
+        <div class="add-row">
+          <input type="text" id="newSkillInput" placeholder="Skill mentioned but not in the catalog (e.g. Looker Studio)">
+          <button class="small ghost" id="btnAddSkill">Add (fast path)</button>
+        </div>
+        <div class="csv-line ${lastCsvSuggestion && lastCsvSuggestion.jobId===jobId ? 'show' : ''}" id="csvLineBox" title="Copy this line and paste it at the end of catalogs/skills.csv so it's auto-detected next time">${lastCsvSuggestion && lastCsvSuggestion.jobId===jobId ? escapeHtml(lastCsvSuggestion.text) : ''}</div>
+      </div>
+
+      <div class="field-block">
+        <span class="label">Languages</span>
+        <div class="pills">${langPills}</div>
+      </div>
+
+      <div class="field-block">
+        <span class="label">Soft skills</span>
+        <div class="pills">${softPills}</div>
+      </div>
+
+      <div class="field-block">
+        <span class="label">Notes</span>
+        <textarea id="notesBox" placeholder="Free notes about this offer...">${escapeHtml(entry.notes||'')}</textarea>
+      </div>
+    </div>
+  `;
+
+  container.querySelectorAll('.pill[data-group]').forEach(p=>{
+    p.onclick = async ()=>{
+      const group = p.dataset.group, id = p.dataset.id;
+      if(group==='manual_skills'){
+        entry.corrections.manual_skills = entry.corrections.manual_skills.filter(x=>x.id!==id);
+      }else{
+        const d = entry.parsed[group][id];
+        toggleCorrection(entry, group, id, d.found);
+      }
+      entry.match_percent = computeMatch(entry);
+      await persistDossier();
+      renderOffers();
+      renderDetail(jobId);
+    };
+  });
+
+  document.getElementById('btnAddSkill').onclick = ()=>{
+    const input = document.getElementById('newSkillInput');
+    const label = input.value.trim();
+    if(!label){ showToast('Type the skill name first'); return; }
+    const id = label.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'');
+    entry.corrections.manual_skills.push({id, label});
+    entry.match_percent = computeMatch(entry);
+    persistDossier();
+    showToast(label + ' added to this offer');
+
+    const escapedPattern = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    lastCsvSuggestion = {jobId, text: `${id},${label},\\b${escapedPattern}\\b`};
+
+    input.value = '';
+    renderOffers();
+    renderDetail(jobId);
+  };
+
+  document.getElementById('notesBox').addEventListener('blur', async (e)=>{
+    entry.notes = e.target.value;
+    await persistDossier();
+  });
+}
+
+loadState();
+</script>
+</body>
+</html>

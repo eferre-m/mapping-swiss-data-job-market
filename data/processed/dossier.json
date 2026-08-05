@@ -1,0 +1,1001 @@
+[
+  {
+    "job_id": "JOB-2026-000001",
+    "date_captured": "2026-08-05",
+    "company_raw": "Swiss Federal Statistical Office FSO",
+    "source": "LinkedIn",
+    "raw_text": "Swiss Federal Statistical Office FSO\n\n\nProduction statistique - Spécialiste des enquêtes et de la diffusion \n\nNeuchâtel, Neuchâtel, Switzerland · 1 week ago · 17 people clicked apply\n\nResponses managed off LinkedIn\n\nRemote\nFull-time\nApply\n\nSaved\nUse AI to assess how you fit\nGet AI-powered advice on this job and more exclusive features with Premium. Try Premium for €0\n\nShow match details\n\nTailor my resume\n\nHelp me stand out\n\nSee how you compare to 17 others who clicked apply\n\nAccess exclusive applicant insights, see jobs where you have the highest chance of hearing back, and more.\n\nTry Premium for €0\n\nAbout the job\nNeuchâtel, Suisse (et travail à domicile) | 60-60%\n\nCe à quoi vous pouvez contribuer\n\nPlanifier et mener diverses enquêtes dans le domaine de la culture et des médias\nMettre en place, tester et réaliser des questionnaires (p. ex. eSurvey), collecter des données secondaires auprès de services internes et externes\nVérifier les données (exhaustivité et cohérence) et les corriger, programmer des tests de plausibilité\nEntretenir les relations avec les fournisseurs de données, demander des précisions aux entités qui ont répondu\nGérer et coordonner les processus de diffusion, créer des éléments de diffusion, gérer et contrôler les traductions\nRépondre aux demandes des clients\n\nCe qui vous rend unique\n\nFormation de niveau maturité et formation continue dans le domaine des sciences sociales ou des statistiques (un atout) ou formation équivalente\nPlusieurs années d'expérience professionnelle dans le domaine des statistiques et des enquêtes, ainsi que, idéalement, dans le secteur culturel ou des médias\nTrès bonnes compétences en informatique, notamment dans les domaines de la gestion des données et de la programmation\nTrès bonnes connaissances d'une langue officielle, connaissances actives d'au moins une deuxième langue officielle et idéalement de l'anglais\nMéthode de travail structurée, autonome et rigoureuse, sens de l'organisation, capacité à gérer la pression\n\nEn quelques mots\n\nEn tant que titulaire de ce poste varié et responsabilisant, vous veillerez à la collecte, au contrôle et à la diffusion des données dans le domaine de la culture et des médias. Vous disposerez pour ce faire d'une grande marge de manœuvre et occuperez une fonction clé au sein d'une petite équipe dynamique.\n\nCe que nous offrons\n\nTravailler pour la Suisse Nous nous engageons pour le succès du modèle suisse et pour le bien-être de la population.\nLa diversité au quotidien Nous veillons à l'égalité des chances, qui nous permet de déployer nos compétences et d'exprimer des points de vue différents.\nSanté au travail Nous assistons et conseillons nos collaboratrices et collaborateurs pour toutes les questions liées à la santé physique ou psychique.\n\nTous les avantages\n\nLa statistique compte. Pour vous aussi.\n\nL'Office fédéral de la statistique (OFS) est le centre de compétences de la statistique publique et l'acteur principal de l'écosystème suisse des données. Il produit des informations statistiques, œuvre pour l'harmonisation des données par le biais d'une gestion nationale des données et élabore des processus tirés de la science des données pour faire évoluer l'interprétation des données. L'OFS contribue ainsi à la formation de l'opinion publique et apporte une contribution importante à la gouvernance démocratique moderne.\n\nInformations complémentaires\n\nDivision Santé et affaires sociales (GS), Section Politique, culture et médias (POKU)\n\nQuestions sur le poste\n\nOliver Möschler Chef du domaine Culture à l'OFS +41 58 46 36967\n\nQuestions sur la postulation\n\nMarianne Zumbach Responsable au service du personnel +41 58 46 08367",
+    "parsed": {
+      "company": {
+        "value": "Swiss Federal Statistical Office FSO",
+        "found": true,
+        "source": "Swiss Federal Statistical Office FSO"
+      },
+      "city": {
+        "value": "Neuchâtel",
+        "found": true,
+        "source": "Neuchâtel"
+      },
+      "canton": {
+        "value": "NE",
+        "found": true,
+        "source": "derived from city"
+      },
+      "workload": {
+        "value": "60-60%",
+        "found": true,
+        "source": "60-60%"
+      },
+      "workmode": {
+        "value": "Remote",
+        "found": true,
+        "source": "Remote"
+      },
+      "skills": {
+        "sql": {
+          "label": "SQL",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "python": {
+          "label": "Python",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "excel": {
+          "label": "Excel",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "dashboards": {
+          "label": "Dashboards",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "powerbi": {
+          "label": "Power BI",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "databricks": {
+          "label": "Databricks",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "tableau": {
+          "label": "Tableau",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "git": {
+          "label": "Git",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "r": {
+          "label": "R",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "aiagent": {
+          "label": "AI Agent",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "sap": {
+          "label": "SAP",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "snowflake": {
+          "label": "Snowflake",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "azure": {
+          "label": "Azure",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "aws": {
+          "label": "AWS",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "gcp": {
+          "label": "Google Cloud",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "looker": {
+          "label": "Looker",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "qlik": {
+          "label": "Qlik",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "spss": {
+          "label": "SPSS",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "sas": {
+          "label": "SAS",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "alteryx": {
+          "label": "Alteryx",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "dbt": {
+          "label": "dbt",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "airflow": {
+          "label": "Airflow",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "spark": {
+          "label": "Spark",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "vba": {
+          "label": "VBA",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "mongodb": {
+          "label": "MongoDB / NoSQL",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "hadoop": {
+          "label": "Hadoop",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "bigquery": {
+          "label": "BigQuery / Redshift",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "java": {
+          "label": "Java",
+          "status": 0,
+          "found": false,
+          "source": null
+        }
+      },
+      "languages": {
+        "french": {
+          "label": "French",
+          "status": 0,
+          "found": false,
+          "source": null,
+          "cefr_required": null
+        },
+        "german": {
+          "label": "German",
+          "status": 0,
+          "found": false,
+          "source": null,
+          "cefr_required": null
+        },
+        "italian": {
+          "label": "Italian",
+          "status": 0,
+          "found": false,
+          "source": null,
+          "cefr_required": null
+        },
+        "english": {
+          "label": "English",
+          "status": 1,
+          "found": true,
+          "source": " actives d'au moins une deuxième langue officielle et idéalement de l'anglais",
+          "cefr_required": null
+        },
+        "spanish": {
+          "label": "Spanish",
+          "status": 0,
+          "found": false,
+          "source": null,
+          "cefr_required": null
+        }
+      },
+      "soft_skills": {
+        "programming": {
+          "label": "Programming",
+          "found": true,
+          "source": "s les domaines de la gestion des données et de la programmation Très bonnes connaissances d'une langue officielle, connaiss"
+        },
+        "storytelling": {
+          "label": "Storytelling",
+          "found": false,
+          "source": null
+        },
+        "surveymethods": {
+          "label": "Survey Methods",
+          "found": true,
+          "source": "ce FSO   Production statistique - Spécialiste des enquêtes et de la diffusion   Neuchâtel, Neuchâtel, Switzerland · 1 "
+        },
+        "descstats": {
+          "label": "Descriptive Statistics",
+          "found": false,
+          "source": null
+        },
+        "reporting": {
+          "label": "Reporting",
+          "found": false,
+          "source": null
+        },
+        "communication": {
+          "label": "Communication",
+          "found": false,
+          "source": null
+        },
+        "researchdesign": {
+          "label": "Research Design",
+          "found": false,
+          "source": null
+        },
+        "datacollection": {
+          "label": "Data Collection",
+          "found": false,
+          "source": null
+        },
+        "coordination": {
+          "label": "Project Coordination",
+          "found": false,
+          "source": null
+        },
+        "stakeholder": {
+          "label": "Stakeholder Training",
+          "found": false,
+          "source": null
+        },
+        "collaboration": {
+          "label": "Collaboration",
+          "found": true,
+          "source": "anté au travail Nous assistons et conseillons nos collaboratrices et collaborateurs pour toutes les questions liées à la sant"
+        },
+        "proactivity": {
+          "label": "Proactivity",
+          "found": false,
+          "source": null
+        },
+        "structured": {
+          "label": "Structured Thinking",
+          "found": false,
+          "source": null
+        },
+        "curiosity": {
+          "label": "Curiosity",
+          "found": false,
+          "source": null
+        },
+        "learningagility": {
+          "label": "Learning Agility",
+          "found": false,
+          "source": null
+        }
+      }
+    },
+    "corrections": {
+      "skills": {},
+      "languages": {},
+      "soft_skills": {},
+      "manual_skills": []
+    },
+    "application_status": "Not applied",
+    "notes": "",
+    "match_percent": 0
+  },
+  {
+    "job_id": "JOB-2026-000002",
+    "date_captured": "2026-08-05",
+    "company_raw": "Liebherr Group",
+    "source": "LinkedIn",
+    "raw_text": "Liebherr Group\n\n\nInternship Data Product Value Analyst (m/w/d) \n\nBulle, Fribourg, Switzerland · Reposted 5 days ago · 81 people clicked apply\n\nPromoted by hirer · Responses managed off LinkedIn\n\nTemporary\nApply\n\nSaved\nUse AI to assess how you fit\nGet AI-powered advice on this job and more exclusive features with Premium. Try Premium for €0\n\nShow match details\n\nTailor my resume\n\nHelp me stand out\n\nSee how you compare to 81 others who clicked apply\n\nAccess exclusive applicant insights, see jobs where you have the highest chance of hearing back, and more.\n\nTry Premium for €0\n\nPeople you can reach out to\n\nSchool alumni from 42 Paris\n\nShow all\nAbout the job\nAs part of the Global Data Governance team, this role has the unique opportunity to shape the future of data products and data valuation at Liebherr. The goal will be to support the development of the data product foundation and build a standardized and scalable data value framework – focusing on identifying, evaluating, and maximizing the business impact of data-driven use cases across divisions.\nWe are looking for a graduate student (or soon-to-graduate) who is interested in learning on the job and contributing to the fascinating topic of data product & value management. This is a temporary engagement with a duration of 12 months.\n\nResponsibilities:\nGlobal Data Governance\nExplore the role of data governance within the Liebherr Group, i.e., goals, scope, responsibilities, operating model, communities etc.\nAlign the activities around data product & value management with Liebherr’s global data strategy\n\nData Products\nLearn about data products, what it means and how it fits into Liebherr\nSupport the creation and implementation of the global data product framework\nCo-facilitate and contribute to the cross-divisional expert group on data products\nSupport the onboarding & piloting of the data product concept within divisions\nMove from concept to reality, i.e., train stakeholders to build and manage data products\nAssist in documentation and communication activities\n\nData Value\nIdentify and estimate business impact of data-driven use cases\nSupport the application and optimization of the data value approach\nContribute to the standardization of templates, metrics, and valuation logic\nAutomate the use-case documentation and valuation process\nDevelop dashboards and reports for value tracking\nScale the valuation approach across the entire company\n\n\nCompetencies:\nStrong analytical and structured thinking skills\nProactiveness and diligence in problem-solving\nImpeccable communication and storytelling abilities\nAdvanced Excel skills (modelling, calculations)\nFluency in English, French or German would be an asset.\nExperience with Power BI and Databricks or similar tools is a plus\nExperience with prompting and building AI agents is a plus\nPrior understanding of master data management, SAP MDG or practical experience with data & analytics governance topics would be an asset\nHands‑on mentality with a strong willingness to learn and explore new topics\nEnjoys collaborating in an international environment\n\nOur offer:\nA unique opportunity to gain practical experience in a strategic data governance environment of a globally operating company\nExposure to enterprise‑scale data platforms and governance frameworks\nOn‑the‑job training with experts in data governance, data engineering, analytics, and compliance\nHybrid work model and modern working environment in Bulle (Fribourg region)\nBenefits of a stable and globally established family-owned company\n\n\nHave we awoken your interest? Then we look forward to receiving your online application. If you have any questions, please contact Regina Abou el Naga.\nOne Passion. Many Opportunities.\n\nThe Company\nLiebherr-International AG with its head office in Bulle is the holding company of the Liebherr Group and performs various functions in the areas finance, tax, auditing, legal, insurance, HR, and corporate communication. The Liebherr Group employs more than 55,000 people worldwide in over 150 countries.\n\nLocation\nLiebherr-International AG\n7, Rue Hans-Liebherr\n1630 Bulle\nSwitzerland (CH)\n\nContact\nRegina Abou el Naga\nregina.abouelnaga@liebherr.com",
+    "parsed": {
+      "company": {
+        "value": "Liebherr Group",
+        "found": true,
+        "source": "Liebherr Group"
+      },
+      "city": {
+        "value": "Bulle",
+        "found": true,
+        "source": "Bulle"
+      },
+      "canton": {
+        "value": "FR",
+        "found": true,
+        "source": "derived from city"
+      },
+      "workload": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "workmode": {
+        "value": "Hybrid",
+        "found": true,
+        "source": "Hybrid"
+      },
+      "skills": {
+        "sql": {
+          "label": "SQL",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "python": {
+          "label": "Python",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "excel": {
+          "label": "Excel",
+          "status": 2,
+          "found": true,
+          "source": "Advanced Excel skills (modelling, calculations)"
+        },
+        "dashboards": {
+          "label": "Dashboards",
+          "status": 1,
+          "found": true,
+          "source": "Develop dashboards and reports for value tracking"
+        },
+        "powerbi": {
+          "label": "Power BI",
+          "status": 1,
+          "found": true,
+          "source": "Experience with Power BI and Databricks or similar tools is a plus"
+        },
+        "databricks": {
+          "label": "Databricks",
+          "status": 1,
+          "found": true,
+          "source": "Experience with Power BI and Databricks or similar tools is a plus"
+        },
+        "tableau": {
+          "label": "Tableau",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "git": {
+          "label": "Git",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "r": {
+          "label": "R",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "aiagent": {
+          "label": "AI Agent",
+          "status": 1,
+          "found": true,
+          "source": "Experience with prompting and building AI agents is a plus"
+        },
+        "sap": {
+          "label": "SAP",
+          "status": 1,
+          "found": true,
+          "source": "Prior understanding of master data management, SAP MDG or practical experience with data & analytics governance topics would be an asset"
+        },
+        "snowflake": {
+          "label": "Snowflake",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "azure": {
+          "label": "Azure",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "aws": {
+          "label": "AWS",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "gcp": {
+          "label": "Google Cloud",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "looker": {
+          "label": "Looker",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "qlik": {
+          "label": "Qlik",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "spss": {
+          "label": "SPSS",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "sas": {
+          "label": "SAS",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "alteryx": {
+          "label": "Alteryx",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "dbt": {
+          "label": "dbt",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "airflow": {
+          "label": "Airflow",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "spark": {
+          "label": "Spark",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "vba": {
+          "label": "VBA",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "mongodb": {
+          "label": "MongoDB / NoSQL",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "hadoop": {
+          "label": "Hadoop",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "bigquery": {
+          "label": "BigQuery / Redshift",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "java": {
+          "label": "Java",
+          "status": 0,
+          "found": false,
+          "source": null
+        }
+      },
+      "languages": {
+        "french": {
+          "label": "French",
+          "status": 1,
+          "found": true,
+          "source": "Fluency in English, French or German would be an asset.",
+          "cefr_required": null
+        },
+        "german": {
+          "label": "German",
+          "status": 1,
+          "found": true,
+          "source": "Fluency in English, French or German would be an asset.",
+          "cefr_required": null
+        },
+        "italian": {
+          "label": "Italian",
+          "status": 0,
+          "found": false,
+          "source": null,
+          "cefr_required": null
+        },
+        "english": {
+          "label": "English",
+          "status": 1,
+          "found": true,
+          "source": "Fluency in English, French or German would be an asset.",
+          "cefr_required": null
+        },
+        "spanish": {
+          "label": "Spanish",
+          "status": 0,
+          "found": false,
+          "source": null,
+          "cefr_required": null
+        }
+      },
+      "soft_skills": {
+        "programming": {
+          "label": "Programming",
+          "found": false,
+          "source": null
+        },
+        "storytelling": {
+          "label": "Storytelling",
+          "found": true,
+          "source": "e in problem-solving Impeccable communication and storytelling abilities Advanced Excel skills (modelling, calculations) F"
+        },
+        "surveymethods": {
+          "label": "Survey Methods",
+          "found": false,
+          "source": null
+        },
+        "descstats": {
+          "label": "Descriptive Statistics",
+          "found": false,
+          "source": null
+        },
+        "reporting": {
+          "label": "Reporting",
+          "found": true,
+          "source": "tion and valuation process Develop dashboards and reports for value tracking Scale the valuation approach across the "
+        },
+        "communication": {
+          "label": "Communication",
+          "found": true,
+          "source": " manage data products Assist in documentation and communication activities  Data Value Identify and estimate business impac"
+        },
+        "researchdesign": {
+          "label": "Research Design",
+          "found": false,
+          "source": null
+        },
+        "datacollection": {
+          "label": "Data Collection",
+          "found": false,
+          "source": null
+        },
+        "coordination": {
+          "label": "Project Coordination",
+          "found": false,
+          "source": null
+        },
+        "stakeholder": {
+          "label": "Stakeholder Training",
+          "found": true,
+          "source": "hin divisions Move from concept to reality, i.e., train stakeholders to build and manage data products Assist in documentation a"
+        },
+        "collaboration": {
+          "label": "Collaboration",
+          "found": true,
+          "source": "illingness to learn and explore new topics Enjoys collaborating in an international environment  Our offer: A unique opport"
+        },
+        "proactivity": {
+          "label": "Proactivity",
+          "found": true,
+          "source": " Strong analytical and structured thinking skills Proactiveness and diligence in problem-solving Impeccable communication a"
+        },
+        "structured": {
+          "label": "Structured Thinking",
+          "found": true,
+          "source": "ire company   Competencies: Strong analytical and structured thinking skills Proactiveness and diligence in problem-solving Impec"
+        },
+        "curiosity": {
+          "label": "Curiosity",
+          "found": false,
+          "source": null
+        },
+        "learningagility": {
+          "label": "Learning Agility",
+          "found": true,
+          "source": "ould be an asset Hands‑on mentality with a strong willingness to learn and explore new topics Enjoys collaborating in an internati"
+        }
+      }
+    },
+    "corrections": {
+      "skills": {},
+      "languages": {},
+      "soft_skills": {},
+      "manual_skills": []
+    },
+    "application_status": "Not applied",
+    "notes": "",
+    "match_percent": 0
+  },
+  {
+    "job_id": "JOB-2026-000003",
+    "date_captured": "2026-08-05",
+    "company_raw": "Fromveur",
+    "source": "LinkedIn",
+    "raw_text": "Fromveur\n\n\nDéveloppeur·euse junior Python — Data & BI\n\nLausanne, Vaud, Switzerland · 1 day ago · 90 applicants\n\nPromoted by hirer · Actively reviewing applicants\n\nHybrid\nFull-time\nEasy Apply\n\nSaved\nUse AI to assess how you fit\nGet AI-powered advice on this job and more exclusive features with Premium. Try Premium for €0\n\nShow match details\n\nTailor my resume\n\nHelp me stand out\n\nSee how you compare to 90 applicants\n\nAccess exclusive applicant insights, see jobs where you have the highest chance of hearing back, and more.\n\nTry Premium for €0\n\nPeople you can reach out to\nMeet the hiring team\n\n\nMehdi Kouar\n\n• 3rd\n\nPython | Data Analysis | Healthcare IT | Medical Data | Interoperability (HL7, FHIR) | Digital Health Solutions\n\nJob poster\n\nMessage\nAbout the job\nLe contexte\n\nNous concevons et exploitons des plateformes de consolidation et de pilotage de données pour des acteurs de la santé et de l'industrie en Suisse. Nos systèmes agrègent des données issues de systèmes hétérogènes et les restituent sous forme d'indicateurs utilisés quotidiennement par les équipes opérationnelles de nos clients.\n\nStructure à taille humaine : vous travaillez directement avec le fondateur, sur du code qui part en production.\n\nVos missions\n\n• Développer et faire évoluer les modules applicatifs : logique métier, endpoints, traitements de données\n\n • Construire et fiabiliser les intégrations avec les systèmes sources de nos clients\n\n • Concevoir et implémenter les tableaux de bord : modélisation des indicateurs, agrégations, visualisations\n\n • Confronter ces indicateurs aux attentes réelles des utilisateurs métier et les faire évoluer\n\n • Écrire les tests associés et documenter ce que vous produisez\n\nIndispensable\n\n• Bases solides en Python, avec un projet concret à l'appui\n\n • SQL : jointures, agrégations, lecture d'un plan d'exécution\n\n • Git : branches, revues, historique propre\n\n • Appétence data et BI : vous savez ce qu'est une métrique bien définie\n\n • Curiosité business — notre critère prioritaire. Un tableau de bord qui ne répond pas à la question du client ne vaut rien\n\n • Français courant et anglais professionnel à l'oral (nos réunions se tiennent en anglais)\n\n • Autorisation de travail en Suisse\n\nApprécié\n\n• Exposition à PHP / Symfony — une partie de notre stack, que vous apprendrez ici\n\n • Django, PostgreSQL, SQL Server, Docker, ou une bibliothèque de visualisation\n\nNous ne cherchons pas quelqu'un qui maîtrise déjà les deux langages. Nous cherchons quelqu'un qui apprend vite, écrit du code propre et pose les bonnes questions avant de coder.\n\nConditions\n\nCHF 85'000 · 100 % · Lausanne, télétravail partiel · Prise de posre dès que possible\n\nProcessus\n\nEntretien de découverte (45 min) → exercice technique sur un cas représentatif → rencontre à Lausanne.\n\nCandidature\n\nCV à contact@fromveur.com. Pas de lettre de motivation.",
+    "parsed": {
+      "company": {
+        "value": "Fromveur",
+        "found": true,
+        "source": "Fromveur"
+      },
+      "city": {
+        "value": "Lausanne",
+        "found": true,
+        "source": "Lausanne"
+      },
+      "canton": {
+        "value": "VD",
+        "found": true,
+        "source": "derived from city"
+      },
+      "workload": {
+        "value": "100%",
+        "found": true,
+        "source": "100 %"
+      },
+      "workmode": {
+        "value": "Hybrid",
+        "found": true,
+        "source": "Hybrid"
+      },
+      "skills": {
+        "sql": {
+          "label": "SQL",
+          "status": 1,
+          "found": true,
+          "source": " • SQL : jointures, agrégations, lecture d'un plan d'exécution"
+        },
+        "python": {
+          "label": "Python",
+          "status": 1,
+          "found": true,
+          "source": "Développeur·euse junior Python — Data & BI"
+        },
+        "excel": {
+          "label": "Excel",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "dashboards": {
+          "label": "Dashboards",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "powerbi": {
+          "label": "Power BI",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "databricks": {
+          "label": "Databricks",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "tableau": {
+          "label": "Tableau",
+          "status": 1,
+          "found": true,
+          "source": " • Curiosité business — notre critère prioritaire. Un tableau de bord qui ne répond pas à la question du client ne vaut rien"
+        },
+        "git": {
+          "label": "Git",
+          "status": 1,
+          "found": true,
+          "source": " • Git : branches, revues, historique propre"
+        },
+        "r": {
+          "label": "R",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "aiagent": {
+          "label": "AI Agent",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "sap": {
+          "label": "SAP",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "snowflake": {
+          "label": "Snowflake",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "azure": {
+          "label": "Azure",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "aws": {
+          "label": "AWS",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "gcp": {
+          "label": "Google Cloud",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "looker": {
+          "label": "Looker",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "qlik": {
+          "label": "Qlik",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "spss": {
+          "label": "SPSS",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "sas": {
+          "label": "SAS",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "alteryx": {
+          "label": "Alteryx",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "dbt": {
+          "label": "dbt",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "airflow": {
+          "label": "Airflow",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "spark": {
+          "label": "Spark",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "vba": {
+          "label": "VBA",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "mongodb": {
+          "label": "MongoDB / NoSQL",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "hadoop": {
+          "label": "Hadoop",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "bigquery": {
+          "label": "BigQuery / Redshift",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "java": {
+          "label": "Java",
+          "status": 0,
+          "found": false,
+          "source": null
+        }
+      },
+      "languages": {
+        "french": {
+          "label": "French",
+          "status": 2,
+          "found": true,
+          "source": " • Français courant et anglais professionnel à l'oral (nos réunions se tiennent en anglais)",
+          "cefr_required": null
+        },
+        "german": {
+          "label": "German",
+          "status": 0,
+          "found": false,
+          "source": null,
+          "cefr_required": null
+        },
+        "italian": {
+          "label": "Italian",
+          "status": 0,
+          "found": false,
+          "source": null,
+          "cefr_required": null
+        },
+        "english": {
+          "label": "English",
+          "status": 2,
+          "found": true,
+          "source": " • Français courant et anglais professionnel à l'oral (nos réunions se tiennent en anglais)",
+          "cefr_required": null
+        },
+        "spanish": {
+          "label": "Spanish",
+          "status": 0,
+          "found": false,
+          "source": null,
+          "cefr_required": null
+        }
+      },
+      "soft_skills": {
+        "programming": {
+          "label": "Programming",
+          "found": false,
+          "source": null
+        },
+        "storytelling": {
+          "label": "Storytelling",
+          "found": false,
+          "source": null
+        },
+        "surveymethods": {
+          "label": "Survey Methods",
+          "found": false,
+          "source": null
+        },
+        "descstats": {
+          "label": "Descriptive Statistics",
+          "found": false,
+          "source": null
+        },
+        "reporting": {
+          "label": "Reporting",
+          "found": false,
+          "source": null
+        },
+        "communication": {
+          "label": "Communication",
+          "found": false,
+          "source": null
+        },
+        "researchdesign": {
+          "label": "Research Design",
+          "found": false,
+          "source": null
+        },
+        "datacollection": {
+          "label": "Data Collection",
+          "found": false,
+          "source": null
+        },
+        "coordination": {
+          "label": "Project Coordination",
+          "found": false,
+          "source": null
+        },
+        "stakeholder": {
+          "label": "Stakeholder Training",
+          "found": false,
+          "source": null
+        },
+        "collaboration": {
+          "label": "Collaboration",
+          "found": false,
+          "source": null
+        },
+        "proactivity": {
+          "label": "Proactivity",
+          "found": false,
+          "source": null
+        },
+        "structured": {
+          "label": "Structured Thinking",
+          "found": false,
+          "source": null
+        },
+        "curiosity": {
+          "label": "Curiosity",
+          "found": true,
+          "source": "ous savez ce qu'est une métrique bien définie   • Curiosité business — notre critère prioritaire. Un tableau de bord qu"
+        },
+        "learningagility": {
+          "label": "Learning Agility",
+          "found": false,
+          "source": null
+        }
+      }
+    },
+    "corrections": {
+      "skills": {},
+      "languages": {},
+      "soft_skills": {},
+      "manual_skills": []
+    },
+    "application_status": "Not applied",
+    "notes": "",
+    "match_percent": 0
+  }
+]

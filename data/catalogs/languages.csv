@@ -1,0 +1,6 @@
+lang_id,canonical_name,pattern
+french,French,\b(French|Français|française|francophone|Französisch)\b
+german,German,\b(German|Allemand|Deutsch\w*|allemande|Tedesco)\b
+italian,Italian,\b(Italian|Italien|italienne|Italienisch)\b
+english,English,\b(English|Anglais|anglaise|Englisch|Inglese)\b
+spanish,Spanish,\b(Spanish|Espagnol|espagnole|Spanisch|Spagnolo)\b

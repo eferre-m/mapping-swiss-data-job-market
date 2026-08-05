@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dossier CH — Capture</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --ink:#111417;
+    --paper:#F4F4F1;
+    --line:#111417;
+    --red:#D6372C;
+    --grey:#8A8D91;
+    --grey-light:#DCDCD8;
+    --green:#3E6B4F;
+    --amber:#B4791F;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Archivo',Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:28px 24px 80px;}
+
+  .masthead{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    border-bottom:4px solid var(--ink); padding-bottom:14px; margin-bottom:6px;
+  }
+  .masthead h1{
+    font-size:26px; font-weight:900; letter-spacing:-0.02em; margin:0; text-transform:uppercase;
+  }
+  .masthead .meta{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--grey); text-align:right; line-height:1.5;
+  }
+  .subline{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--grey); margin-bottom:18px;
+    text-transform:uppercase; letter-spacing:0.04em;
+  }
+  .note{
+    font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--grey); background:#fff;
+    border:1.5px solid var(--grey-light); padding:10px 14px; margin-bottom:24px; line-height:1.6;
+  }
+  .note strong{color:var(--ink);}
+
+  .stat-row{display:flex; gap:36px; align-items:flex-end; margin-bottom:26px;}
+  .count{font-family:'IBM Plex Mono',monospace; font-size:40px; font-weight:600; color:var(--red); line-height:1;}
+  .count-label{font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; color:var(--grey); letter-spacing:0.05em;}
+
+  .section-num{display:flex; align-items:center; gap:10px; margin:26px 0 12px;}
+  .section-num .n{
+    font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:12px;
+    background:var(--ink); color:var(--paper); padding:3px 8px;
+  }
+  .section-num .t{font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:0.05em;}
+
+  label{
+    display:block; font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase;
+    letter-spacing:0.06em; color:var(--grey); margin-bottom:4px;
+  }
+  input[type=text], select, textarea{
+    width:100%; border:none; border-bottom:2px solid var(--ink); background:transparent;
+    font-family:'Archivo',sans-serif; font-size:14px; padding:6px 2px; color:var(--ink);
+  }
+  input:focus, select:focus, textarea:focus{outline:none; border-bottom-color:var(--red);}
+  textarea{border:2px solid var(--ink); padding:12px; min-height:220px; resize:vertical; line-height:1.5;}
+
+  .row2{display:grid; grid-template-columns:2fr 1fr; gap:14px; margin-top:14px;}
+  .hint{font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--amber); margin-top:4px; min-height:14px;}
+
+  button{
+    font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:0.05em;
+    font-size:12px; font-weight:600; border:2px solid var(--ink); background:var(--ink); color:var(--paper);
+    padding:12px 22px; cursor:pointer; transition:all .12s ease;
+  }
+  button:hover{background:var(--red); border-color:var(--red);}
+  button.ghost{background:transparent; color:var(--ink);}
+  button.ghost:hover{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+  button:disabled{opacity:.35; cursor:not-allowed;}
+  .actions{display:flex; gap:10px; flex-wrap:wrap; margin:18px 0 6px; align-items:center;}
+
+  table{width:100%; border-collapse:collapse; margin-top:6px;}
+  th{
+    font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; text-align:left;
+    color:var(--grey); border-bottom:2px solid var(--ink); padding:6px 8px;
+  }
+  td{font-size:12px; padding:8px; border-bottom:1px solid var(--grey-light); vertical-align:top;}
+  tr:hover td{background:#ECECE8;}
+  .del{color:var(--red); cursor:pointer; font-family:'IBM Plex Mono',monospace; font-size:11px;}
+  .jobid{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--grey);}
+  .snippet{color:var(--grey); font-size:11px;}
+  .empty-state{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--grey); text-align:center; padding:30px 0;
+  }
+
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--ink); color:var(--paper); padding:10px 18px; font-family:'IBM Plex Mono',monospace;
+    font-size:12px; opacity:0; transition:all .25s ease; pointer-events:none;
+    max-width:600px; word-break:break-word; text-align:center;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <h1>Dossier CH — Capture</h1>
+    <div class="meta">Raw offer capture<br>Source of truth layer</div>
+  </div>
+  <div class="subline" id="storageState">loading…</div>
+  <div class="note">
+    This tool does <strong>one job only</strong>: capture the original offer text and give it a permanent Job ID.
+    No parsing, no skills, no city — that all happens afterwards in the Python pipeline, which can be re-run anytime without ever touching this capture.
+    <br><br>
+    ⚠ If you reopen this file later in a new tab, it may not remember previous captures automatically.
+    <strong>Always click "Import JSON ←" and load your last export first</strong> — that JSON file is your real memory, not the browser.
+  </div>
+
+  <div class="stat-row">
+    <div><div class="count" id="totalCount">0</div><div class="count-label">Offers captured</div></div>
+    <div><div class="count" id="nextIdDisplay" style="color:var(--ink);font-size:22px;">—</div><div class="count-label">Next Job ID</div></div>
+  </div>
+
+  <div class="section-num"><span class="n">01</span><span class="t">Paste the offer</span></div>
+  <label>Full job description — French, German, Italian, or English all work</label>
+  <textarea id="rawtext" placeholder="Paste the complete offer text here…"></textarea>
+
+  <div class="row2">
+    <div>
+      <label>Company</label>
+      <input type="text" id="f_company" placeholder="Detected automatically — correct if wrong">
+      <div class="hint" id="companyHint"></div>
+    </div>
+    <div>
+      <label>Source</label>
+      <select id="f_source"><option>LinkedIn</option><option>Indeed</option><option>JobUp</option><option>Company website</option><option>Other</option></select>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button id="btnSave">Save capture →</button>
+    <button class="ghost" id="btnClearForm">Clear form</button>
+  </div>
+
+  <div class="section-num"><span class="n">02</span><span class="t">Captured offers</span></div>
+  <div class="actions">
+    <button class="ghost" id="btnExport">Export JSON →</button>
+    <input type="file" id="fileImport" accept=".json" style="display:none;">
+    <button class="ghost" id="btnImport">Import JSON ←</button>
+    <button class="ghost" id="btnClearAll">Clear all</button>
+  </div>
+  <table>
+    <thead><tr><th>Job ID</th><th>Date</th><th>Company</th><th>Source</th><th>Preview</th><th></th></tr></thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+  <div class="empty-state" id="emptyState">No offers captured yet.</div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+let entries = [];
+let idCounter = null; // null = not yet loaded/decided
+
+// ---- Company auto-guess (best-effort only, never blocks saving) ----
+function guessCompany(text){
+  const head = text.slice(0, 600);
+  const labelRx = /(?:Company|Employer|Entreprise|Arbeitgeber|Azienda|Datore di lavoro)\s*:\s*([^\n,.;]{2,60})/i;
+  let m = labelRx.exec(head);
+  if(m) return m[1].trim();
+
+  const atRx = /\b(?:at|bei|chez|presso)\s+([A-ZÀ-ÖØ-Ý][\w&.\-'’]*(?:\s+[A-ZÀ-ÖØ-Ý][\w&.\-'’]*){0,3})/;
+  m = atRx.exec(head);
+  if(m) return m[1].trim();
+
+  const lines = head.split('\n').map(l=>l.trim()).filter(Boolean);
+  const firstLine = lines.find(l=> l.length>1 && l.length<60);
+  const jobWordsRx = /\b(we|nous|wir|noi|recherch|recrute|looking|suchen|cerchiamo|job|poste|position|stelle|offre|angebot|offerta)\b/i;
+  if(firstLine && /^[A-ZÀ-ÖØ-Ý]/.test(firstLine) && !jobWordsRx.test(firstLine)){
+    return firstLine;
+  }
+  return '';
+}
+
+document.getElementById('rawtext').addEventListener('blur', ()=>{
+  const text = document.getElementById('rawtext').value;
+  const companyField = document.getElementById('f_company');
+  const hint = document.getElementById('companyHint');
+  if(!text.trim()){ hint.textContent=''; return; }
+  if(companyField.value.trim()) return; // don't overwrite what the user already typed/corrected
+  const guess = guessCompany(text);
+  if(guess){
+    companyField.value = guess;
+    hint.textContent = 'Auto-detected — please check it\'s correct';
+  }else{
+    hint.textContent = 'Could not auto-detect — please type it manually';
+  }
+});
+
+// ---- Job ID ----
+function pad6(n){ return String(n).padStart(6,'0'); }
+
+function nextJobId(){
+  if(idCounter === null) idCounter = 1;
+  const year = new Date().getFullYear();
+  return `JOB-${year}-${pad6(idCounter)}`;
+}
+
+function updateNextIdDisplay(){
+  document.getElementById('nextIdDisplay').textContent = idCounter === null ? nextJobId() : nextJobId();
+}
+
+// ---- Save ----
+document.getElementById('btnSave').onclick = async ()=>{
+  const rawtext = document.getElementById('rawtext').value.trim();
+  if(!rawtext){ showToast('Paste the offer text first'); return; }
+  const company = document.getElementById('f_company').value.trim() || 'N/A';
+  const source = document.getElementById('f_source').value;
+
+  const job_id = nextJobId();
+  const entry = {
+    job_id,
+    date_captured: new Date().toISOString().slice(0,10),
+    company_raw: company,
+    source,
+    raw_text: rawtext,
+  };
+  entries.push(entry);
+  idCounter = idCounter === null ? 2 : idCounter + 1;
+
+  await persist();
+  await persistCounter();
+  updateNextIdDisplay();
+  clearForm();
+  renderTable();
+  showToast(job_id + ' captured');
+};
+
+function clearForm(){
+  document.getElementById('rawtext').value = '';
+  document.getElementById('f_company').value = '';
+  document.getElementById('companyHint').textContent = '';
+  document.getElementById('f_source').selectedIndex = 0;
+}
+document.getElementById('btnClearForm').onclick = clearForm;
+
+// ---- Persistence ----
+async function persist(){
+  try{
+    await window.storage.set('capture_entries', JSON.stringify(entries));
+    document.getElementById('storageState').textContent = entries.length + ' offers captured';
+  }catch(e){
+    document.getElementById('storageState').textContent = 'error saving';
+    console.error(e);
+  }
+}
+
+async function persistCounter(){
+  try{ await window.storage.set('capture_id_counter', String(idCounter)); }
+  catch(e){ console.error('Could not persist ID counter', e); }
+}
+
+async function load(){
+  try{
+    const res = await window.storage.get('capture_entries');
+    entries = res && res.value ? JSON.parse(res.value) : [];
+  }catch(e){ entries = []; }
+  try{
+    const res2 = await window.storage.get('capture_id_counter');
+    idCounter = res2 && res2.value ? parseInt(res2.value, 10) : null;
+  }catch(e){ idCounter = null; }
+  document.getElementById('storageState').textContent = entries.length + ' offers captured';
+  updateNextIdDisplay();
+  renderTable();
+}
+
+// ---- Table ----
+function escapeHtml(s){ return (s||'').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function renderTable(){
+  const body = document.getElementById('tableBody');
+  const empty = document.getElementById('emptyState');
+  document.getElementById('totalCount').textContent = entries.length;
+  if(!entries.length){ body.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+  body.innerHTML = entries.map(e=>`
+    <tr>
+      <td class="jobid">${escapeHtml(e.job_id)}</td>
+      <td>${escapeHtml(e.date_captured)}</td>
+      <td>${escapeHtml(e.company_raw)}</td>
+      <td>${escapeHtml(e.source)}</td>
+      <td class="snippet">${escapeHtml((e.raw_text||'').slice(0,60))}…</td>
+      <td><span class="del" data-id="${e.job_id}">delete</span></td>
+    </tr>
+  `).join('');
+  document.querySelectorAll('.del').forEach(d=>{
+    d.onclick = async ()=>{
+      if(!confirm('Delete ' + d.dataset.id + '? This cannot be undone.')) return;
+      entries = entries.filter(e=>e.job_id!==d.dataset.id);
+      await persist();
+      renderTable();
+    };
+  });
+}
+
+document.getElementById('btnClearAll').onclick = async ()=>{
+  if(!confirm('Delete all ' + entries.length + ' captured offers? This cannot be undone.')) return;
+  entries = [];
+  await persist();
+  renderTable();
+};
+
+// ---- Export / Import (single JSON = transport format into the Python pipeline) ----
+document.getElementById('btnExport').onclick = ()=>{
+  if(!entries.length){ showToast('No offers captured yet'); return; }
+  const json = JSON.stringify(entries, null, 2);
+  const blob = new Blob([json], {type:'application/json;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'dossier_ch_capture.json';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('JSON exported — feed this to the Python Extract step');
+};
+
+document.getElementById('btnImport').onclick = ()=> document.getElementById('fileImport').click();
+
+document.getElementById('fileImport').onchange = async (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  try{
+    const text = await file.text();
+    const imported = JSON.parse(text);
+    if(!Array.isArray(imported)){ showToast('Invalid file format'); return; }
+    const existingIds = new Set(entries.map(x=>x.job_id));
+    const newOnes = imported.filter(x=>x.job_id && !existingIds.has(x.job_id));
+    entries = [...entries, ...newOnes];
+
+    // Keep the counter ahead of every imported Job ID so we never collide
+    const maxNum = entries.reduce((max,x)=>{
+      const m = /JOB-\d{4}-(\d{6})/.exec(x.job_id||'');
+      return m ? Math.max(max, parseInt(m[1],10)) : max;
+    }, 0);
+    idCounter = Math.max(idCounter||1, maxNum+1);
+
+    await persist();
+    await persistCounter();
+    updateNextIdDisplay();
+    renderTable();
+    showToast(`Imported ${newOnes.length} offers`, 4000);
+  }catch(err){
+    console.error(err);
+    showToast('Could not read this file');
+  }
+  e.target.value = '';
+};
+
+function showToast(msg, duration){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(()=>t.classList.remove('show'), duration || 2200);
+}
+
+load();
+</script>
+</body>
+</html>
