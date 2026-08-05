@@ -231,7 +231,8 @@ mapping-swiss-data-job-market/
 
 ├── data/
 │   ├── raw/
-│   └── processed/
+│   ├── processed/
+│   └── catalogs/
 │
 ├── prompts/
 │
