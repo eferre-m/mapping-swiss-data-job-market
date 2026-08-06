@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dossier — Swiss Job Offer Analyzer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --ink:#111417;
+    --paper:#F4F4F1;
+    --line:#111417;
+    --red:#D6372C;
+    --grey:#8A8D91;
+    --grey-light:#DCDCD8;
+    --green:#3E6B4F;
+    --amber:#B4791F;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Archivo',Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1020px;margin:0 auto;padding:28px 24px 80px;}
+
+  .masthead{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    border-bottom:4px solid var(--ink); padding-bottom:14px; margin-bottom:6px;
+  }
+  .masthead h1{
+    font-size:28px; font-weight:900; letter-spacing:-0.02em; margin:0; text-transform:uppercase;
+  }
+  .masthead .meta{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--grey); text-align:right; line-height:1.5;
+  }
+  .subline{
+    display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace;
+    font-size:11px; color:var(--grey); margin-bottom:28px; text-transform:uppercase; letter-spacing:0.04em;
+  }
+  .subline strong{color:var(--red);}
+
+  .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:10px 14px; margin-bottom:18px;}
+  label{
+    display:block; font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase;
+    letter-spacing:0.06em; color:var(--grey); margin-bottom:4px;
+  }
+  input[type=text], input[type=date], select, textarea{
+    width:100%; border:none; border-bottom:2px solid var(--ink); background:transparent;
+    font-family:'Archivo',sans-serif; font-size:14px; padding:6px 2px; color:var(--ink);
+  }
+  input:focus, select:focus, textarea:focus{outline:none; border-bottom-color:var(--red);}
+  textarea{border:2px solid var(--ink); padding:12px; min-height:160px; resize:vertical; line-height:1.5;}
+
+  .section-num{
+    display:flex; align-items:center; gap:10px; margin:30px 0 14px;
+  }
+  .section-num .n{
+    font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:12px;
+    background:var(--ink); color:var(--paper); padding:3px 8px;
+  }
+  .section-num .t{font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:0.05em;}
+
+  button{
+    font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:0.05em;
+    font-size:12px; font-weight:600; border:2px solid var(--ink); background:var(--ink); color:var(--paper);
+    padding:12px 22px; cursor:pointer; transition:all .12s ease;
+  }
+  button:hover{background:var(--red); border-color:var(--red);}
+  button.ghost{background:transparent; color:var(--ink);}
+  button.ghost:hover{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+  button:disabled{opacity:.35; cursor:not-allowed;}
+
+  .actions{display:flex; gap:10px; flex-wrap:wrap; margin:16px 0 6px; align-items:center;}
+
+  .tagbox{border:2px solid var(--ink); padding:16px; display:none;}
+  .tagbox.show{display:block;}
+  .tag-group-title{
+    font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.06em;
+    color:var(--grey); margin:14px 0 8px; border-top:1px solid var(--grey-light); padding-top:10px;
+  }
+  .tag-group-title:first-child{border-top:none; margin-top:0; padding-top:0;}
+  .pills{display:flex; flex-wrap:wrap; gap:6px;}
+  .pill{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; padding:5px 10px; border:1.5px solid var(--grey-light);
+    cursor:pointer; user-select:none; display:flex; align-items:center; gap:6px; background:#fff;
+  }
+  .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--grey-light);}
+  .pill[data-lvl="1"]{border-color:var(--amber); color:var(--amber);}
+  .pill[data-lvl="1"] .dot{background:var(--amber);}
+  .pill[data-lvl="2"]{border-color:var(--red); color:var(--red); font-weight:600;}
+  .pill[data-lvl="2"] .dot{background:var(--red);}
+  .pill.soft-on{border-color:var(--green); color:var(--green); font-weight:600; background:#fff;}
+  .pill.soft-on .dot{background:var(--green);}
+  .pill.extra{border-style:dashed;}
+  .addrow{display:flex; gap:6px; margin-top:10px;}
+  .addrow input{border:1.5px solid var(--grey-light); font-size:12px; padding:5px 8px; width:220px;}
+  .addrow button{padding:6px 12px; font-size:10px;}
+
+  table{width:100%; border-collapse:collapse; margin-top:6px;}
+  th{
+    font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; text-align:left;
+    color:var(--grey); border-bottom:2px solid var(--ink); padding:6px 8px;
+  }
+  td{font-size:12px; padding:8px; border-bottom:1px solid var(--grey-light); vertical-align:top;}
+  tr:hover td{background:#ECECE8;}
+  .del{color:var(--red); cursor:pointer; font-family:'IBM Plex Mono',monospace; font-size:11px;}
+  .tag-chip{
+    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:10px; padding:2px 7px;
+    border:1px solid var(--ink); border-radius:20px; text-transform:uppercase;
+  }
+  .empty-state{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--grey); text-align:center; padding:30px 0;
+  }
+  .count{font-family:'IBM Plex Mono',monospace; font-size:44px; font-weight:600; color:var(--red); line-height:1;}
+  .count-label{font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; color:var(--grey); letter-spacing:0.05em;}
+  .stat-row{display:flex; gap:36px; align-items:flex-end; margin-bottom:22px;}
+
+  .filterbar{display:flex; gap:10px; align-items:center; margin-bottom:10px;}
+  .filterbar label{margin:0;}
+  .filterbar select{width:220px;}
+
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--ink); color:var(--paper); padding:10px 18px; font-family:'IBM Plex Mono',monospace;
+    font-size:12px; opacity:0; transition:all .25s ease; pointer-events:none;
+    max-width:600px; word-break:break-word; text-align:center;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <h1>Dossier CH</h1>
+    <div class="meta">Job offer analyzer<br>Swiss analytics job market</div>
+  </div>
+  <div class="subline"><span>Paste → analyze → review → save</span><span id="storageState">loading…</span></div>
+  <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--grey); background:#fff; border:1.5px solid var(--grey-light); padding:10px 14px; margin-bottom:20px;">
+    ⚠ If you reopen this tool as a downloaded file in a new tab, it may not remember previous offers automatically.
+    <strong>Always click "Import CSV ←" and load your last exported file first</strong> — that CSV is your real memory, not the browser.
+  </div>
+
+  <div class="stat-row">
+    <div><div class="count" id="totalCount">0</div><div class="count-label">Offers saved</div></div>
+    <div>
+      <div class="count" id="nextIdDisplay" style="color:var(--ink);font-size:28px;">—</div>
+      <div class="count-label">Next ID to be used</div>
+    </div>
+  </div>
+  <div class="filterbar" style="margin-bottom:24px;">
+    <label style="margin:0;">Set next ID to</label>
+    <input type="text" id="idSeedInput" style="width:100px;border:1.5px solid var(--grey-light);padding:5px 8px;font-size:12px;" placeholder="e.g. 3">
+    <button class="ghost" id="btnSetSeed" style="padding:6px 14px;font-size:10px;">Update</button>
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--grey);">— set this once to whatever comes after your last Google Sheet ID; it will keep counting up on its own from then on.</span>
+  </div>
+
+  <div class="section-num"><span class="n">01</span><span class="t">Offer details</span></div>
+  <div class="grid">
+    <div><label>Company</label><input type="text" id="f_company" placeholder="Liebherr Group"></div>
+    <div><label>Sector</label><input type="text" id="f_sector" placeholder="Industrial"></div>
+    <div><label>Job title (as posted)</label><input type="text" id="f_job" placeholder="Data Analyst Junior"></div>
+    <div><label>Role category</label>
+      <select id="f_rolecat">
+        <option>Data Analyst</option>
+        <option>Business Analyst</option>
+        <option>Consumer / Market Insights</option>
+        <option>UX Research</option>
+        <option>Data Visualization / Storytelling</option>
+        <option>Data Product Management</option>
+        <option>Data Governance</option>
+        <option>BI / Analytics Engineer</option>
+        <option>Data Scientist</option>
+        <option>Data Quality / Data Management</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div id="rolecat_other_wrap" style="display:none;"><label>Specify other category</label><input type="text" id="f_rolecat_other" placeholder="e.g. Pricing Analyst"></div>
+    <div><label>Source</label>
+      <select id="f_source"><option>LinkedIn</option><option>Indeed</option><option>JobUp</option><option>Company website</option><option>Other</option></select>
+    </div>
+    <div><label>City</label><input type="text" id="f_city" placeholder="Zürich"></div>
+    <div><label>Canton</label><input type="text" id="f_canton" placeholder="ZH"></div>
+    <div><label>Work mode</label>
+      <select id="f_workmode"><option>Hybrid</option><option>Remote</option><option>On-site</option><option>N/A</option></select>
+    </div>
+    <div><label>Experience level</label>
+      <select id="f_exp"><option>Junior</option><option>Mid</option><option>Senior</option><option>N/A</option></select>
+    </div>
+    <div><label>Salary</label><input type="text" id="f_salary" placeholder="N/A"></div>
+    <div><label>Contract type</label>
+      <select id="f_contract"><option>Permanent</option><option>Internship</option><option>Fixed-term</option><option>N/A</option></select>
+    </div>
+    <div><label>Duration</label><input type="text" id="f_duration" placeholder="12 months / N/A"></div>
+    <div><label>Workload</label><input type="text" id="f_workload" placeholder="100%"></div>
+  </div>
+
+  <div class="section-num"><span class="n">02</span><span class="t">Offer text</span></div>
+  <label>Paste the full job description here — German, French, Italian, or English all work</label>
+  <textarea id="rawtext" placeholder="Paste the full offer text here…"></textarea>
+  <div class="actions">
+    <button id="btnParse">Analyze text →</button>
+  </div>
+
+  <div class="tagbox" id="tagbox">
+    <div class="section-num" style="margin-top:0;"><span class="n">03</span><span class="t">Review before saving</span></div>
+
+    <div class="tag-group-title">Technical skills — missing one? add it below</div>
+    <div class="pills" id="pills-skills"></div>
+    <div class="addrow"><input type="text" id="add-skill" placeholder="+ add a skill manually"><button class="ghost" id="btn-add-skill">Add</button></div>
+
+    <div class="tag-group-title">Languages</div>
+    <div class="pills" id="pills-lang"></div>
+    <div class="addrow"><input type="text" id="add-lang" placeholder="+ add a language manually"><button class="ghost" id="btn-add-lang">Add</button></div>
+
+    <div class="tag-group-title">Soft skills detected</div>
+    <div class="pills" id="pills-soft"></div>
+    <div class="addrow"><input type="text" id="add-soft" placeholder="+ add a soft skill manually"><button class="ghost" id="btn-add-soft">Add</button></div>
+
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--grey); margin-top:14px; display:flex; gap:16px;">
+      <span style="display:flex;align-items:center;gap:5px;"><span style="width:7px;height:7px;border-radius:50%;background:var(--grey-light);display:inline-block;"></span> Not mentioned</span>
+      <span style="display:flex;align-items:center;gap:5px;"><span style="width:7px;height:7px;border-radius:50%;background:var(--amber);display:inline-block;"></span> Nice to have</span>
+      <span style="display:flex;align-items:center;gap:5px;"><span style="width:7px;height:7px;border-radius:50%;background:var(--red);display:inline-block;"></span> Required</span>
+      <span style="display:flex;align-items:center;gap:5px;"><span style="width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block;"></span> Detected (click to remove)</span>
+    </div>
+    <div class="actions">
+      <button id="btnSave">Save offer</button>
+      <button class="ghost" id="btnCancel">Discard</button>
+    </div>
+  </div>
+
+  <div class="section-num"><span class="n">04</span><span class="t">My profile</span></div>
+  <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--grey); margin-bottom:10px;">
+    Click what you actually have. This is compared against each saved offer to calculate a match %.
+  </div>
+  <div class="tag-group-title">My technical skills</div>
+  <div class="pills" id="pills-profile-skills"></div>
+  <div class="tag-group-title">My languages</div>
+  <div class="pills" id="pills-profile-lang"></div>
+
+  <div class="section-num"><span class="n">05</span><span class="t">Saved offers</span></div>
+  <div class="actions">
+    <button class="ghost" id="btnExport">Export CSV →</button>
+    <input type="file" id="fileImport" accept=".csv" style="display:none;">
+    <button class="ghost" id="btnImport">Import CSV ←</button>
+    <button class="ghost" id="btnClearAll">Clear all</button>
+  </div>
+  <div class="filterbar">
+    <label style="margin:0;">Filter by role category</label>
+    <select id="filterRole"><option value="">All categories</option></select>
+  </div>
+  <table>
+    <thead><tr><th>ID</th><th>Company</th><th>Title</th><th>Category</th><th>City</th><th>Match</th><th>Status</th><th>Source</th><th></th></tr></thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+  <div class="empty-state" id="emptyState">No offers saved yet.</div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const SKILL_DEFS = [
+  ["sql","SQL","\\bSQL\\b"],
+  ["python","Python","\\bPython\\b"],
+  ["excel","Excel","\\bExcel\\b"],
+  ["dashboards","Dashboards","\\bdashboards?\\b"],
+  ["powerbi","Power BI","\\bPower\\s?BI\\b"],
+  ["databricks","Databricks","\\bDatabricks\\b"],
+  ["tableau","Tableau","\\bTableau\\b"],
+  ["git","Git","\\bGit\\b"],
+  ["r","R","\\b(R\\s?(language|studio)|langage\\sR)\\b"],
+  ["aiagent","AI Agent","\\b(AI\\s?agents?|agents?\\sIA|prompting)\\b"],
+  ["sapmdg","SAP MDG","\\bSAP\\s?MDG\\b"],
+  ["sap","SAP (general)","\\bSAP\\b"],
+  ["snowflake","Snowflake","\\bSnowflake\\b"],
+  ["azure","Azure","\\bAzure\\b"],
+  ["aws","AWS","\\bAWS\\b"],
+  ["gcp","Google Cloud","\\b(GCP|Google\\sCloud)\\b"],
+  ["looker","Looker","\\bLooker\\b"],
+  ["qlik","Qlik","\\bQlik(View|Sense)?\\b"],
+  ["spss","SPSS","\\bSPSS\\b"],
+  ["sas","SAS","\\bSAS\\b"],
+  ["alteryx","Alteryx","\\bAlteryx\\b"],
+  ["dbt","dbt","\\bdbt\\b"],
+  ["airflow","Airflow","\\bAirflow\\b"],
+  ["spark","Spark","\\bSpark\\b"],
+  ["vba","VBA","\\bVBA\\b"],
+  ["javascript","JavaScript","\\bJava[Ss]cript\\b"],
+  ["salesforce","Salesforce","\\bSalesforce\\b"],
+  ["jira","Jira","\\bJira\\b"],
+  ["mongodb","MongoDB / NoSQL","\\b(MongoDB|NoSQL)\\b"],
+  ["hadoop","Hadoop","\\bHadoop\\b"],
+  ["bigquery","BigQuery / Redshift","\\b(BigQuery|Redshift)\\b"],
+  ["java","Java","\\bJava\\b(?!Script)"],
+];
+
+const LANG_DEFS = [
+  ["french","French","\\b(French|Français|française|francophone|Französisch)\\b"],
+  ["german","German","\\b(German|Allemand|Deutsch|allemande|Tedesco)\\b"],
+  ["italian","Italian","\\b(Italian|Italien|italienne|Italienisch)\\b"],
+  ["english","English","\\b(English|Anglais|anglaise|Englisch|Inglese)\\b"],
+  ["spanish","Spanish","\\b(Spanish|Espagnol|espagnole|Spanisch|Spagnolo)\\b"],
+  ["catalan","Catalan","\\b(Catalan|Català)\\b"],
+];
+
+const SOFT_DEFS = [
+  ["programming","Programming","\\b(programming|programmation|coding|Programmierung)\\b"],
+  ["storytelling","Storytelling","\\b(storytelling|data\\sstor)\\b"],
+  ["surveymethods","Survey Methods","\\b(survey\\smethod|méthode.{0,3}enquête|enquêtes?|Erhebungsmethod|indagini)\\b"],
+  ["descstats","Descriptive Statistics","\\b(descriptive\\sstatistic|statistiques?\\sdescriptive|deskriptive\\sStatistik)\\b"],
+  ["reporting","Reporting","\\b(reporting|reports?|Berichterstattung)\\b"],
+  ["communication","Communication","\\b(communication|Kommunikation|comunicazione)\\b"],
+  ["researchdesign","Research Design","\\b(research\\sdesign|conception.{0,3}recherche|Forschungsdesign)\\b"],
+  ["datacollection","Data Collection","\\b(data\\scollection|collecte\\sde\\sdonnées|Datenerhebung|raccolta\\sdati)\\b"],
+  ["coordination","Project Coordination","\\b(coordinat|project\\smanagement|gestion\\sde\\sprojet|Projektkoordination)\\b"],
+  ["stakeholder","Stakeholder Training","\\b(stakeholder|parties\\sprenantes|train\\sstakeholders?)\\b"],
+  ["collaboration","Collaboration","\\b(collaborat|international\\senvironment|environnement\\sinternational|Zusammenarbeit|collaborazione)\\b"],
+  ["proactivity","Proactivity","\\b(proactiv|proactivité|proaktiv|proattività)\\b"],
+  ["structured","Structured Thinking","\\b(structured\\sthinking|pensée\\sstructurée|strukturiert|strutturat)\\b"],
+  ["curiosity","Curiosity","\\b(curiosity|curiosité|curious|Neugier|curiosità)\\b"],
+  ["learningagility","Learning Agility","\\b(learning\\sagility|willingness\\sto\\slearn|envie\\sd.apprendre|Lernbereitschaft|apprendimento)\\b"],
+];
+
+// Skills y soft skills que la propia usuaria añade a mano se guardan aquí de
+// forma PERMANENTE (no solo para la oferta actual) — así, la próxima vez que
+// aparezcan en otra oferta, se detectan solas sin tener que volver a añadirlas.
+let customSkills = [];  // mismo formato que SKILL_DEFS: [key, label, pattern-o-null]
+let customSoft = [];    // mismo formato que SOFT_DEFS
+
+function allSkillDefs(){ return SKILL_DEFS.concat(customSkills); }
+function allSoftDefs(){ return SOFT_DEFS.concat(customSoft); }
+
+async function persistCustomLists(){
+  try{
+    await window.storage.set('dossier_ch_custom_skills', JSON.stringify(customSkills));
+    await window.storage.set('dossier_ch_custom_soft', JSON.stringify(customSoft));
+  }catch(e){ console.error(e); }
+}
+
+async function loadCustomLists(){
+  try{
+    const r1 = await window.storage.get('dossier_ch_custom_skills');
+    customSkills = r1 && r1.value ? JSON.parse(r1.value) : [];
+  }catch(e){ customSkills = []; }
+  try{
+    const r2 = await window.storage.get('dossier_ch_custom_soft');
+    customSoft = r2 && r2.value ? JSON.parse(r2.value) : [];
+  }catch(e){ customSoft = []; }
+}
+
+function slugify(name){
+  const s = name.toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'').slice(0,40);
+  return s || ('custom_'+Date.now());
+}
+
+// Detecta una definición (fija o personalizada). Las fijas usan regex; las
+// personalizadas, si no tienen patrón guardado, se buscan como texto simple.
+function levelForDef(text, def){
+  const [key,label,pattern] = def;
+  if(pattern) return detectLevel(text, new RegExp(pattern,'i'));
+  const idx = text.toLowerCase().indexOf(label.toLowerCase());
+  if(idx===-1) return 0;
+  const start = Math.max(0, idx-70), end = Math.min(text.length, idx+label.length+90);
+  const win = text.slice(start,end);
+  if(REQUIRED_RX.test(win)) return 2;
+  if(NICE_RX.test(win)) return 1;
+  return 1;
+}
+
+function boolForDef(text, def){
+  const [key,label,pattern] = def;
+  if(pattern) return detectBool(text, new RegExp(pattern,'i'));
+  return text.toLowerCase().includes(label.toLowerCase());
+}
+
+const SWISS_CITIES = [
+  ["Zürich","ZH"],["Zurich","ZH"],["Winterthur","ZH"],
+  ["Genève","GE"],["Geneva","GE"],
+  ["Lausanne","VD"],
+  ["Bâle","BS"],["Basel","BS"],["Basle","BS"],
+  ["Berne","BE"],["Bern","BE"],["Biel","BE"],["Bienne","BE"],
+  ["Neuchâtel","NE"],
+  ["Fribourg","FR"],["Bulle","FR"],["Freiburg","FR"],
+  ["Lugano","TI"],["Bellinzona","TI"],
+  ["Zoug","ZG"],["Zug","ZG"],
+  ["Lucerne","LU"],["Luzern","LU"],
+  ["St. Gallen","SG"],["St Gallen","SG"],
+  ["Sion","VS"],
+  ["Schaffhausen","SH"],
+  ["Aarau","AG"],
+  ["Chur","GR"],
+];
+
+const REQUIRED_RX = /(required|requis|exig[ée]|mandatory|must\s|essential|indispensable|ma[îi]tris|solide|proficien|fluent|courant|excellent|strong|advanced|avanc[ée]e?|imp[ée]ccable|erforderlich|zwingend|fundiert|sehr\sgut|zwingende|obbligatorio|richiest[ao]|ottima\sconoscenza|indispensabile)/i;
+const NICE_RX = /(nice\sto\shave|would\sbe\s(a\s)?(plus|asset)|is\sa\splus|atout|asset|id[ée]al|ideally|souhait|appr[ée]ci|welcome|bonus|a\splus|von\svorteil|wünschenswert|idealerweise|un\svantaggio|preferibilmente|gradit[ao])/i;
+
+function detectLevel(text, rx){
+  const m = rx.exec(text);
+  if(!m) return 0;
+  const start = Math.max(0, m.index-70);
+  const end = Math.min(text.length, m.index+m[0].length+90);
+  const win = text.slice(start,end);
+  if(REQUIRED_RX.test(win)) return 2;
+  if(NICE_RX.test(win)) return 1;
+  return 1;
+}
+
+function detectBool(text, rx){ return rx.test(text); }
+
+// Busca, cerca de la mención del idioma, un nivel CEFR explícito (A1-C2)
+// o palabras como "native"/"fluent" que indiquen el nivel exigido.
+function detectLangLevel(text, rx){
+  const m = rx.exec(text);
+  if(!m) return null;
+  const start = Math.max(0, m.index-40);
+  const end = Math.min(text.length, m.index+m[0].length+60);
+  const win = text.slice(start,end);
+  const cefr = /\b(A1|A2|B1|B2|C1|C2)\b/i.exec(win);
+  if(cefr) return cefr[0].toUpperCase();
+  if(/native|muttersprache|langue\smaternelle|madrelingua|lingua\smadre/i.test(win)) return 'Native';
+  if(/fluent|courant|fließend|corrente|couramment/i.test(win)) return 'C1';
+  return null; // se mencionó el idioma pero sin nivel concreto detectable
+}
+
+function detectCity(text){
+  for(const [city,canton] of SWISS_CITIES){
+    if(new RegExp('\\b'+city.replace('.','\\.?')+'\\b','i').test(text)) return {city, canton};
+  }
+  return null;
+}
+
+function stripAccents(s){
+  return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+}
+
+function lookupCanton(cityInput){
+  const n = stripAccents(cityInput);
+  if(!n) return null;
+  for(const [city,canton] of SWISS_CITIES){
+    if(stripAccents(city) === n) return canton;
+  }
+  return null;
+}
+
+let state = { skills:{}, lang:{}, soft:{}, extraSkills:[], extraLang:[], extraSoft:[] };
+let entries = [];
+let activeFilter = "";
+let profile = { skills:{}, lang:{} };
+
+const STATUS_OPTIONS = ["Not applied","Applied","Interview 1","Interview 2+","Offer","Rejected","Withdrawn"];
+
+function normKey(s){ return (s||'').toLowerCase().replace(/[^a-z0-9]/g,''); }
+
+function matchPredefined(name, defs){
+  const n = normKey(name);
+  if(!n) return null;
+  for(const [key,label] of defs){
+    const nk = normKey(key), nl = normKey(label);
+    if(n===nk || n===nl || n.includes(nk) || nk.includes(n) || n.includes(nl) || nl.includes(n)) return key;
+  }
+  return null;
+}
+
+function renderPills(){
+  const skillsEl = document.getElementById('pills-skills');
+  skillsEl.innerHTML = allSkillDefs().map(([key,label])=>{
+    const lvl = state.skills[key]||0;
+    return `<div class="pill" data-lvl="${lvl}" data-type="skills" data-key="${key}"><span class="dot"></span>${label}</div>`;
+  }).join('');
+
+  const langEl = document.getElementById('pills-lang');
+  langEl.innerHTML = LANG_DEFS.map(([key,label])=>{
+    const lvl = state.lang[key]||0;
+    return `<div class="pill" data-lvl="${lvl}" data-type="lang" data-key="${key}"><span class="dot"></span>${label}</div>`;
+  }).join('') + state.extraLang.map((s,i)=>
+    `<div class="pill extra" data-lvl="${s.level}" data-type="extraLang" data-idx="${i}"><span class="dot"></span>${escapeHtml(s.name)}</div>`
+  ).join('');
+
+  const softEl = document.getElementById('pills-soft');
+  softEl.innerHTML = allSoftDefs().map(([key,label])=>{
+    const on = state.soft[key];
+    return `<div class="pill ${on?'soft-on':''}" data-type="soft" data-key="${key}"><span class="dot"></span>${label}</div>`;
+  }).join('');
+
+  document.querySelectorAll('.pill').forEach(p=>{
+    p.onclick = ()=>{
+      const type=p.dataset.type;
+      if(type==='soft'){ state.soft[p.dataset.key]=!state.soft[p.dataset.key]; renderPills(); return; }
+      if(type==='skills'||type==='lang'){ state[type][p.dataset.key] = ((state[type][p.dataset.key]||0)+1)%3; renderPills(); return; }
+      if(type==='extraSoft'){ state.extraSoft.splice(p.dataset.idx,1); renderPills(); return; }
+      const arr = state[type];
+      const idx = +p.dataset.idx;
+      arr[idx].level = arr[idx].level===2 ? 1 : 2;
+      renderPills();
+    };
+  });
+}
+
+const CEFR_LEVELS = ["none","A1","A2","B1","B2","C1","C2","Native"];
+
+function renderProfilePills(){
+  const skillsEl = document.getElementById('pills-profile-skills');
+  skillsEl.innerHTML = allSkillDefs().map(([key,label])=>{
+    const on = profile.skills[key];
+    return `<div class="pill ${on?'soft-on':''}" data-ptype="skills" data-key="${key}"><span class="dot"></span>${label}</div>`;
+  }).join('');
+
+  document.querySelectorAll('#pills-profile-skills .pill').forEach(p=>{
+    p.onclick = async ()=>{
+      const key = p.dataset.key;
+      profile.skills[key] = !profile.skills[key];
+      renderProfilePills();
+      await persistProfile();
+      renderTable();
+    };
+  });
+
+  const langEl = document.getElementById('pills-profile-lang');
+  langEl.innerHTML = LANG_DEFS.map(([key,label])=>{
+    const current = profile.lang[key] || 'none';
+    return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;width:90px;">${label}</span>
+      <select data-lang-key="${key}" style="font-family:'IBM Plex Mono',monospace;font-size:11px;border:1.5px solid var(--grey-light);padding:4px 6px;">
+        ${CEFR_LEVELS.map(l=>`<option value="${l}" ${l===current?'selected':''}>${l==='none'?'— none —':l}</option>`).join('')}
+      </select>
+    </div>`;
+  }).join('');
+
+  document.querySelectorAll('#pills-profile-lang select').forEach(sel=>{
+    sel.onchange = async ()=>{
+      profile.lang[sel.dataset.langKey] = sel.value;
+      await persistProfile();
+      renderTable();
+    };
+  });
+}
+
+async function persistProfile(){
+  try{ await window.storage.set('dossier_ch_profile', JSON.stringify(profile)); }
+  catch(e){ console.error(e); }
+}
+
+// Valores por defecto basados en tu CV real (Python, SQL, Excel, Typescript,
+// idiomas nativos/nivel real) — solo se usan la PRIMERA vez que abres la
+// herramienta. A partir de ahí, tus propios ajustes siempre tienen prioridad.
+const DEFAULT_PROFILE = {
+  skills: { python:true, sql:true, excel:true, javascript:true },
+  lang: { french:'C2', spanish:'Native', catalan:'Native', english:'C1', german:'A1' },
+};
+
+async function loadProfile(){
+  try{
+    const res = await window.storage.get('dossier_ch_profile');
+    if(res && res.value){
+      profile = JSON.parse(res.value);
+    }else{
+      // primera vez: arrancamos con tu perfil real conocido, no en blanco
+      profile = JSON.parse(JSON.stringify(DEFAULT_PROFILE));
+      await persistProfile();
+    }
+  }catch(e){
+    profile = JSON.parse(JSON.stringify(DEFAULT_PROFILE));
+  }
+  renderProfilePills();
+}
+
+function computeMatch(entry){
+  let earned = 0, possible = 0;
+  allSkillDefs().forEach(([key])=>{
+    const lvl = entry.skills[key]||0;
+    if(lvl>0){ possible += lvl; if(profile.skills[key]) earned += lvl; }
+  });
+  LANG_DEFS.forEach(([key])=>{
+    const lvl = entry.lang[key]||0;
+    if(lvl>0){
+      possible += lvl;
+      const required = entry.langLevel ? entry.langLevel[key] : null;
+      const mine = profile.lang[key]; // ej. 'B2', 'Native', 'none'/undefined
+      if(required && CEFR_LEVELS.includes(required)){
+        // se detectó un nivel exigido concreto -> solo cuenta si lo alcanzas o superas
+        if(mine && mine!=='none' && CEFR_LEVELS.indexOf(mine) >= CEFR_LEVELS.indexOf(required)){
+          earned += lvl;
+        }
+      }else{
+        // no se detectó nivel exigido concreto -> basta con tener algún nivel
+        if(mine && mine!=='none') earned += lvl;
+      }
+    }
+  });
+  if(possible===0) return null;
+  return Math.round(100*earned/possible);
+}
+
+function addManual(type){
+  return async ()=>{
+    const inputId = type==='skills'?'add-skill':(type==='lang'?'add-lang':'add-soft');
+    const input = document.getElementById(inputId);
+    const val = input.value.trim();
+    if(!val) return;
+
+    if(type==='lang'){
+      // los idiomas siguen siendo una lista fija corta y acotada (contexto suizo)
+      state.extraLang.push({name:val, level:2});
+      input.value='';
+      renderPills();
+      return;
+    }
+
+    const fixedArr = type==='skills' ? SKILL_DEFS : SOFT_DEFS;
+    const customArr = type==='skills' ? customSkills : customSoft;
+    let key = matchPredefined(val, fixedArr.concat(customArr));
+    if(!key){
+      key = slugify(val);
+      customArr.push([key, val, null]); // null = se detectará por texto simple, no regex
+      await persistCustomLists();
+      showToast('"' + val + '" saved — it will be auto-detected in future offers too');
+    }
+    if(type==='soft'){ state.soft[key] = true; }
+    else{ state.skills[key] = 2; }
+    input.value = '';
+    renderPills();
+  };
+}
+document.getElementById('btn-add-skill').onclick = addManual('skills');
+document.getElementById('btn-add-lang').onclick = addManual('lang');
+document.getElementById('btn-add-soft').onclick = addManual('soft');
+
+document.getElementById('f_rolecat').onchange = (e)=>{
+  document.getElementById('rolecat_other_wrap').style.display = e.target.value==='Other' ? 'block' : 'none';
+};
+
+document.getElementById('f_city').addEventListener('blur', ()=>{
+  const cityField = document.getElementById('f_city');
+  const cantonField = document.getElementById('f_canton');
+  const canton = lookupCanton(cityField.value);
+  if(canton) cantonField.value = canton;
+});
+
+document.getElementById('btnParse').onclick = ()=>{
+  const text = document.getElementById('rawtext').value;
+  if(!text.trim()){ showToast('Paste the offer text first'); return; }
+
+  state = { skills:{}, lang:{}, soft:{}, extraSkills:[], extraLang:[], extraSoft:[], langLevel:{} };
+  allSkillDefs().forEach(def=>{ state.skills[def[0]] = levelForDef(text, def); });
+  LANG_DEFS.forEach(([key,label,pattern])=>{
+    state.lang[key] = detectLevel(text, new RegExp(pattern,'i'));
+    state.langLevel[key] = detectLangLevel(text, new RegExp(pattern,'i'));
+  });
+  allSoftDefs().forEach(def=>{ state.soft[def[0]] = boolForDef(text, def); });
+
+  const cityField = document.getElementById('f_city');
+  const cantonField = document.getElementById('f_canton');
+  if(!cityField.value.trim()){
+    const found = detectCity(text);
+    if(found){ cityField.value = found.city; cantonField.value = found.canton; }
+  }
+
+  renderPills();
+  document.getElementById('tagbox').classList.add('show');
+  document.getElementById('tagbox').scrollIntoView({behavior:'smooth', block:'start'});
+};
+
+document.getElementById('btnCancel').onclick = ()=>{
+  document.getElementById('tagbox').classList.remove('show');
+};
+
+let idCounter = null; // se carga desde storage; null = todavía no configurado
+
+function nextId(){
+  if(idCounter === null){
+    idCounter = entries.length ? Math.max(...entries.map(e=>e.id))+1 : 1;
+  }
+  return idCounter;
+}
+
+async function persistIdCounter(){
+  try{ await window.storage.set('dossier_ch_id_counter', String(idCounter)); }
+  catch(e){ console.error('Could not persist ID counter', e); }
+}
+
+function updateNextIdDisplay(){
+  document.getElementById('nextIdDisplay').textContent = idCounter === null ? '—' : idCounter;
+}
+
+document.getElementById('btnSetSeed').onclick = async ()=>{
+  const val = parseInt(document.getElementById('idSeedInput').value, 10);
+  if(isNaN(val) || val < 1){ showToast('Enter a valid positive number'); return; }
+  idCounter = val;
+  await persistIdCounter();
+  updateNextIdDisplay();
+  document.getElementById('idSeedInput').value = '';
+  showToast('Next ID set to ' + val);
+};
+
+function currentRoleCategory(){
+  const val = document.getElementById('f_rolecat').value;
+  if(val==='Other') return document.getElementById('f_rolecat_other').value.trim() || 'Other';
+  return val;
+}
+
+document.getElementById('btnSave').onclick = async ()=>{
+  const entry = {
+    id: nextId(),
+    date: new Date().toISOString().slice(0,10),
+    company: document.getElementById('f_company').value || 'N/A',
+    sector: document.getElementById('f_sector').value || 'N/A',
+    job: document.getElementById('f_job').value || 'N/A',
+    rolecat: currentRoleCategory(),
+    source: document.getElementById('f_source').value,
+    city: document.getElementById('f_city').value || 'N/A',
+    canton: document.getElementById('f_canton').value || 'N/A',
+    workmode: document.getElementById('f_workmode').value,
+    exp: document.getElementById('f_exp').value,
+    salary: document.getElementById('f_salary').value || 'N/A',
+    contract: document.getElementById('f_contract').value,
+    duration: document.getElementById('f_duration').value || 'N/A',
+    workload: document.getElementById('f_workload').value || 'N/A',
+    skills: {...state.skills},
+    lang: {...state.lang},
+    langLevel: {...state.langLevel},
+    soft: {...state.soft},
+    extraSkills: [...state.extraSkills],
+    extraLang: [...state.extraLang],
+    extraSoft: [...state.extraSoft],
+    status: "Not applied",
+    statusNotes: "",
+  };
+  entries.push(entry);
+  idCounter = entry.id + 1;
+  await persist();
+  await persistIdCounter();
+  updateNextIdDisplay();
+  resetForm();
+  renderTable();
+  showToast('Offer #' + entry.id + ' saved');
+};
+
+function resetForm(){
+  ['f_company','f_sector','f_job','f_city','f_canton','f_salary','f_duration','f_workload','f_rolecat_other'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('rawtext').value='';
+  document.getElementById('tagbox').classList.remove('show');
+  document.getElementById('rolecat_other_wrap').style.display='none';
+  document.getElementById('f_rolecat').selectedIndex = 0;
+  state = { skills:{}, lang:{}, soft:{}, extraSkills:[], extraLang:[], extraSoft:[], langLevel:{} };
+}
+
+function updateFilterOptions(){
+  const sel = document.getElementById('filterRole');
+  const cats = Array.from(new Set(entries.map(e=>e.rolecat).filter(Boolean))).sort();
+  const prev = sel.value;
+  sel.innerHTML = '<option value="">All categories</option>' + cats.map(c=>`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+  sel.value = cats.includes(prev) ? prev : "";
+  activeFilter = sel.value;
+}
+
+document.getElementById('filterRole').onchange = (e)=>{ activeFilter = e.target.value; renderTable(); };
+
+function renderTable(){
+  updateFilterOptions();
+  const body = document.getElementById('tableBody');
+  const empty = document.getElementById('emptyState');
+  document.getElementById('totalCount').textContent = entries.length;
+  const filtered = activeFilter ? entries.filter(e=>e.rolecat===activeFilter) : entries;
+  if(!filtered.length){ body.innerHTML=''; empty.style.display='block'; empty.textContent = entries.length ? 'No offers match this filter.' : 'No offers saved yet.'; return; }
+  empty.style.display='none';
+  body.innerHTML = filtered.map(e=>{
+    const match = computeMatch(e);
+    const matchColor = match===null ? 'var(--grey)' : (match>=70 ? 'var(--green)' : (match>=40 ? 'var(--amber)' : 'var(--red)'));
+    const matchTxt = match===null ? 'N/A' : match+'%';
+    const status = e.status || 'Not applied';
+    return `
+    <tr>
+      <td>#${e.id}</td>
+      <td>${escapeHtml(e.company)}</td>
+      <td>${escapeHtml(e.job)}</td>
+      <td><span class="tag-chip">${escapeHtml(e.rolecat||'N/A')}</span></td>
+      <td>${escapeHtml(e.city)}</td>
+      <td style="color:${matchColor}; font-family:'IBM Plex Mono',monospace; font-weight:600;">${matchTxt}</td>
+      <td>
+        <select class="status-select" data-id="${e.id}" style="font-family:'IBM Plex Mono',monospace;font-size:11px;border:1px solid var(--grey-light);padding:3px;">
+          ${STATUS_OPTIONS.map(s=>`<option value="${s}" ${s===status?'selected':''}>${s}</option>`).join('')}
+        </select>
+      </td>
+      <td>${escapeHtml(e.source)}</td>
+      <td><span class="del" data-id="${e.id}">delete</span></td>
+    </tr>
+  `;
+  }).join('');
+  document.querySelectorAll('.status-select').forEach(sel=>{
+    sel.onchange = async ()=>{
+      const entry = entries.find(en=>en.id==sel.dataset.id);
+      if(entry){ entry.status = sel.value; await persist(); }
+    };
+  });
+  document.querySelectorAll('.del').forEach(d=>{
+    d.onclick = async ()=>{
+      entries = entries.filter(e=>e.id!=d.dataset.id);
+      await persist();
+      renderTable();
+    };
+  });
+}
+
+function escapeHtml(s){ return (s||'').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+async function persist(){
+  try{
+    await window.storage.set('dossier_ch_entries', JSON.stringify(entries));
+    document.getElementById('storageState').textContent = 'saved ✓';
+  }catch(e){
+    document.getElementById('storageState').textContent = 'error saving';
+    console.error(e);
+  }
+}
+
+async function load(){
+  try{
+    const res = await window.storage.get('dossier_ch_entries');
+    entries = res && res.value ? JSON.parse(res.value) : [];
+  }catch(e){
+    entries = [];
+  }
+  try{
+    const res2 = await window.storage.get('dossier_ch_id_counter');
+    idCounter = res2 && res2.value ? parseInt(res2.value, 10) : null;
+  }catch(e){
+    idCounter = null;
+  }
+  document.getElementById('storageState').textContent = entries.length + ' offers loaded';
+  updateNextIdDisplay();
+  renderTable();
+}
+
+document.getElementById('btnClearAll').onclick = async ()=>{
+  if(!confirm('Delete all ' + entries.length + ' saved offers? This cannot be undone.')) return;
+  entries = [];
+  await persist();
+  renderTable();
+};
+
+function parseCSV(text){
+  const rows = [];
+  let row = [], field = '', inQuotes = false;
+  for(let i=0; i<text.length; i++){
+    const c = text[i], next = text[i+1];
+    if(inQuotes){
+      if(c === '"' && next === '"'){ field += '"'; i++; }
+      else if(c === '"'){ inQuotes = false; }
+      else{ field += c; }
+    }else{
+      if(c === '"'){ inQuotes = true; }
+      else if(c === ','){ row.push(field); field=''; }
+      else if(c === '\n' || c === '\r'){
+        if(c === '\r' && next === '\n') i++;
+        row.push(field); field='';
+        if(row.length > 1 || row[0] !== ''){ rows.push(row); }
+        row = [];
+      }else{ field += c; }
+    }
+  }
+  if(field !== '' || row.length){ row.push(field); rows.push(row); }
+  return rows;
+}
+
+document.getElementById('btnImport').onclick = ()=> document.getElementById('fileImport').click();
+
+document.getElementById('fileImport').onchange = async (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const text = await file.text();
+  const rows = parseCSV(text);
+  if(rows.length < 2){ showToast('Empty or unreadable CSV'); return; }
+  const header = rows[0];
+  const idx = (name)=> header.indexOf(name);
+
+  const skillKeys = allSkillDefs().map(d=>d[0]);
+  const langKeys = LANG_DEFS.map(d=>d[0]);
+  const softKeys = allSoftDefs().map(d=>d[0]);
+
+  const imported = rows.slice(1).filter(r=>r.length>1).map(r=>{
+    const get = (name)=> r[idx(name)];
+    const skills = {}; skillKeys.forEach(k=> skills[k] = parseInt(get('SKILL_'+k.toUpperCase()))||0);
+    const lang = {}; langKeys.forEach(k=> lang[k] = parseInt(get('LANG_'+k.toUpperCase()))||0);
+    const soft = {}; softKeys.forEach(k=> soft[k] = get('SOFT_'+k.toUpperCase())==='yes');
+    const parseExtraPairs = (str)=> (!str || str==='N/A') ? [] : str.split(';').map(s=>s.trim()).filter(Boolean).map(s=>{
+      const parts = s.split(':'); return {name: (parts[0]||'').trim(), level: parseInt(parts[1])||1};
+    });
+    const parseExtraList = (str)=> (!str || str==='N/A') ? [] : str.split(';').map(s=>s.trim()).filter(Boolean);
+    return {
+      id: parseInt(get('ID'))||0,
+      company: get('COMPANY'), sector: get('SECTOR'), job: get('JOB TITLE'),
+      rolecat: get('ROLE CATEGORY'), city: get('CITY'), canton: get('CANTON'),
+      source: get('SOURCE'), workmode: get('WORK MODE'), exp: get('EXPERIENCE'),
+      salary: get('SALARY'), contract: get('CONTRACT TYPE'), duration: get('CONTRACT DURATION'),
+      workload: get('WORK LOAD'), date: get('DATE'),
+      skills, lang, soft,
+      extraSkills: parseExtraPairs(get('EXTRA_SKILLS')),
+      extraLang: parseExtraPairs(get('EXTRA_LANGUAGES')),
+      extraSoft: parseExtraList(get('EXTRA_SOFT_SKILLS')),
+    };
+  });
+
+  const existingIds = new Set(entries.map(e=>e.id));
+  const newOnes = imported.filter(e=>!existingIds.has(e.id));
+  entries = [...entries, ...newOnes];
+  idCounter = entries.length ? Math.max(...entries.map(e=>e.id))+1 : 1;
+
+  await persist();
+  await persistIdCounter();
+  updateNextIdDisplay();
+  renderTable();
+  showToast(`Imported ${newOnes.length} offers (next ID will be ${idCounter})`, 4000);
+  e.target.value = '';
+};
+
+document.getElementById('btnExport').onclick = ()=>{
+  if(!entries.length){ showToast('No offers saved yet'); return; }
+  const orNA = (v)=> (v===undefined || v===null || v==='') ? 'N/A' : v;
+  const skillKeys = allSkillDefs().map(d=>d[0]);
+  const langKeys = LANG_DEFS.map(d=>d[0]);
+  const softKeys = allSoftDefs().map(d=>d[0]);
+  const header = [
+    'ID','COMPANY','SECTOR','JOB TITLE','ROLE CATEGORY','CITY','CANTON','SOURCE','WORK MODE','EXPERIENCE','SALARY','CONTRACT TYPE','CONTRACT DURATION','WORK LOAD','DATE','STATUS','MATCH_PERCENT',
+    ...skillKeys.map(k=>'SKILL_'+k.toUpperCase()),
+    ...langKeys.map(k=>'LANG_'+k.toUpperCase()),
+    ...softKeys.map(k=>'SOFT_'+k.toUpperCase()),
+    'EXTRA_SKILLS','EXTRA_LANGUAGES','EXTRA_SOFT_SKILLS',
+  ];
+  const rows = entries.map(e=>{
+    const match = computeMatch(e);
+    return [
+    e.id,
+    orNA(e.company), orNA(e.sector), orNA(e.job), orNA(e.rolecat), orNA(e.city), orNA(e.canton),
+    orNA(e.source), orNA(e.workmode), orNA(e.exp), orNA(e.salary), orNA(e.contract), orNA(e.duration), orNA(e.workload), orNA(e.date),
+    orNA(e.status), match===null?'N/A':match,
+    ...skillKeys.map(k=> e.skills[k]||0),
+    ...langKeys.map(k=> e.lang[k]||0),
+    ...softKeys.map(k=> e.soft[k] ? 'yes' : 'N/A'),
+    orNA((e.extraSkills||[]).map(s=>`${s.name}:${s.level}`).join('; ')),
+    orNA((e.extraLang||[]).map(s=>`${s.name}:${s.level}`).join('; ')),
+    orNA((e.extraSoft||[]).join('; ')),
+  ];});
+  const csv = [header, ...rows].map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join(String.fromCharCode(10));
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'dossier_ch_offers.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('CSV exported');
+};
+
+function showToast(msg, duration){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(()=>t.classList.remove('show'), duration || 2200);
+}
+
+async function init(){
+  await loadCustomLists();
+  await loadProfile();
+  await load();
+}
+init();
+</script>
+</body>
+</html>

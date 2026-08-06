@@ -85,6 +85,20 @@ def compute_match(entry, profile):
         if profile.get("soft_skills", {}).get(soft_id):
             matched_weight += 1
 
+    # "Two of the official languages" — matched if the profile has at least two of
+    # German/French/Italian at B1 or above (Native counts as above any bar).
+    official = parsed.get("official_languages_unspecified", {})
+    off_found = corrections.get("official_languages_unspecified", official.get("found"))
+    if off_found:
+        total_weight += 2
+        official_ids = ("french", "german", "italian")
+        strong_count = sum(
+            1 for lid in official_ids
+            if CEFR_ORDER.get(profile.get("languages", {}).get(lid), 0) >= CEFR_ORDER["B1"]
+        )
+        if strong_count >= 2:
+            matched_weight += 2
+
     if total_weight == 0:
         return None
     return round(100 * matched_weight / total_weight)

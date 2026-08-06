@@ -320,6 +320,31 @@
           "found": false,
           "source": null
         }
+      },
+      "official_languages_unspecified": {
+        "value": false,
+        "found": false,
+        "source": null
+      },
+      "experience_required": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_level": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_institution": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "sector": {
+        "value": null,
+        "found": false,
+        "source": null
       }
     },
     "corrections": {
@@ -330,7 +355,7 @@
     },
     "application_status": "Not applied",
     "notes": "",
-    "match_percent": 0
+    "match_percent": 75
   },
   {
     "job_id": "JOB-2026-000002",
@@ -653,6 +678,31 @@
           "found": true,
           "source": "ould be an asset Hands‑on mentality with a strong willingness to learn and explore new topics Enjoys collaborating in an internati"
         }
+      },
+      "official_languages_unspecified": {
+        "value": false,
+        "found": false,
+        "source": null
+      },
+      "experience_required": {
+        "value": "Internship",
+        "found": true,
+        "source": "Internship"
+      },
+      "education_level": {
+        "value": "Master",
+        "found": true,
+        "source": "master"
+      },
+      "education_institution": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "sector": {
+        "value": "Finance",
+        "found": true,
+        "source": "finance"
       }
     },
     "corrections": {
@@ -663,7 +713,7 @@
     },
     "application_status": "Not applied",
     "notes": "",
-    "match_percent": 0
+    "match_percent": 72
   },
   {
     "job_id": "JOB-2026-000003",
@@ -986,6 +1036,31 @@
           "found": false,
           "source": null
         }
+      },
+      "official_languages_unspecified": {
+        "value": false,
+        "found": false,
+        "source": null
+      },
+      "experience_required": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_level": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_institution": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "sector": {
+        "value": null,
+        "found": false,
+        "source": null
       }
     },
     "corrections": {
@@ -996,7 +1071,7 @@
     },
     "application_status": "Not applied",
     "notes": "",
-    "match_percent": 0
+    "match_percent": 78
   },
   {
     "job_id": "JOB-2026-000004",
@@ -1319,6 +1394,31 @@
           "found": false,
           "source": null
         }
+      },
+      "official_languages_unspecified": {
+        "value": false,
+        "found": false,
+        "source": null
+      },
+      "experience_required": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_level": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_institution": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "sector": {
+        "value": null,
+        "found": false,
+        "source": null
       }
     },
     "corrections": {
@@ -1329,7 +1429,7 @@
     },
     "application_status": "Not applied",
     "notes": "",
-    "match_percent": 0
+    "match_percent": 75
   },
   {
     "job_id": "JOB-2026-000006",
@@ -1652,6 +1752,31 @@
           "found": false,
           "source": null
         }
+      },
+      "official_languages_unspecified": {
+        "value": false,
+        "found": false,
+        "source": null
+      },
+      "experience_required": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_level": {
+        "value": "Bachelor",
+        "found": true,
+        "source": "Bachelor"
+      },
+      "education_institution": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "sector": {
+        "value": null,
+        "found": false,
+        "source": null
       }
     },
     "corrections": {
@@ -1662,7 +1787,7 @@
     },
     "application_status": "Not applied",
     "notes": "",
-    "match_percent": 0
+    "match_percent": 67
   },
   {
     "job_id": "JOB-2026-000007",
@@ -1985,6 +2110,31 @@
           "found": false,
           "source": null
         }
+      },
+      "official_languages_unspecified": {
+        "value": false,
+        "found": false,
+        "source": null
+      },
+      "experience_required": {
+        "value": "Internship",
+        "found": true,
+        "source": "Stagiaire"
+      },
+      "education_level": {
+        "value": "Master",
+        "found": true,
+        "source": "Master"
+      },
+      "education_institution": {
+        "value": "EPFL",
+        "found": true,
+        "source": "EPFL"
+      },
+      "sector": {
+        "value": "Manufacturing",
+        "found": true,
+        "source": "manufacturing"
       }
     },
     "corrections": {
@@ -1995,7 +2145,7 @@
     },
     "application_status": "Not applied",
     "notes": "",
-    "match_percent": 0
+    "match_percent": 11
   },
   {
     "job_id": "JOB-2026-000008",
@@ -2318,6 +2468,31 @@
           "found": false,
           "source": null
         }
+      },
+      "official_languages_unspecified": {
+        "value": false,
+        "found": false,
+        "source": null
+      },
+      "experience_required": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_level": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_institution": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "sector": {
+        "value": null,
+        "found": false,
+        "source": null
       }
     },
     "corrections": {
@@ -2328,7 +2503,7 @@
     },
     "application_status": "Not applied",
     "notes": "",
-    "match_percent": 0
+    "match_percent": 100
   },
   {
     "job_id": "JOB-2026-000009",
@@ -2651,6 +2826,31 @@
           "found": false,
           "source": null
         }
+      },
+      "official_languages_unspecified": {
+        "value": false,
+        "found": false,
+        "source": null
+      },
+      "experience_required": {
+        "value": "Internship",
+        "found": true,
+        "source": "Internship"
+      },
+      "education_level": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_institution": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "sector": {
+        "value": null,
+        "found": false,
+        "source": null
       }
     },
     "corrections": {
@@ -2661,7 +2861,7 @@
     },
     "application_status": "Not applied",
     "notes": "",
-    "match_percent": 0
+    "match_percent": 89
   },
   {
     "job_id": "JOB-2026-000010",
@@ -2984,6 +3184,31 @@
           "found": true,
           "source": " Für SDR und Junior-nahe Rollen zählen Disziplin, Lernbereitschaft und Kommunikationsstärke besonders. Die IT-Rollen sind als "
         }
+      },
+      "official_languages_unspecified": {
+        "value": false,
+        "found": false,
+        "source": null
+      },
+      "experience_required": {
+        "value": "Senior",
+        "found": true,
+        "source": "Senior"
+      },
+      "education_level": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_institution": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "sector": {
+        "value": null,
+        "found": false,
+        "source": null
       }
     },
     "corrections": {
@@ -2994,7 +3219,7 @@
     },
     "application_status": "Not applied",
     "notes": "",
-    "match_percent": 0
+    "match_percent": 75
   },
   {
     "job_id": "JOB-2026-000011",
@@ -3317,6 +3542,31 @@
           "found": false,
           "source": null
         }
+      },
+      "official_languages_unspecified": {
+        "value": false,
+        "found": false,
+        "source": null
+      },
+      "experience_required": {
+        "value": "Internship",
+        "found": true,
+        "source": "Stage"
+      },
+      "education_level": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_institution": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "sector": {
+        "value": null,
+        "found": false,
+        "source": null
       }
     },
     "corrections": {
@@ -3327,7 +3577,7 @@
     },
     "application_status": "Not applied",
     "notes": "",
-    "match_percent": 0
+    "match_percent": 100
   },
   {
     "job_id": "JOB-2026-000012",
@@ -3650,6 +3900,31 @@
           "found": false,
           "source": null
         }
+      },
+      "official_languages_unspecified": {
+        "value": false,
+        "found": false,
+        "source": null
+      },
+      "experience_required": {
+        "value": "Internship",
+        "found": true,
+        "source": "Internship"
+      },
+      "education_level": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_institution": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "sector": {
+        "value": null,
+        "found": false,
+        "source": null
       }
     },
     "corrections": {
@@ -3660,7 +3935,7 @@
     },
     "application_status": "Not applied",
     "notes": "",
-    "match_percent": 0
+    "match_percent": 83
   },
   {
     "job_id": "JOB-2026-000013",
@@ -3983,6 +4258,31 @@
           "found": false,
           "source": null
         }
+      },
+      "official_languages_unspecified": {
+        "value": false,
+        "found": false,
+        "source": null
+      },
+      "experience_required": {
+        "value": "Internship",
+        "found": true,
+        "source": "internship"
+      },
+      "education_level": {
+        "value": "Bachelor",
+        "found": true,
+        "source": "Bachelor's"
+      },
+      "education_institution": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "sector": {
+        "value": null,
+        "found": false,
+        "source": null
       }
     },
     "corrections": {
@@ -3993,7 +4293,7 @@
     },
     "application_status": "Not applied",
     "notes": "",
-    "match_percent": 0
+    "match_percent": 68
   },
   {
     "job_id": "JOB-2026-000014",
@@ -4316,6 +4616,31 @@
           "found": false,
           "source": null
         }
+      },
+      "official_languages_unspecified": {
+        "value": false,
+        "found": false,
+        "source": null
+      },
+      "experience_required": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_level": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_institution": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "sector": {
+        "value": null,
+        "found": false,
+        "source": null
       }
     },
     "corrections": {
@@ -4326,7 +4651,7 @@
     },
     "application_status": "Not applied",
     "notes": "",
-    "match_percent": 0
+    "match_percent": 67
   },
   {
     "job_id": "JOB-2026-000015",
@@ -4649,6 +4974,31 @@
           "found": false,
           "source": null
         }
+      },
+      "official_languages_unspecified": {
+        "value": false,
+        "found": false,
+        "source": null
+      },
+      "experience_required": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_level": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_institution": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "sector": {
+        "value": "Finance",
+        "found": true,
+        "source": "insurance"
       }
     },
     "corrections": {
@@ -4659,7 +5009,7 @@
     },
     "application_status": "Not applied",
     "notes": "",
-    "match_percent": 0
+    "match_percent": 71
   },
   {
     "job_id": "JOB-2026-000016",
@@ -4982,6 +5332,31 @@
           "found": false,
           "source": null
         }
+      },
+      "official_languages_unspecified": {
+        "value": false,
+        "found": false,
+        "source": null
+      },
+      "experience_required": {
+        "value": "Internship",
+        "found": true,
+        "source": "internship"
+      },
+      "education_level": {
+        "value": "Master",
+        "found": true,
+        "source": "Master's"
+      },
+      "education_institution": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "sector": {
+        "value": null,
+        "found": false,
+        "source": null
       }
     },
     "corrections": {
@@ -4992,7 +5367,7 @@
     },
     "application_status": "Not applied",
     "notes": "",
-    "match_percent": 0
+    "match_percent": 70
   },
   {
     "job_id": "JOB-2026-000017",
@@ -5315,6 +5690,31 @@
           "found": false,
           "source": null
         }
+      },
+      "official_languages_unspecified": {
+        "value": false,
+        "found": false,
+        "source": null
+      },
+      "experience_required": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_level": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_institution": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "sector": {
+        "value": null,
+        "found": false,
+        "source": null
       }
     },
     "corrections": {
@@ -5325,6 +5725,722 @@
     },
     "application_status": "Not applied",
     "notes": "",
-    "match_percent": 0
+    "match_percent": 50
+  },
+  {
+    "job_id": "JOB-2026-000018",
+    "date_captured": "2026-08-06",
+    "company_raw": "IC - Research Assistant - RAP",
+    "source": "Other",
+    "raw_text": "IC - Research Assistant - RAP\nJob Opening\nJob Opening ID: 281928\nJob Network : -\nJob Family : Economic Affairs (and Sustainable Development)\nCategory and Level : Affiliate Personnel – Consultants/Individual Contractors, CON\nRecruitment Type : Individual Contractor\nDuty Station : GENEVA\nDepartment/Office : United Nations Conference on Trade and Development\nDate Posted : Aug 3, 2026\nDeadline : Aug 9, 2026\n    Apply Now    \n Share Job\n Print\n Expand All Collapse All\nResult of Service\nThe individual contractor will monitor the project/programme implementation and evaluation and its effective reporting to donor counterparts.\nWork Location\nHome based\nExpected duration\n13.08.26 - 13.11.26\nDuties and Responsibilities\nUnder the overall supervision of the Interregional Adviser, Regional Advisory Programme (RAP), Division for Africa, Least Developed Countries and Special Programmes (ALDC), the Individual Contractor will provide research, analytical, administrative and project support for the implementation of the COTONI Project and the day-to-day activities of the Regional Advisory Programme (RAP). The Individual Contractor will perform the following duties: 1. Support the implementation of the COTONI Project and RAP activities • Assist in the day-to-day implementation of activities under the COTONI Project and other RAP initiatives. • Provide logistical and administrative support for project meetings, workshops, technical missions and stakeholder consultations. • Assist in preparing meeting agendas, presentations, participant lists and other supporting documentation. • Follow up on routine actions arising from meetings and missions. 2. Support project monitoring and reporting • Assist in collecting, compiling and organizing data required for monitoring project implementation against the project logical framework and work plan. • Update monitoring tables, activity trackers and implementation matrices. • Support the preparation of progress reports, briefing notes, presentations and other project management documents. • Assist in maintaining project files and supporting documentation. 3. Provide research and data management support • Collect, organize and verify quantitative and qualitative data from different sources. • Compile and maintain datasets using Microsoft Excel, Stata or other relevant software under the guidance of the supervisor. • Assist in preparing tables, charts, graphs and simple data visualizations for reports, presentations and training materials. • Support data entry, data cleaning and basic statistical analysis related to project activities. 4. Support project planning and coordination • Assist in updating project work plans, implementation schedules and activity calendars. • Monitor routine deadlines and support the team in tracking project deliverables. • Prepare draft meeting notes, mission summaries and follow-up matrices. • Assist in coordinating information received from project partners and team members. 5. Support research and knowledge products • Conduct desk research on trade, transport, trade facilitation, productive capacities and other development issues affecting Least Developed Countries. • Compile reference materials, statistics and background information for studies, technical papers, presentations and publications. • Assist in formatting reports, presentations, publications and training materials. • Support literature reviews and the compilation of bibliographic references. 6. Support knowledge management and administrative tasks • Maintain organized electronic and hard-copy project files. • Update contact databases, mailing lists and document repositories. • Assist in preparing correspondence, presentations and other communication materials. • Perform other research, administrative and project support tasks as required by the Regional Advisory Programme.\nQualifications/special skills\nHigh school diploma At least 1 year of experience in the area of management, economics or other related field is required.\nLanguages\nFluency written and spoken in English is required.\nAdditional Information\nNot available.\nNo Fee\nTHE UNITED NATIONS DOES NOT CHARGE A FEE AT ANY STAGE OF THE RECRUITMENT PROCESS (APPLICATION, INTERVIEW MEETING, PROCESSING, OR TRAINING). THE UNITED NATIONS DOES NOT CONCERN ITSELF WITH INFORMATION ON APPLICANTS’ BANK ACCOUNTS.",
+    "parsed": {
+      "company": {
+        "value": "IC - Research Assistant - RAP",
+        "found": true,
+        "source": "IC - Research Assistant - RAP"
+      },
+      "city": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "canton": {
+        "value": null,
+        "found": false,
+        "source": "derived from city"
+      },
+      "workload": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "workmode": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "skills": {
+        "sql": {
+          "label": "SQL",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "python": {
+          "label": "Python",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "excel": {
+          "label": "Excel",
+          "status": 1,
+          "found": true,
+          "source": "ve data from different sources. • Compile and maintain datasets using Microsoft Excel, Stata or other relevant software under the guidance of the supervisor. • Assist in prepa"
+        },
+        "dashboards": {
+          "label": "Dashboards",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "powerbi": {
+          "label": "Power BI",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "databricks": {
+          "label": "Databricks",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "tableau": {
+          "label": "Tableau",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "git": {
+          "label": "Git",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "r": {
+          "label": "R",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "aiagent": {
+          "label": "AI Agent",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "sap": {
+          "label": "SAP",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "snowflake": {
+          "label": "Snowflake",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "azure": {
+          "label": "Azure",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "aws": {
+          "label": "AWS",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "gcp": {
+          "label": "Google Cloud",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "looker": {
+          "label": "Looker",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "qlik": {
+          "label": "Qlik",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "spss": {
+          "label": "SPSS",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "sas": {
+          "label": "SAS",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "alteryx": {
+          "label": "Alteryx",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "dbt": {
+          "label": "dbt",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "airflow": {
+          "label": "Airflow",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "spark": {
+          "label": "Spark",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "vba": {
+          "label": "VBA",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "mongodb": {
+          "label": "MongoDB / NoSQL",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "hadoop": {
+          "label": "Hadoop",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "bigquery": {
+          "label": "BigQuery / Redshift",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "java": {
+          "label": "Java",
+          "status": 0,
+          "found": false,
+          "source": null
+        }
+      },
+      "languages": {
+        "french": {
+          "label": "French",
+          "status": 0,
+          "found": false,
+          "source": null,
+          "cefr_required": null
+        },
+        "german": {
+          "label": "German",
+          "status": 0,
+          "found": false,
+          "source": null,
+          "cefr_required": null
+        },
+        "italian": {
+          "label": "Italian",
+          "status": 0,
+          "found": false,
+          "source": null,
+          "cefr_required": null
+        },
+        "english": {
+          "label": "English",
+          "status": 2,
+          "found": true,
+          "source": "Fluency written and spoken in English is required.",
+          "cefr_required": null
+        },
+        "spanish": {
+          "label": "Spanish",
+          "status": 0,
+          "found": false,
+          "source": null,
+          "cefr_required": null
+        }
+      },
+      "soft_skills": {
+        "programming": {
+          "label": "Programming",
+          "found": false,
+          "source": null
+        },
+        "storytelling": {
+          "label": "Storytelling",
+          "found": false,
+          "source": null
+        },
+        "surveymethods": {
+          "label": "Survey Methods",
+          "found": false,
+          "source": null
+        },
+        "descstats": {
+          "label": "Descriptive Statistics",
+          "found": false,
+          "source": null
+        },
+        "reporting": {
+          "label": "Reporting",
+          "found": true,
+          "source": "e implementation and evaluation and its effective reporting to donor counterparts. Work Location Home based Expected du"
+        },
+        "communication": {
+          "label": "Communication",
+          "found": true,
+          "source": "preparing correspondence, presentations and other communication materials. • Perform other research, administrative and pro"
+        },
+        "researchdesign": {
+          "label": "Research Design",
+          "found": false,
+          "source": null
+        },
+        "datacollection": {
+          "label": "Data Collection",
+          "found": false,
+          "source": null
+        },
+        "coordination": {
+          "label": "Project Coordination",
+          "found": true,
+          "source": " reports, briefing notes, presentations and other project management documents. • Assist in maintaining project files and suppor"
+        },
+        "stakeholder": {
+          "label": "Stakeholder Training",
+          "found": true,
+          "source": "oject meetings, workshops, technical missions and stakeholder consultations. • Assist in preparing meeting agendas, prese"
+        },
+        "collaboration": {
+          "label": "Collaboration",
+          "found": false,
+          "source": null
+        },
+        "proactivity": {
+          "label": "Proactivity",
+          "found": false,
+          "source": null
+        },
+        "structured": {
+          "label": "Structured Thinking",
+          "found": false,
+          "source": null
+        },
+        "curiosity": {
+          "label": "Curiosity",
+          "found": false,
+          "source": null
+        },
+        "learningagility": {
+          "label": "Learning Agility",
+          "found": false,
+          "source": null
+        }
+      },
+      "official_languages_unspecified": {
+        "value": false,
+        "found": false,
+        "source": null
+      },
+      "experience_required": {
+        "value": "Internship",
+        "found": true,
+        "source": "STAGE"
+      },
+      "education_level": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_institution": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "sector": {
+        "value": "Finance",
+        "found": true,
+        "source": "BANK"
+      }
+    },
+    "corrections": {
+      "skills": {},
+      "languages": {},
+      "soft_skills": {},
+      "manual_skills": []
+    },
+    "application_status": "Not applied",
+    "notes": "",
+    "match_percent": 71
+  },
+  {
+    "job_id": "JOB-2026-000019",
+    "date_captured": "2026-08-06",
+    "company_raw": "ML Advisors",
+    "source": "LinkedIn",
+    "raw_text": "ML Advisors\n\n\nJunior Researcher\n\nLausanne, Vaud, Switzerland · 1 hour ago · 1 person clicked apply\n\nResponses managed off LinkedIn\n\nFull-time\nApply\n\nSave\nYour profile and resume match the required qualifications well\n\n\n\nShow match details\n\nBETA • Is this information helpful?\n\n\nSee recent hiring trends for ML Advisors\n\nAccess exclusive applicant insights, see jobs where you have the highest chance of hearing back, and more.\n\nTry Premium for €0\n\nAbout the job\nDora ZALTENI\n\nDirectrice commerciale\n\nMaxime PIERSON\n\nDirecteur R&D\n\nPourquoi nous choisir ?\n\nDans un domaine complexe et stratégique, nous privilégions l’excellence en formant continuellement nos consultants, en les sélectionnant, en qualifiant les projets sur lesquels nous travaillons et en étant très présents dans le monde de la recherche en Intelligence Artificielle.\n\nNos Projets\n\nVous recherchez des solutions novatrices, ciblées et adaptées à vos objectifs ?\n\nContactez-nous!",
+    "parsed": {
+      "company": {
+        "value": "ML Advisors",
+        "found": true,
+        "source": "ML Advisors"
+      },
+      "city": {
+        "value": "Lausanne",
+        "found": true,
+        "source": "Lausanne"
+      },
+      "canton": {
+        "value": "VD",
+        "found": true,
+        "source": "derived from city"
+      },
+      "workload": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "workmode": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "skills": {
+        "sql": {
+          "label": "SQL",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "python": {
+          "label": "Python",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "excel": {
+          "label": "Excel",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "dashboards": {
+          "label": "Dashboards",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "powerbi": {
+          "label": "Power BI",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "databricks": {
+          "label": "Databricks",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "tableau": {
+          "label": "Tableau",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "git": {
+          "label": "Git",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "r": {
+          "label": "R",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "aiagent": {
+          "label": "AI Agent",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "sap": {
+          "label": "SAP",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "snowflake": {
+          "label": "Snowflake",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "azure": {
+          "label": "Azure",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "aws": {
+          "label": "AWS",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "gcp": {
+          "label": "Google Cloud",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "looker": {
+          "label": "Looker",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "qlik": {
+          "label": "Qlik",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "spss": {
+          "label": "SPSS",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "sas": {
+          "label": "SAS",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "alteryx": {
+          "label": "Alteryx",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "dbt": {
+          "label": "dbt",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "airflow": {
+          "label": "Airflow",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "spark": {
+          "label": "Spark",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "vba": {
+          "label": "VBA",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "mongodb": {
+          "label": "MongoDB / NoSQL",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "hadoop": {
+          "label": "Hadoop",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "bigquery": {
+          "label": "BigQuery / Redshift",
+          "status": 0,
+          "found": false,
+          "source": null
+        },
+        "java": {
+          "label": "Java",
+          "status": 0,
+          "found": false,
+          "source": null
+        }
+      },
+      "languages": {
+        "french": {
+          "label": "French",
+          "status": 0,
+          "found": false,
+          "source": null,
+          "cefr_required": null
+        },
+        "german": {
+          "label": "German",
+          "status": 0,
+          "found": false,
+          "source": null,
+          "cefr_required": null
+        },
+        "italian": {
+          "label": "Italian",
+          "status": 0,
+          "found": false,
+          "source": null,
+          "cefr_required": null
+        },
+        "english": {
+          "label": "English",
+          "status": 0,
+          "found": false,
+          "source": null,
+          "cefr_required": null
+        },
+        "spanish": {
+          "label": "Spanish",
+          "status": 0,
+          "found": false,
+          "source": null,
+          "cefr_required": null
+        }
+      },
+      "soft_skills": {
+        "programming": {
+          "label": "Programming",
+          "found": false,
+          "source": null
+        },
+        "storytelling": {
+          "label": "Storytelling",
+          "found": false,
+          "source": null
+        },
+        "surveymethods": {
+          "label": "Survey Methods",
+          "found": false,
+          "source": null
+        },
+        "descstats": {
+          "label": "Descriptive Statistics",
+          "found": false,
+          "source": null
+        },
+        "reporting": {
+          "label": "Reporting",
+          "found": false,
+          "source": null
+        },
+        "communication": {
+          "label": "Communication",
+          "found": false,
+          "source": null
+        },
+        "researchdesign": {
+          "label": "Research Design",
+          "found": false,
+          "source": null
+        },
+        "datacollection": {
+          "label": "Data Collection",
+          "found": false,
+          "source": null
+        },
+        "coordination": {
+          "label": "Project Coordination",
+          "found": false,
+          "source": null
+        },
+        "stakeholder": {
+          "label": "Stakeholder Training",
+          "found": false,
+          "source": null
+        },
+        "collaboration": {
+          "label": "Collaboration",
+          "found": false,
+          "source": null
+        },
+        "proactivity": {
+          "label": "Proactivity",
+          "found": false,
+          "source": null
+        },
+        "structured": {
+          "label": "Structured Thinking",
+          "found": false,
+          "source": null
+        },
+        "curiosity": {
+          "label": "Curiosity",
+          "found": false,
+          "source": null
+        },
+        "learningagility": {
+          "label": "Learning Agility",
+          "found": false,
+          "source": null
+        }
+      },
+      "official_languages_unspecified": {
+        "value": false,
+        "found": false,
+        "source": null
+      },
+      "experience_required": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_level": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "education_institution": {
+        "value": null,
+        "found": false,
+        "source": null
+      },
+      "sector": {
+        "value": "Research",
+        "found": true,
+        "source": "R&D"
+      }
+    },
+    "corrections": {
+      "skills": {},
+      "languages": {},
+      "soft_skills": {},
+      "manual_skills": []
+    },
+    "application_status": "Not applied",
+    "notes": "",
+    "match_percent": null
   }
 ]
