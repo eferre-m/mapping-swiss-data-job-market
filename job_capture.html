@@ -125,7 +125,7 @@
   </div>
 
   <div class="section-num"><span class="n">01</span><span class="t">Paste the offer</span></div>
-  <label>Full job description — French, German, Italian, or English all work</label>
+  <label>Full job description</label>
   <textarea id="rawtext" placeholder="Paste the complete offer text here…"></textarea>
 
   <div class="row2">
@@ -133,6 +133,15 @@
       <label>Company</label>
       <input type="text" id="f_company" placeholder="Detected automatically — correct if wrong">
       <div class="hint" id="companyHint"></div>
+    </div>
+    <div>
+      <label>Role Category</label>
+      <select id="f_role"><option>Data Analyst</option><option>Business Analyst</option><option>Research Analyst</option><option>Customer Insights</option><option>Data Product</option><option>Other</option></select>
+    </div>
+    <div>
+      <label>Industry</label>
+      <input type="text" id="f_industry" placeholder="Detected automatically — correct if wrong">
+      <div class="hint" id="industryHint"></div>
     </div>
     <div>
       <label>Source</label>
@@ -218,6 +227,8 @@ document.getElementById('btnSave').onclick = async ()=>{
   const rawtext = document.getElementById('rawtext').value.trim();
   if(!rawtext){ showToast('Paste the offer text first'); return; }
   const company = document.getElementById('f_company').value.trim() || 'N/A';
+  const role = document.getElementById('f_role').value;
+  const industry = document.getElementById('f_industry').value.trim() || 'N/A';
   const source = document.getElementById('f_source').value;
 
   const job_id = nextJobId();
@@ -225,6 +236,8 @@ document.getElementById('btnSave').onclick = async ()=>{
     job_id,
     date_captured: new Date().toISOString().slice(0,10),
     company_raw: company,
+    role,
+    industry_raw: industry,
     source,
     raw_text: rawtext,
   };
@@ -242,7 +255,10 @@ document.getElementById('btnSave').onclick = async ()=>{
 function clearForm(){
   document.getElementById('rawtext').value = '';
   document.getElementById('f_company').value = '';
+  document.getElementById('f_industry').value = '';
   document.getElementById('companyHint').textContent = '';
+  document.getElementById('industryHint').textContent = '';
+  document.getElementById('f_role').selectedIndex = 0;
   document.getElementById('f_source').selectedIndex = 0;
 }
 document.getElementById('btnClearForm').onclick = clearForm;
@@ -291,6 +307,8 @@ function renderTable(){
       <td class="jobid">${escapeHtml(e.job_id)}</td>
       <td>${escapeHtml(e.date_captured)}</td>
       <td>${escapeHtml(e.company_raw)}</td>
+      <td>${escapeHtml(e.industry_raw)}</td>
+      <td>${escapeHtml(e.role)}</td>
       <td>${escapeHtml(e.source)}</td>
       <td class="snippet">${escapeHtml((e.raw_text||'').slice(0,60))}…</td>
       <td><span class="del" data-id="${e.job_id}">delete</span></td>
@@ -320,7 +338,7 @@ document.getElementById('btnExport').onclick = ()=>{
   const blob = new Blob([json], {type:'application/json;charset=utf-8;'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = 'dossier_ch_capture.json';
+  a.href = url; a.download = 'offer_raw.json';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   URL.revokeObjectURL(url);
   showToast('JSON exported — feed this to the Python Extract step');

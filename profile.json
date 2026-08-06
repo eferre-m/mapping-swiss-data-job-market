@@ -1,12 +1,13 @@
 {
+  "_readme": "Edita esto desde review.html (pestaña Mi Perfil), no a mano salvo que sepas lo que haces. skill_id y soft_id deben coincidir exactamente con los ids de catalogs/skills.csv y catalogs/soft_skills.csv. Los niveles de idioma son CEFR: A1, A2, B1, B2, C1, C2 o 'Native'.",
   "skills": {
     "sql": true,
     "excel": true,
     "tableau": true,
-    "python": true,
+    "python": false,
     "powerbi": false,
     "dashboards": true,
-    "git": true,
+    "git": false,
     "vba": false
   },
   "languages": {

@@ -121,6 +121,25 @@ NATIVE_RX = re.compile(
     re.I,
 )
 
+# Swiss job ads sometimes ask for "two of the official languages" without naming which
+# ones — meaning any two of German/French/Italian. This is a distinct signal from a
+# specific named language, so it gets its own field instead of being folded into one.
+OFFICIAL_LANGS_RX = re.compile(
+    r"(two\sof\sthe\sofficial\slanguages|deux\sdes\slangues\sofficielles|"
+    r"deux\slangues\snationales|zwei\s(der\s)?(Amts|Landes)sprachen|"
+    r"due\sdelle\slingue\sufficiali|langues?\snationales?\ssuisses?)",
+    re.I,
+)
+
+
+def detect_official_languages(text):
+    m = OFFICIAL_LANGS_RX.search(text)
+    if not m:
+        return False, None
+    start = max(0, m.start() - 50)
+    end = min(len(text), m.end() + 60)
+    return True, text[start:end].replace("\n", " ")
+
 
 def detect_lang_cefr(window):
     """Looks for a CEFR level (A1..C2) or a 'native/bilingual' mention in the same
@@ -197,6 +216,108 @@ def detect_workmode(text):
     return None, None
 
 
+# ---- Experience, education, sector -----------------------------------------------
+# Deliberately conservative: only fill a value when the text is unambiguous.
+# Vague or absent mentions are left for manual validation in review.html instead
+# of guessing — see project philosophy: confidence over forced automation.
+
+EXPERIENCE_INTERNSHIP_RX = re.compile(r"\b(internship|stage|stagiaire|praktikum|tirocinio)\b", re.I)
+EXPERIENCE_NONE_RX = re.compile(
+    r"(no\s+(prior\s+)?experience|entry[\s-]level|d[ée]butant|ohne\sBerufserfahrung|sans\sexp[ée]rience)",
+    re.I,
+)
+EXPERIENCE_SENIOR_RX = re.compile(r"\bsenior\b", re.I)
+EXPERIENCE_YEARS_RX = re.compile(
+    r"(\d{1,2})\s*(?:\+|to\s*\d{1,2}|-\s*\d{1,2})?\s*years?\s*(?:of\s*)?(?:experience|exp\.?)",
+    re.I,
+)
+
+
+def detect_experience(text):
+    """Buckets into a small fixed vocabulary. Returns (value, found, source)."""
+    m = EXPERIENCE_INTERNSHIP_RX.search(text)
+    if m:
+        return "Internship", True, m.group(0)
+    m = EXPERIENCE_NONE_RX.search(text)
+    if m:
+        return "No experience", True, m.group(0)
+    m = EXPERIENCE_YEARS_RX.search(text)
+    if m:
+        years = int(m.group(1))
+        has_plus = "+" in m.group(0)
+        if years >= 5 or (has_plus and years >= 5):
+            bucket = "5+ years"
+        elif years in (3, 4):
+            bucket = "3 years"
+        elif years <= 2:
+            bucket = "0-2 years"
+        else:
+            bucket = "5+ years"
+        return bucket, True, m.group(0)
+    m = EXPERIENCE_SENIOR_RX.search(text)
+    if m:
+        return "Senior", True, m.group(0)
+    return None, False, None
+
+
+EDUCATION_LEVEL_PATTERNS = [
+    ("PhD", re.compile(r"\b(Ph\.?D|doctorate|doctorat)\b", re.I)),
+    ("Master", re.compile(r"\b(Master'?s?|MSc|M\.Sc\.?)\b", re.I)),
+    ("Bachelor", re.compile(r"\b(Bachelor'?s?|BSc|B\.Sc\.?)\b", re.I)),
+]
+EDUCATION_EQUIVALENT_RX = re.compile(r"\bor\s+equivalent(\s+degree)?\b", re.I)
+
+EDUCATION_INSTITUTION_PATTERNS = [
+    ("ETH", re.compile(r"\bETH(\s+Z[üu]rich)?\b")),
+    ("EPFL", re.compile(r"\bEPFL\b")),
+    ("HES / FH", re.compile(r"\b(HES(-SO)?|Fachhochschule|university\sof\sapplied\ssciences)\b", re.I)),
+    ("Swiss university", re.compile(r"\bSwiss\s+university\b", re.I)),
+]
+
+
+def detect_education_level(text):
+    for label, rx in EDUCATION_LEVEL_PATTERNS:
+        m = rx.search(text)
+        if m:
+            return label, True, m.group(0)
+    m = EDUCATION_EQUIVALENT_RX.search(text)
+    if m:
+        return "Equivalent degree", True, m.group(0)
+    return None, False, None
+
+
+def detect_education_institution(text):
+    for label, rx in EDUCATION_INSTITUTION_PATTERNS:
+        m = rx.search(text)
+        if m:
+            return label, True, m.group(0)
+    return None, False, None
+
+
+SECTOR_PATTERNS = [
+    ("Finance", re.compile(r"\b(bank(ing)?|finance|financial\sservices|insurance)\b", re.I)),
+    ("Manufacturing", re.compile(r"\b(manufactur\w*|industrial\sproduction|production\splant)\b", re.I)),
+    ("Research", re.compile(r"\b(research\sinstitute|research\scent(er|re)|R&D)\b", re.I)),
+    ("Pharma", re.compile(r"\b(pharma\w*|biotech\w*)\b", re.I)),
+    ("Consulting", re.compile(r"\b(consulting|consultanc\w*)\b", re.I)),
+    ("Public Sector", re.compile(r"\b(public\ssector|government|canton\w*\sadministration|federal\soffice|municipalit\w*)\b", re.I)),
+    ("Technology", re.compile(r"\b(software\scompany|tech\scompany|IT\sservices)\b", re.I)),
+]
+
+
+def detect_sector(text):
+    """Only returns a value when exactly ONE sector pattern matches — if the text
+    plausibly fits more than one, that's ambiguous and gets left for manual pick."""
+    hits = []
+    for label, rx in SECTOR_PATTERNS:
+        m = rx.search(text)
+        if m:
+            hits.append((label, m.group(0)))
+    if len(hits) == 1:
+        return hits[0][0], True, hits[0][1]
+    return None, False, None
+
+
 JOB_WORDS_RX = re.compile(
     r"\b(we|nous|wir|noi|recherch|recrute|looking|suchen|cerchiamo|job|poste|position|"
     r"stelle|offre|angebot|offerta|internship|stage|company\slogo)\b",
@@ -269,6 +390,36 @@ def parse_offer(raw_text, skills_catalog, lang_catalog, cities_catalog, soft_cat
     for soft_id, label, pattern in (soft_catalog or []):
         found, window = detect_presence(raw_text, pattern)
         result["soft_skills"][soft_id] = {"label": label, "found": found, "source": window}
+
+    result["official_languages_unspecified"] = {}
+    off_found, off_source = detect_official_languages(raw_text)
+    result["official_languages_unspecified"]["value"] = off_found
+    result["official_languages_unspecified"]["found"] = off_found
+    result["official_languages_unspecified"]["source"] = off_source
+
+    result["experience_required"] = {}
+    exp_value, exp_found, exp_source = detect_experience(raw_text)
+    result["experience_required"]["value"] = exp_value
+    result["experience_required"]["found"] = exp_found
+    result["experience_required"]["source"] = exp_source
+
+    result["education_level"] = {}
+    edu_value, edu_found, edu_source = detect_education_level(raw_text)
+    result["education_level"]["value"] = edu_value
+    result["education_level"]["found"] = edu_found
+    result["education_level"]["source"] = edu_source
+
+    result["education_institution"] = {}
+    inst_value, inst_found, inst_source = detect_education_institution(raw_text)
+    result["education_institution"]["value"] = inst_value
+    result["education_institution"]["found"] = inst_found
+    result["education_institution"]["source"] = inst_source
+
+    result["sector"] = {}
+    sec_value, sec_found, sec_source = detect_sector(raw_text)
+    result["sector"]["value"] = sec_value
+    result["sector"]["found"] = sec_found
+    result["sector"]["source"] = sec_source
 
     return result
 
