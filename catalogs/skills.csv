@@ -23,6 +23,12 @@ dbt,dbt,\bdbt\b
 airflow,Airflow,\bAirflow\b
 spark,Spark,\bSpark\b
 vba,VBA,\bVBA\b
+docker,Docker,\bDocker\b
+kubernetes,Kubernetes,\bKubernetes\b
+packoffice,Pack Office,\b(Pack\s?Office|Microsoft\s?Office)\b
+word,Word,\bWord\b
+powerpoint,PowerPoint,\bPowerPoint\b
+typescript,TypeScript,\bType[Ss]cript\b
 javascript,JavaScript,\bJava[Ss]cript\b
 mongodb,MongoDB / NoSQL,\b(MongoDB|NoSQL)\b
 hadoop,Hadoop,\bHadoop\b
