@@ -1,5 +1,15 @@
-.DS_Store
 MUANUAL.md
+
+.
+..
+.git
+
+# macOS
+.DS_Store
+
+# Generated outputs
+dossier*.json
+profile.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
