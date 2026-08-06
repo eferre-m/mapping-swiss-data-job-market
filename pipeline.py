@@ -20,7 +20,7 @@ import parse
 
 CEFR_ORDER = {"A1": 1, "A2": 2, "B1": 3, "B2": 4, "C1": 5, "C2": 6, "Native": 7}
 
-DEFAULT_DOSSIER = "dossier.json"
+DEFAULT_DOSSIER = "offer_processed.json"
 DEFAULT_PROFILE = "profile.json"
 
 
@@ -131,6 +131,8 @@ def run(capture_path, dossier_path, profile_path, reparse):
                 "date_captured": c.get("date_captured"),
                 "company_raw": c.get("company_raw"),
                 "source": c.get("source"),
+                "industry_raw": c.get("industry_raw"),
+                "role": c.get("role"),
                 "raw_text": c.get("raw_text"),
                 "parsed": parsed,
                 "corrections": {"skills": {}, "languages": {}, "soft_skills": {}, "manual_skills": []},

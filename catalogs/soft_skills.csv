@@ -14,3 +14,24 @@ proactivity,Proactivity,\b(proactiv\w*|proactivit[ée]|proaktiv\w*|proattivit[à
 structured,Structured Thinking,\b(structured\sthinking|pens[ée]e\sstructur[ée]e|strukturiert\w*|strutturat\w*)\b
 curiosity,Curiosity,\b(curiosity|curiosit[ée]|curious|Neugier\w*|curiosit[àa])\b
 learningagility,Learning Agility,\b(learning\sagility|willingness\sto\slearn|envie\sd.apprendre|Lernbereitschaft|apprendimento)\b
+analyticalmindset,Analytical Mindset,\b(analytical\smindset|esprit\sanalytique|analytisches\sDenken|mentalit[àa]\sanalitica)\b
+analyticalskills,Analytical Skills,\b(analytical\sskills|comp[ée]tences?\sanalytique|analytische\sF[äa]higkeiten|competenze\sanalitiche)\b
+criticalthinking,Critical Thinking,\b(critical\sthinking|pens[ée]e\scritique|kritisches\sDenken|pensiero\scritico)\b
+problem-solving,Problem Solving,\b(problem\ssolving|r[ée]solution\sde\sprobl[èe]mes?|Probleml[öo]sung|risoluzione\sdei\sproblemi)\b
+communication-skills,Communication Skills,\b(communication\sskills|comp[ée]tences?\scommunication|Kommunikationsf[äa]higkeiten|competenze\scomunicative)\b
+strongcommunicator,Strong Communicator,\b(strong\scommunicator|bon\scommunicant|starker\sKommunikator|forte\scomunicatore)\b
+verbalcommunication,Verbal Communication,\b(verbal\scommunication|communication\sverbale|verbale\sKommunikation|comunicazione\sverbale)\b
+writtencommunication,Written Communication,\b(written\scommunication|communication\s[ée]crite|schriftliche\sKommunikation|comunicazione\sscritta)\b
+teamwork,Teamwork,\b(teamwork|travail\sd.e\s[ée]quipe|Teamarbeit|lavoro\sdi\sgruppo)\b
+teamplayer,Team Player,\b(team\splayer|joueur\sd.e\s[ée]quipe|Teamspieler|giocatore\sdi\sgruppo)\b
+collaborative,Collaborative,\b(collaborative|collaboratif|kooperativ|collaborativo)\b
+workingwellwithothers,Working Well with Others,\b(working\swell\swith\sothers|bien\stravailler\savec\sles\sautres|gut\szusammenarbeiten|lavorare\sbene\scon\sagli\saltri)\b
+autonomy,Autonomy,\b(autonomy|autonomie|Autonomie|autonomia)\b
+autonomous,Autonomous,\b(autonomous|autonome|selbstst[äa]ndig|autonomo)\b
+selfdriven,Self-Driven,\b(self[-\s]?driven|autonome|selbstmotiviert|autonomo)\b
+independent,Independent,\b(independent|ind[ée]pendant|unabh[äa]ngig|indipendente)\b
+adaptability,Adaptability,\b(adaptability|adaptabilit[ée]|Anpassungsf[äa]higkeit|adattabilit[àa])\b
+flexibility,Flexibility,\b(flexibility|flexibilit[ée]|Flexibilit[äa]t|flessibilit[àa])\b
+agilemindset,Agile Mindset,\b(agile\smindset|esprit\sagile|agiles\sDenken|mentalit[àa]\sagile)\b
+agile,Agile,\b(agile|agilit[ée]|agil|agilezza)\b
+peertopeer,Peer-to-Peer Learning,\b(peer[-\s]?to[-\s]?peer|apprentissage\sentre\spairs|Peer[-\s]?to[-\s]?Peer|apprendimento\stra\spari)\b
