@@ -1,9 +1,8 @@
 .DS_Store
 .git
 
-MANUAL.md
-job_parser_v2.html
-
+docs/
+data/
 
 *.json
 
