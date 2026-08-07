@@ -1,6 +1,0 @@
-# Currently empty on purpose: parse.py, pipeline.py, and coverage.py only use
-# the Python standard library (csv, re, json, pathlib, argparse, unicodedata).
-#
-# Add dependencies here as you build them out, e.g. when you bring back
-# adzuna_collector.py:
-# requests
