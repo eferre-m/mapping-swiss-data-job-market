@@ -22,7 +22,7 @@ def load_skills_catalog():
     return skills
 
 
-def load_language_catalog():
+def load_languages_catalog():
     languages = []
     with open(CATALOG_DIR / "languages.csv", encoding="utf-8") as csv_file:
         for row in csv.DictReader(csv_file):
@@ -68,9 +68,24 @@ def load_cities_catalog():
     return cities
 
 
-def parse_offer():
-    """
-    Parse a job offer into structured data.
-    Input: Raw job offer text.
-    Output: A dictionary containing the extracted information.
-    """
+def load_requirements_catalog():
+    requirements = []
+    with open(CATALOG_DIR / "requirements.csv", encoding="utf-8") as csv_file:
+        for row in csv.DictReader(csv_file):
+            requirements.append(
+                {
+                    "requirement_id": row["requirement_id"],
+                    "canonical_name": row["canonical_name"],
+                    "pattern": re.compile(row["pattern"], re.I)
+                }
+            )
+
+    return requirements
+
+
+if __name__ == "__main__":
+    skills_catalog = load_skills_catalog()
+    lang_catalog = load_languages_catalog()
+    cities_catalog = load_cities_catalog()
+    soft_catalog = load_soft_skills_catalog()
+    req_catalog = load_requirements_catalog()

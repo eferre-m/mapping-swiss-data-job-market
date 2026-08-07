@@ -1,0 +1,40 @@
+requirement_id,canonical_name,pattern
+required,Required,\brequired\b
+required,Required,\bmandatory\b
+required,Required,\bmust\b
+required,Required,\bessential\b
+required,Required,\bindispensable\b
+required,Required,\bstrong\b
+required,Required,\badvanced\b
+required,Required,\bexcellent\b
+required,Required,\bproficient\b
+required,Required,\bsolid\b
+required,Required,\brequis\b
+required,Required,\bexig[ée]?\b
+required,Required,\bma[îi]trise\b
+required,Required,\bcourant\b
+required,Required,\bimp[ée]ccable\b
+required,Required,\berforderlich\b
+required,Required,\bzwingend\b
+required,Required,\bfundiert\b
+required,Required,\bsehr\s+gut\b
+required,Required,\bobbligatorio\b
+required,Required,\brichiest[ao]\b
+required,Required,\bottima\s+conoscenza\b
+required,Required,\bindispensabile\b
+nice_to_have,Nice to have,\bnice\s+to\s+have\b
+nice_to_have,Nice to have,\bwould\s+be\s+(?:a\s+)?plus\b
+nice_to_have,Nice to have,\bwould\s+be\s+(?:an\s+)?asset\b
+nice_to_have,Nice to have,\bis\s+a\s+plus\b
+nice_to_have,Nice to have,\basset\b
+nice_to_have,Nice to have,\batout\b
+nice_to_have,Nice to have,\bbonus\b
+nice_to_have,Nice to have,\bwelcome\b
+nice_to_have,Nice to have,\bideal(?:ly)?\b
+nice_to_have,Nice to have,\bsouhait[ée]?\b
+nice_to_have,Nice to have,\bappr[ée]ci[ée]?\b
+nice_to_have,Nice to have,\bvon\s+Vorteil\b
+nice_to_have,Nice to have,\bwünschenswert\b
+nice_to_have,Nice to have,\bidealerweise\b
+nice_to_have,Nice to have,\bpreferibilmente\b
+nice_to_have,Nice to have,\bgradit[ao]\b
