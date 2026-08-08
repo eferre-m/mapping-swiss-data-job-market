@@ -1,0 +1,20 @@
+level_id,canonical_name,pattern
+a1,A1,\bA1\b
+a2,A2,\bA2\b
+b1,B1,\bB1\b
+b2,B2,\bB2\b
+c1,C1,\bC1\b
+c2,C2,\bC2\b
+native,Native,\b(native|native\sspeaker|mother\stongue|mother\stongue|langue\smaternelle|Muttersprache|madrelingua)\b
+bilingual,Bilingual,\b(bilingual|bilingue|bilingual[e]?)\b
+fluent,Fluent,\b(fluent|fließend|courant|fluente)\b
+proficient,Proficient,\b(proficient|proficiency|maîtrise|maîtriser|beherrscht|conoscenza)\b
+advanced,Advanced,\b(advanced|avancé[e]?|fortgeschritten|avanzato[a]?)\b
+upper_intermediate,Upper Intermediate,\b(upper[\s-]?intermediate|intermédiaire\ssupérieur|obere[s]?\sMittelstufe)\b
+intermediate,Intermediate,\b(intermediate|intermédiaire|Mittelstufe|intermedio)\b
+lower_intermediate,Lower Intermediate,\b(lower[\s-]?intermediate|intermédiaire\ssousérieur|untere[s]?\sMittelstufe)\b
+good,Good,\b(good|good\sknowledge|good\scommand|bon[n]?[e]?\sconnaissance|gute[s]?\skenntnisse|buona\sconoscenza)\b
+very_good,Very Good,\b(very\sgood|very\sgood\sknowledge|very\sgood\scommand|très\sbonne?\sconnaissance|sehr\sgute[s]?\skenntnisse|ottima\sconoscenza)\b
+excellent,Excellent,\b(excellent|excellent\scommand|excellente?\sconnaissance|ausgezeichnete[s]?\skenntnisse|eccellente\sconoscenza)\b
+basic,Basic,\b(basic|basic\sknowledge|basic\scommand|notions|Grundkenntnisse|conoscenza\sbase)\b
+working,Working Proficiency,\b(working\sproficiency|working\sknowledge|professional\sworking\sproficiency|connaissance\sprofessionnelle|berufliche\skenntnisse)\b

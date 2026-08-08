@@ -83,9 +83,16 @@ def load_requirements_catalog():
     return requirements
 
 
-if __name__ == "__main__":
-    skills_catalog = load_skills_catalog()
-    lang_catalog = load_languages_catalog()
-    cities_catalog = load_cities_catalog()
-    soft_catalog = load_soft_skills_catalog()
-    req_catalog = load_requirements_catalog()
+def load_levels_catalog():
+    levels = []
+    with open(CATALOG_DIR / "levels.csv", encoding="utf-8") as csv_file:
+        for row in csv.DictReader(csv_file):
+            levels.append(
+                {
+                    "level_id": row["level_id"],
+                    "canonical_name": row["canonical_name"],
+                    "pattern": re.compile(row["pattern"], re.I)
+                }
+            )
+
+    return levels
