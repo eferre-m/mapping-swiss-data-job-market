@@ -1,4 +1,5 @@
 education_id,canonical_name,pattern
+degree,University Degree,\b(university degree|academic degree|higher education degree|diplôme universitaire|universit[aä]tsabschluss)\b
 high_school,High School,\b(high school|secondary school|lycée|maturité|matura)\b
 vocational,Vocational Education,\b(vocational|apprenticeship|apprentissage|formation professionnelle|Ausbildung)\b
 bachelor,Bachelor,\b(bachelor|bachelor's|licence|licenciatura)\b
