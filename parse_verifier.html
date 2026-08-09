@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offer Parse Verifier</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --ink:#111417;
+    --paper:#F4F4F1;
+    --red:#D6372C;
+    --grey:#8A8D91;
+    --grey-light:#DCDCD8;
+    --green:#3E6B4F;
+    --amber:#B4791F;
+    --skill:#ffd166;
+    --lang:#5bc0ff;
+    --soft:#7ee787;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Archivo',Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1300px;margin:0 auto;padding:28px 24px 100px;}
+
+  .masthead{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    border-bottom:4px solid var(--ink); padding-bottom:14px; margin-bottom:6px;
+  }
+  .masthead h1{font-size:26px; font-weight:900; letter-spacing:-0.02em; margin:0; text-transform:uppercase;}
+  .masthead .meta{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--grey); text-align:right; line-height:1.5;}
+  .subline{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--grey); margin-bottom:18px; text-transform:uppercase; letter-spacing:0.04em;}
+  .note{
+    font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--grey); background:#fff;
+    border:1.5px solid var(--grey-light); padding:10px 14px; margin-bottom:24px; line-height:1.6;
+  }
+  .note strong{color:var(--ink);}
+
+  .section-num{display:flex; align-items:center; gap:10px; margin:30px 0 12px; cursor:pointer;}
+  .section-num .n{font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:12px; background:var(--ink); color:var(--paper); padding:3px 8px;}
+  .section-num .t{font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:0.05em; flex:1;}
+  .section-num .toggle{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--grey);}
+  .section-body{display:none; border:1.5px solid var(--grey-light); background:#fff; padding:18px; margin-bottom:6px;}
+  .section-body.open{display:block;}
+
+  label{display:block; font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--grey); margin-bottom:4px;}
+  input[type=text], input[type=file], select, textarea{
+    width:100%; border:none; border-bottom:2px solid var(--ink); background:transparent;
+    font-family:'Archivo',sans-serif; font-size:14px; padding:6px 2px; color:var(--ink);
+  }
+  input:focus, select:focus, textarea:focus{outline:none; border-bottom-color:var(--red);}
+  textarea{border:2px solid var(--ink); padding:10px; min-height:60px; resize:vertical; line-height:1.5; font-size:12px; font-family:'IBM Plex Mono',monospace;}
+  textarea.invalid{border-color:var(--red);}
+
+  button{
+    font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:0.05em;
+    font-size:12px; font-weight:600; border:2px solid var(--ink); background:var(--ink); color:var(--paper);
+    padding:10px 18px; cursor:pointer; transition:all .12s ease;
+  }
+  button:hover{background:var(--red); border-color:var(--red);}
+  button.ghost{background:transparent; color:var(--ink);}
+  button.ghost:hover{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+  button.small{padding:5px 10px; font-size:10px;}
+  button:disabled{opacity:.35; cursor:not-allowed;}
+  .actions{display:flex; gap:10px; flex-wrap:wrap; margin:14px 0 6px; align-items:center;}
+
+  table{width:100%; border-collapse:collapse; margin-top:6px;}
+  th{font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; text-align:left; color:var(--grey); border-bottom:2px solid var(--ink); padding:6px 8px;}
+  td{font-size:12px; padding:8px; border-bottom:1px solid var(--grey-light); vertical-align:top;}
+  tr.offer-row{cursor:pointer;}
+  tr.offer-row:hover td{background:#ECECE8;}
+  tr.offer-row.selected td{background:#111417; color:#fff;}
+  tr.offer-row.selected .jobid{color:#ccc;}
+  .jobid{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--grey);}
+  .empty-state{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--grey); text-align:center; padding:30px 0;}
+
+  select.status-select{width:auto; border:2px solid var(--ink); padding:4px 6px; font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase;}
+  .status-tag{font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; padding:2px 6px; letter-spacing:0.04em; display:inline-block;}
+  .status-pending{background:var(--grey-light); color:var(--grey);}
+  .status-reviewed{background:var(--green); color:#fff;}
+  .status-flagged{background:var(--red); color:#fff;}
+
+  /* ---- Offer detail ---- */
+  .detail{border:3px solid var(--ink); border-left:8px solid var(--red); background:#fff; padding:0; margin:10px 0 24px;}
+  .detail-flag{background:var(--ink); color:var(--paper); font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; padding:6px 18px; display:flex; justify-content:space-between; align-items:center;}
+  .detail-body{padding:0;}
+  .detail h3{margin:0 0 4px; font-size:18px;}
+  .detail .sub{font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--grey); margin-bottom:16px;}
+
+  .split{display:grid; grid-template-columns:1fr 1fr; min-height:0;}
+  @media (max-width:900px){ .split{grid-template-columns:1fr;} }
+  .split-pane{padding:18px; max-height:720px; overflow-y:auto;}
+  .split-pane.raw{border-right:2px solid var(--ink); background:var(--paper);}
+  @media (max-width:900px){ .split-pane.raw{border-right:none; border-bottom:2px solid var(--ink);} }
+
+  .legend{display:flex; gap:14px; font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--grey); align-items:center; margin-bottom:10px; flex-wrap:wrap;}
+  .legend span{display:flex; align-items:center; gap:5px;}
+  .dot{width:9px;height:9px;display:inline-block; border:1px solid var(--grey-light);}
+  .dot.skill{background:var(--skill);}
+  .dot.lang{background:var(--lang);}
+  .dot.soft{background:var(--soft);}
+
+  #rawTextView{
+    white-space:pre-wrap; word-wrap:break-word; font-size:12.5px; line-height:1.65;
+    font-family:'IBM Plex Mono',monospace; color:#333;
+  }
+  mark{border-radius:2px; padding:0 2px; color:#111; font-weight:600; scroll-margin-top:20px;}
+  mark.m-skill{background:var(--skill);}
+  mark.m-lang{background:var(--lang);}
+  mark.m-soft{background:var(--soft);}
+  mark.m-flash{outline:2px solid var(--red);}
+
+  .field-block{margin-bottom:16px;}
+  .field-block .label{font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--grey); margin-bottom:8px; display:block;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;}
+  .field{margin-bottom:10px;}
+
+  .array-row{
+    border:1.5px solid var(--grey-light); background:var(--paper); padding:10px; margin-bottom:8px; position:relative;
+  }
+  .array-row .row-top{display:flex; gap:8px; align-items:flex-end;}
+  .array-row .row-top > div{flex:1;}
+  .array-row .row-actions{display:flex; gap:6px; align-items:flex-end; flex-shrink:0;}
+  .icon-btn{
+    border:1.5px solid var(--grey-light); background:#fff; color:var(--grey); font-family:'IBM Plex Mono',monospace;
+    font-size:11px; padding:6px 8px; cursor:pointer; line-height:1;
+  }
+  .icon-btn:hover{border-color:var(--ink); color:var(--ink);}
+  .icon-btn.del:hover{border-color:var(--red); color:var(--red);}
+  .add-row-btn{
+    width:100%; border:1.5px dashed var(--grey); background:transparent; color:var(--grey);
+    font-family:'IBM Plex Mono',monospace; font-size:11px; padding:8px; cursor:pointer; text-transform:uppercase; letter-spacing:.04em;
+  }
+  .add-row-btn:hover{border-color:var(--ink); color:var(--ink);}
+
+  .count-badge{font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--grey); font-weight:400;}
+
+  .cat-table input{border-bottom:1px solid var(--grey-light); font-size:12px; padding:4px 2px;}
+  .cat-table td{padding:4px;}
+  .cat-table .del{color:var(--red); cursor:pointer; font-family:'IBM Plex Mono',monospace; font-size:14px; text-align:center;}
+  .cat-tabs{display:flex; gap:8px; flex-wrap:wrap;}
+  button.tab{border:2px solid var(--grey-light); background:#fff; color:var(--grey); padding:6px 12px; font-size:10px;}
+  button.tab.active{border-color:var(--ink); background:var(--ink); color:#fff;}
+
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--ink); color:var(--paper); padding:10px 18px; font-family:'IBM Plex Mono',monospace;
+    font-size:12px; opacity:0; transition:all .25s ease; pointer-events:none;
+    max-width:600px; word-break:break-word; text-align:center; z-index:99;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  #pasteModal{
+    position:fixed; inset:0; background:rgba(17,20,23,.6);
+    display:none; align-items:center; justify-content:center; z-index:50;
+  }
+  #pasteModal.open{display:flex;}
+  .modal-box{
+    background:var(--paper); border:3px solid var(--ink); width:min(700px, 92vw); padding:18px;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .modal-box h3{margin:0; font-size:14px; text-transform:uppercase; font-family:'IBM Plex Mono',monospace;}
+  .modal-box textarea{height:260px;}
+  .modal-actions{display:flex; justify-content:flex-end; gap:8px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <h1>Offer Parse Verifier</h1>
+    <div class="meta">Visual verification layer<br>Edits the parser's JSON directly</div>
+  </div>
+  <div class="subline" id="storageState">loading…</div>
+  <div class="note">
+    This viewer <strong>never re-analyzes the text</strong> — it shows the <code>raw_text</code> highlighted with
+    whatever your parser already detected, and lets you correct it by hand. Changes are saved automatically in
+    the browser, and <strong>Export JSON</strong> keeps exactly the same input schema (same fields, same
+    <code>skills</code> / <code>languages</code> / <code>soft_skills</code> arrays), ready for your Python pipeline.
+    <br><br>
+    Status (pending/reviewed) and notes are stored separately and <strong>never end up in the exported JSON</strong>.
+    Re-importing a JSON with the same <code>job_id</code> replaces that offer — export first if you don't want to
+    lose edits.
+  </div>
+
+  <div class="actions">
+    <input type="file" id="fileImport" accept=".json" multiple style="display:none;">
+    <button id="btnImport">📂 Import JSON ←</button>
+    <button class="ghost" id="btnPaste">📋 Paste JSON</button>
+    <input type="file" id="fileImportCatalogs" accept=".csv" multiple style="display:none;">
+    <button class="ghost" id="btnImportCatalogs">Import catalogs (CSV) ←</button>
+    <button class="ghost" id="btnExportAll">⬇️ Export all (JSON) →</button>
+    <button class="ghost" id="btnExportOne" disabled>⬇️ Export this offer (JSON) →</button>
+  </div>
+
+  <!-- ===== OFFERS ===== -->
+  <div class="section-num" data-section="offers" style="cursor:default;">
+    <span class="n">01</span><span class="t">Loaded offers</span>
+    <span class="count-badge" id="offerCount"></span>
+  </div>
+  <table>
+    <thead><tr><th>Job ID</th><th>Company</th><th>Role</th><th>City</th><th>Status</th><th></th></tr></thead>
+    <tbody id="offersBody"></tbody>
+  </table>
+  <div class="empty-state" id="emptyState">No offers loaded — import a JSON (single object or array).</div>
+
+  <div id="detailContainer"></div>
+
+  <!-- ===== CSV batch export ===== -->
+  <div class="section-num" data-section="csv">
+    <span class="n">02</span><span class="t">Export CSV (all offers)</span><span class="toggle">▸ show</span>
+  </div>
+  <div class="section-body" id="section-csv">
+    <div class="actions" style="margin:0;">
+      <button class="ghost" id="csvSkills">skills.csv</button>
+      <button class="ghost" id="csvLanguages">languages.csv</button>
+      <button class="ghost" id="csvSoft">soft_skills.csv</button>
+      <button class="ghost" id="csvMain">job_main.csv</button>
+      <button class="ghost" id="csvMeta">estado_notas.csv</button>
+    </div>
+  </div>
+
+  <!-- ===== CATALOGS ===== -->
+  <div class="section-num" data-section="catalogs">
+    <span class="n">03</span><span class="t">Edit catalogs</span><span class="toggle">▸ show</span>
+  </div>
+  <div class="section-body" id="section-catalogs">
+    <div class="actions cat-tabs" id="catalogTabs"></div>
+    <div id="catalogEditorBody"></div>
+    <div class="actions">
+      <button id="btnAddCatalogRow">+ Add row</button>
+      <button class="ghost" id="btnDownloadCatalog">Download this catalog.csv →</button>
+    </div>
+  </div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<div id="pasteModal">
+  <div class="modal-box">
+    <h3>Paste JSON</h3>
+    <textarea id="pasteArea" placeholder="Paste a single offer object or an array of offers here..."></textarea>
+    <div class="modal-actions">
+      <button class="ghost" id="pasteCancel">Cancel</button>
+      <button id="pasteLoad">Load</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+let offers = [];               // array of job objects — EXACT source schema, edited in place
+let meta = {};                 // job_id -> {status, notes}   (kept OUT of exported JSON)
+let selectedJobId = null;
+let flashTimer = null;
+
+const CATALOG_SCHEMAS = {
+  skills:      {file:'skills.csv',       idField:'skill_id',  fields:['skill_id','canonical_name','pattern']},
+  languages:   {file:'languages.csv',    idField:'lang_id',   fields:['lang_id','canonical_name','pattern']},
+  soft_skills: {file:'soft_skills.csv',  idField:'soft_id',   fields:['soft_id','canonical_name','pattern']},
+  cities:      {file:'cities.csv',       idField:'city_id',   fields:['city_id','canonical_name','canton']},
+  aliases:     {file:'aliases.csv',      idField:'alias',     fields:['alias','canonical_skill_id']},
+};
+let catalogs = {skills:[], languages:[], soft_skills:[], cities:[], aliases:[]};
+let activeCatalogTab = 'skills';
+
+const STATUS_OPTIONS = ['pending','reviewed','flagged'];
+const STATUS_LABEL = {pending:'Pending', reviewed:'Reviewed', flagged:'Flagged'};
+const TOP_FIELDS = [
+  {key:'job_id', label:'job_id'}, {key:'date_captured', label:'date_captured'},
+  {key:'company', label:'company'}, {key:'role', label:'role'},
+  {key:'industry_raw', label:'industry_raw'}, {key:'source', label:'source'},
+];
+
+// ============================================================
+// HELPERS
+// ============================================================
+function escapeHtml(s){ return (s??'').toString().replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function escapeRegex(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+function showToast(msg, duration){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(()=>t.classList.remove('show'), duration || 2600);
+}
+function el(tag, attrs, children){
+  const e = document.createElement(tag);
+  if (attrs) for (const k in attrs){
+    if (k === 'text') e.textContent = attrs[k];
+    else if (k.startsWith('on')) e[k] = attrs[k];
+    else e.setAttribute(k, attrs[k]);
+  }
+  (children||[]).forEach(c => e.appendChild(c));
+  return e;
+}
+function downloadBlob(content, filename, type){
+  const blob = new Blob([content], {type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+function csvEscape(v){
+  if (v === null || v === undefined) return '';
+  const s = String(v);
+  return /[",\n]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s;
+}
+function arrayToCSV(rows, columns){
+  const lines = [columns.join(',')];
+  rows.forEach(r => lines.push(columns.map(c => csvEscape(r[c])).join(',')));
+  return lines.join('\n') + '\n';
+}
+function parseCsv(text){
+  const rows = [];
+  let row = [], field = '', inQuotes = false;
+  for(let i=0;i<text.length;i++){
+    const c = text[i];
+    if(inQuotes){
+      if(c === '"'){ if(text[i+1] === '"'){ field += '"'; i++; } else { inQuotes = false; } }
+      else{ field += c; }
+    }else{
+      if(c === '"'){ inQuotes = true; }
+      else if(c === ','){ row.push(field); field=''; }
+      else if(c === '\n'){ row.push(field); rows.push(row); row=[]; field=''; }
+      else if(c === '\r'){ /* skip */ }
+      else{ field += c; }
+    }
+  }
+  if(field.length || row.length){ row.push(field); rows.push(row); }
+  if(!rows.length) return [];
+  const header = rows[0];
+  return rows.slice(1).filter(r=>r.length>1 || r[0]).map(r=>{
+    const obj = {};
+    header.forEach((h,idx)=> obj[h.trim()] = (r[idx]||'').trim());
+    return obj;
+  });
+}
+function writeCsv(rows, fields){
+  const esc = v=>{ const s = String(v??''); return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s; };
+  const lines = [fields.join(',')];
+  rows.forEach(r=> lines.push(fields.map(f=>esc(r[f])).join(',')));
+  return lines.join('\n') + '\n';
+}
+function ensureShape(job){
+  // Fill missing keys so the form never breaks — but never invent data, just structure.
+  if (!('job_id' in job)) job.job_id = null;
+  ['date_captured','company','role','industry_raw','source','raw_text','contract','education','experience'].forEach(k=>{
+    if (!(k in job)) job[k] = null;
+  });
+  if (!job.city || typeof job.city !== 'object') job.city = {city_id:null, canonical_name:null, canton:null};
+  if (!job.work_mode || typeof job.work_mode !== 'object') job.work_mode = {work_mode_id:null, canonical_name:null};
+  if (!job.workload || typeof job.workload !== 'object') job.workload = {workload_id:null, canonical_name:null};
+  if (!Array.isArray(job.skills)) job.skills = [];
+  if (!Array.isArray(job.languages)) job.languages = [];
+  if (!Array.isArray(job.soft_skills)) job.soft_skills = [];
+  return job;
+}
+function metaFor(jobId){
+  if (!meta[jobId]) meta[jobId] = {status:'pending', notes:''};
+  return meta[jobId];
+}
+
+// ============================================================
+// PERSISTENCE
+// ============================================================
+async function persistOffers(){
+  try{ await window.storage.set('offers_data', JSON.stringify(offers)); }catch(e){ console.error(e); }
+  document.getElementById('storageState').textContent = offers.length + ' offer(s) saved in this browser';
+  document.getElementById('offerCount').textContent = '(' + offers.length + ')';
+}
+async function persistMeta(){
+  try{ await window.storage.set('offers_meta', JSON.stringify(meta)); }catch(e){ console.error(e); }
+}
+async function persistCatalogs(){
+  try{ await window.storage.set('offers_catalogs', JSON.stringify(catalogs)); }catch(e){ console.error(e); }
+}
+async function loadState(){
+  try{ const r = await window.storage.get('offers_data'); offers = r && r.value ? JSON.parse(r.value) : []; }catch(e){ offers = []; }
+  try{ const r2 = await window.storage.get('offers_meta'); meta = r2 && r2.value ? JSON.parse(r2.value) : {}; }catch(e){ meta = {}; }
+  try{ const r3 = await window.storage.get('offers_catalogs'); catalogs = r3 && r3.value ? JSON.parse(r3.value) : {skills:[], languages:[], soft_skills:[], cities:[], aliases:[]}; }catch(e){ catalogs = {skills:[], languages:[], soft_skills:[], cities:[], aliases:[]}; }
+  offers.forEach(ensureShape);
+  document.getElementById('storageState').textContent = offers.length + ' offer(s) saved in this browser';
+  document.getElementById('offerCount').textContent = '(' + offers.length + ')';
+  renderOffers();
+  renderCatalogTabs();
+  renderCatalogEditor();
+}
+
+// ============================================================
+// IMPORT / EXPORT — offers
+// ============================================================
+function importJobs(parsed, sourceName){
+  let jobs;
+  if (Array.isArray(parsed)) jobs = parsed;
+  else if (parsed && typeof parsed === 'object' && 'raw_text' in parsed) jobs = [parsed];
+  else { showToast((sourceName||'JSON') + ': unrecognized format (expected an offer object or an array)'); return 0; }
+
+  let replaced = 0, added = 0;
+  jobs.forEach(j=>{
+    ensureShape(j);
+    const idx = offers.findIndex(o=>o.job_id && j.job_id && o.job_id === j.job_id);
+    if (idx >= 0){ offers[idx] = j; replaced++; }
+    else { offers.push(j); added++; }
+  });
+  persistOffers();
+  renderOffers();
+  showToast(`Importadas: ${added} nueva(s), ${replaced} reemplazada(s)`);
+  return jobs.length;
+}
+
+document.getElementById('btnImport').onclick = ()=> document.getElementById('fileImport').click();
+document.getElementById('fileImport').onchange = async (e)=>{
+  const files = [...e.target.files]; if(!files.length) return;
+  for (const file of files){
+    try{ importJobs(JSON.parse(await file.text()), file.name); }
+    catch(err){ console.error(err); showToast(`${file.name}: invalid JSON`); }
+  }
+  e.target.value = '';
+};
+
+document.getElementById('btnPaste').onclick = ()=>{
+  document.getElementById('pasteModal').classList.add('open');
+  document.getElementById('pasteArea').value = '';
+  document.getElementById('pasteArea').focus();
+};
+document.getElementById('pasteCancel').onclick = ()=> document.getElementById('pasteModal').classList.remove('open');
+document.getElementById('pasteLoad').onclick = ()=>{
+  const txt = document.getElementById('pasteArea').value;
+  try{ importJobs(JSON.parse(txt)); document.getElementById('pasteModal').classList.remove('open'); }
+  catch(e){ showToast('Invalid JSON: ' + e.message); }
+};
+
+document.getElementById('btnExportAll').onclick = ()=>{
+  if (!offers.length){ showToast('Nothing to export yet'); return; }
+  downloadBlob(JSON.stringify(offers, null, 2), 'offers.json', 'application/json');
+};
+document.getElementById('btnExportOne').onclick = ()=>{
+  const job = offers.find(o=>o.job_id === selectedJobId);
+  if (!job){ showToast('Select an offer first'); return; }
+  downloadBlob(JSON.stringify(job, null, 2), (job.job_id || 'offer') + '.json', 'application/json');
+};
+
+// ============================================================
+// OFFERS LIST
+// ============================================================
+function renderOffers(){
+  const body = document.getElementById('offersBody');
+  const empty = document.getElementById('emptyState');
+  document.getElementById('btnExportOne').disabled = !selectedJobId;
+  if (!offers.length){
+    body.innerHTML = ''; empty.style.display = 'block';
+    document.getElementById('detailContainer').innerHTML = '';
+    return;
+  }
+  empty.style.display = 'none';
+  body.innerHTML = offers.map(o=>{
+    const st = metaFor(o.job_id || '').status;
+    return `
+      <tr class="offer-row ${o.job_id===selectedJobId?'selected':''}" data-jobid="${escapeHtml(o.job_id)}">
+        <td class="jobid">${escapeHtml(o.job_id||'—')}</td>
+        <td>${escapeHtml(o.company||'—')}</td>
+        <td>${escapeHtml(o.role||'—')}</td>
+        <td>${escapeHtml(o.city && o.city.canonical_name || '—')}</td>
+        <td><span class="status-tag status-${st}">${STATUS_LABEL[st]}</span></td>
+        <td><span class="icon-btn del" data-del="${escapeHtml(o.job_id)}" title="Remove from list">✕</span></td>
+      </tr>`;
+  }).join('');
+
+  body.querySelectorAll('tr.offer-row').forEach(tr=>{
+    tr.addEventListener('click', (e)=>{
+      if (e.target.closest('[data-del]')) return;
+      const jobId = tr.dataset.jobid;
+      selectedJobId = (selectedJobId === jobId) ? null : jobId;
+      renderOffers();
+      renderDetail();
+    });
+  });
+  body.querySelectorAll('[data-del]').forEach(b=>{
+    b.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const jobId = b.dataset.del;
+      if (!confirm(`Remove offer ${jobId} from the list? (no file is deleted, just this session)`)) return;
+      offers = offers.filter(o=>o.job_id !== jobId);
+      if (selectedJobId === jobId) selectedJobId = null;
+      persistOffers();
+      renderOffers();
+      renderDetail();
+    });
+  });
+}
+
+// ============================================================
+// HIGHLIGHT raw_text
+// ============================================================
+function buildHighlight(job){
+  const raw = job.raw_text || '';
+  const terms = [];
+  (job.skills||[]).forEach(s => { if (s.canonical_name) terms.push({term:s.canonical_name, cls:'m-skill'}); });
+  (job.languages||[]).forEach(l => { if (l.canonical_name) terms.push({term:l.canonical_name, cls:'m-lang'}); });
+  (job.soft_skills||[]).forEach(s => { if (s.canonical_name) terms.push({term:s.canonical_name, cls:'m-soft'}); });
+  if (!terms.length) return escapeHtml(raw);
+
+  terms.sort((a,b)=> b.term.length - a.term.length);
+  const map = {};
+  terms.forEach(t => { map[t.term.toLowerCase()] = t.cls; });
+  const pattern = terms.map(t => escapeRegex(t.term)).join('|');
+  // Unicode-aware whole-word match: a letter/digit right before or after the match means
+  // it's part of a bigger word (e.g. "Excel" inside "Excellence") and should NOT count.
+  const regex = new RegExp('(?<![\\p{L}\\p{N}_])(' + pattern + ')(?![\\p{L}\\p{N}_])', 'giu');
+
+  let result = '', lastIndex = 0, match;
+  while ((match = regex.exec(raw)) !== null){
+    result += escapeHtml(raw.slice(lastIndex, match.index));
+    const cls = map[match[0].toLowerCase()] || '';
+    result += `<mark class="${cls}" data-term="${escapeHtml(match[0].toLowerCase())}">${escapeHtml(match[0])}</mark>`;
+    lastIndex = regex.lastIndex;
+    if (match.index === regex.lastIndex) regex.lastIndex++;
+  }
+  result += escapeHtml(raw.slice(lastIndex));
+  return result;
+}
+function locateTerm(term){
+  if (!term) return;
+  clearTimeout(flashTimer);
+  const marks = [...document.querySelectorAll('#rawTextView mark')].filter(m => m.dataset.term === term.toLowerCase());
+  document.querySelectorAll('#rawTextView mark.m-flash').forEach(m=>m.classList.remove('m-flash'));
+  if (!marks.length){ showToast('No aparece literalmente en el raw_text — revisa el nombre'); return; }
+  marks.forEach(m=>m.classList.add('m-flash'));
+  marks[0].scrollIntoView({block:'center', behavior:'smooth'});
+  flashTimer = setTimeout(()=> marks.forEach(m=>m.classList.remove('m-flash')), 1600);
+}
+
+// ============================================================
+// DETAIL — field editors
+// ============================================================
+function simpleTextField(container, obj, key, labelText, onChange){
+  const wrap = el('div', {class:'field'});
+  wrap.appendChild(el('label', {text: labelText}));
+  const input = el('input', {type:'text'});
+  input.value = obj[key] ?? '';
+  input.oninput = () => { obj[key] = input.value === '' ? null : input.value; onChange && onChange(); };
+  wrap.appendChild(input);
+  container.appendChild(wrap);
+  return input;
+}
+function jsonField(container, obj, key, labelText){
+  const wrap = el('div', {class:'field-block'});
+  wrap.appendChild(el('span', {class:'label', text: labelText + ' (JSON — empty = null)'}));
+  const ta = el('textarea', {});
+  ta.value = obj[key] === null || obj[key] === undefined ? '' : JSON.stringify(obj[key], null, 2);
+  ta.oninput = () => {
+    const v = ta.value.trim();
+    if (v === ''){ obj[key] = null; ta.classList.remove('invalid'); return; }
+    try { obj[key] = JSON.parse(v); ta.classList.remove('invalid'); }
+    catch(e){ ta.classList.add('invalid'); }
+  };
+  ta.onblur = () => { persistOffers(); };
+  wrap.appendChild(ta);
+  container.appendChild(wrap);
+}
+
+// Fields like contract / education / experience can arrive as null, a flat object,
+// or (occasionally) something more complex. Editable as key/value rows when possible,
+// with a manual "raw JSON" fallback so nothing is ever unrepresentable or lost.
+let fieldModeOverride = {}; // "jobId:key" -> 'structured' | 'raw', transient UI state
+function parseFieldValue(str){
+  const s = str.trim();
+  if (s === '') return null;
+  try { return JSON.parse(s); } catch(e) { /* not valid JSON literal, keep as plain string */ }
+  return str;
+}
+function displayFieldValue(v){
+  if (v === null || v === undefined) return '';
+  if (typeof v === 'object') return JSON.stringify(v);
+  return String(v);
+}
+function renderDynamicField(container, job, key, title){
+  const wrap = el('div', {class:'field-block'});
+  const headerRow = el('div', {style:'display:flex; justify-content:space-between; align-items:center;'});
+  headerRow.appendChild(el('span', {class:'label', text: title, style:'margin-bottom:0;'}));
+  const toggleBtn = el('span', {class:'icon-btn', title:'Switch between structured fields and raw JSON'});
+  headerRow.appendChild(toggleBtn);
+  wrap.appendChild(headerRow);
+  const body = el('div', {style:'margin-top:8px;'});
+  wrap.appendChild(body);
+  container.appendChild(wrap);
+
+  const modeKey = (job.job_id||'') + ':' + key;
+  function currentMode(){
+    if (fieldModeOverride[modeKey]) return fieldModeOverride[modeKey];
+    const v = job[key];
+    const isPlainObject = v !== null && typeof v === 'object' && !Array.isArray(v);
+    return (isPlainObject || v === null || v === undefined) ? 'structured' : 'raw';
+  }
+
+  function renderBody(){
+    const mode = currentMode();
+    toggleBtn.textContent = mode === 'structured' ? '{ } raw JSON' : '▤ structured fields';
+    body.innerHTML = '';
+
+    if (mode === 'raw'){
+      const ta = el('textarea', {});
+      ta.value = job[key] === null || job[key] === undefined ? '' : JSON.stringify(job[key], null, 2);
+      ta.oninput = () => {
+        const v = ta.value.trim();
+        if (v === ''){ job[key] = null; ta.classList.remove('invalid'); return; }
+        try { job[key] = JSON.parse(v); ta.classList.remove('invalid'); }
+        catch(e){ ta.classList.add('invalid'); }
+      };
+      ta.onblur = () => persistOffers();
+      body.appendChild(ta);
+      return;
+    }
+
+    // structured mode
+    if (job[key] === null || job[key] === undefined || typeof job[key] !== 'object' || Array.isArray(job[key])){
+      job[key] = {};
+    }
+    const obj = job[key];
+    const keys = Object.keys(obj);
+    if (!keys.length){
+      body.appendChild(el('div', {class:'empty-state', style:'padding:10px 0; text-align:left;', text:'No fields yet — add one below.'}));
+    }
+    keys.forEach(k => {
+      const row = el('div', {class:'array-row'});
+      const top = el('div', {class:'row-top'});
+      const keyWrap = el('div', {});
+      keyWrap.appendChild(el('label', {text:'field'}));
+      const keyInput = el('input', {type:'text'});
+      keyInput.value = k;
+      keyInput.onblur = () => {
+        const newKey = keyInput.value.trim();
+        if (newKey && newKey !== k){
+          const reordered = {};
+          Object.keys(obj).forEach(ok => { reordered[ok === k ? newKey : ok] = obj[ok]; });
+          job[key] = reordered;
+          persistOffers();
+          renderDetail();
+        }
+      };
+      keyWrap.appendChild(keyInput);
+      const valWrap = el('div', {});
+      valWrap.appendChild(el('label', {text:'value'}));
+      const valInput = el('input', {type:'text'});
+      valInput.value = displayFieldValue(obj[k]);
+      valInput.oninput = () => { obj[k] = parseFieldValue(valInput.value); };
+      valInput.onblur = () => persistOffers();
+      valWrap.appendChild(valInput);
+      top.appendChild(keyWrap); top.appendChild(valWrap);
+      const actions = el('div', {class:'row-actions'});
+      const delBtn = el('span', {class:'icon-btn del', text:'✕', title:'Delete field'});
+      delBtn.onclick = () => { delete obj[k]; persistOffers(); renderDetail(); };
+      actions.appendChild(delBtn);
+      top.appendChild(actions);
+      row.appendChild(top);
+      body.appendChild(row);
+    });
+
+    const addRow = el('div', {style:'display:flex; gap:8px; margin-top:6px;'});
+    const newKeyInput = el('input', {type:'text', placeholder:'field name (e.g. level, years)'});
+    const addBtn = el('button', {class:'add-row-btn', text:'+ Add field', style:'width:auto;'});
+    addBtn.onclick = () => {
+      const nk = newKeyInput.value.trim();
+      if (!nk){ showToast('Type a field name first'); return; }
+      obj[nk] = '';
+      persistOffers();
+      renderDetail();
+    };
+    addRow.appendChild(newKeyInput); addRow.appendChild(addBtn);
+    body.appendChild(addRow);
+  }
+
+  toggleBtn.onclick = () => {
+    fieldModeOverride[modeKey] = currentMode() === 'structured' ? 'raw' : 'structured';
+    renderBody();
+  };
+  renderBody();
+}
+
+function renderArrayEditor(container, title, arr, template, rowFields, cls, job, idConfig){
+  const wrap = el('div', {class:'field-block'});
+  wrap.appendChild(el('span', {class:'label', text: `${title} (${arr.length})`}));
+  const list = el('div', {});
+  arr.forEach((item, idx) => {
+    const row = el('div', {class:'array-row'});
+    const top = el('div', {class:'row-top'});
+    rowFields.forEach(f => {
+      const fieldWrap = el('div', {});
+      fieldWrap.appendChild(el('label', {text:f.label}));
+      const input = el('input', {type:'text'});
+      input.value = item[f.key] ?? '';
+      if (f.list) input.setAttribute('list', f.list);
+      input.oninput = () => {
+        item[f.key] = input.value === '' ? null : input.value;
+        if (idConfig && f.key === idConfig.nameField){
+          item[idConfig.idField] = autoId(idConfig.catalogType, item[f.key], idConfig.idField, idConfig.slugFn);
+        }
+        if (f.rerenderRaw) refreshRawPane(job);
+      };
+      input.onblur = () => persistOffers();
+      fieldWrap.appendChild(input);
+      top.appendChild(fieldWrap);
+    });
+    const actions = el('div', {class:'row-actions'});
+    if (cls){
+      const locateBtn = el('span', {class:'icon-btn', text:'👁', title:'Locate in text'});
+      locateBtn.onclick = () => locateTerm(item.canonical_name);
+      actions.appendChild(locateBtn);
+    }
+    const delBtn = el('span', {class:'icon-btn del', text:'✕', title:'Delete row'});
+    delBtn.onclick = () => { arr.splice(idx,1); persistOffers(); renderDetail(); };
+    actions.appendChild(delBtn);
+    top.appendChild(actions);
+    row.appendChild(top);
+    list.appendChild(row);
+  });
+  wrap.appendChild(list);
+  const addBtn = el('button', {class:'add-row-btn', text:'+ Add row'});
+  addBtn.onclick = () => { arr.push(Object.assign({}, template)); persistOffers(); renderDetail(); };
+  wrap.appendChild(addBtn);
+  container.appendChild(wrap);
+}
+
+function refreshRawPane(job){
+  const view = document.getElementById('rawTextView');
+  if (view) view.innerHTML = buildHighlight(job);
+}
+
+// ---- Auto id generation: the person edits the human-readable name only; the internal
+// id (skill_id / lang_id / soft_id / city_id / ...) is derived automatically so it never
+// needs to be shown or typed. Reuses a matching catalog id when there is one. ----
+function stripDiacritics(s){ return (s||'').toString().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+function slugConcat(s){ return stripDiacritics(s).toLowerCase().replace(/[^a-z0-9]+/g,''); }
+function slugUnderscore(s){ return stripDiacritics(s).toLowerCase().trim().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,''); }
+function autoId(catalogType, name, idFieldName, slugFn){
+  if (!name) return null;
+  const rows = catalogType ? (catalogs[catalogType]||[]) : [];
+  const match = rows.find(r => (r.canonical_name||'').toLowerCase() === name.toLowerCase());
+  if (match && match[idFieldName]) return match[idFieldName];
+  return (slugFn||slugConcat)(name);
+}
+
+function renderDetail(){
+  const container = document.getElementById('detailContainer');
+  document.getElementById('btnExportOne').disabled = !selectedJobId;
+  if (!selectedJobId){ container.innerHTML = ''; return; }
+  const job = offers.find(o=>o.job_id === selectedJobId);
+  if (!job){ container.innerHTML = ''; return; }
+  const m = metaFor(job.job_id || '');
+
+  container.innerHTML = `
+    <div class="detail">
+      <div class="detail-flag">
+        <span>Verifying: ${escapeHtml(job.job_id||'no job_id')}</span>
+        <span id="statusWrap"></span>
+      </div>
+      <div class="detail-body">
+        <div class="split">
+          <div class="split-pane raw">
+            <div class="legend">
+              <span><span class="dot skill"></span>skill</span>
+              <span><span class="dot lang"></span>idioma</span>
+              <span><span class="dot soft"></span>soft skill</span>
+            </div>
+            <div id="rawTextView">${buildHighlight(job)}</div>
+          </div>
+          <div class="split-pane form" id="formPane"></div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // status selector
+  const statusWrap = document.getElementById('statusWrap');
+  const sel = el('select', {class:'status-select'});
+  STATUS_OPTIONS.forEach(s=>{
+    const opt = el('option', {value:s, text:STATUS_LABEL[s]});
+    if (s === m.status) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  sel.onchange = () => { m.status = sel.value; persistMeta(); renderOffers(); };
+  statusWrap.appendChild(sel);
+
+  const formPane = document.getElementById('formPane');
+
+  // general
+  const genSec = el('div', {class:'field-block'});
+  genSec.appendChild(el('span', {class:'label', text:'General info'}));
+  const genGrid = el('div', {class:'grid2'});
+  TOP_FIELDS.forEach(f => simpleTextField(genGrid, job, f.key, f.label, ()=>persistOffers()));
+  genSec.appendChild(genGrid);
+  formPane.appendChild(genSec);
+
+  // city / work_mode / workload
+  const locSec = el('div', {class:'field-block'});
+  locSec.appendChild(el('span', {class:'label', text:'City · Work mode · Workload'}));
+  const locGrid = el('div', {class:'grid3'});
+  const cityCol = el('div', {}); cityCol.appendChild(el('label', {text:'city'}));
+  simpleTextField(cityCol, job.city, 'canonical_name', 'name', ()=>{
+    job.city.city_id = autoId('cities', job.city.canonical_name, 'city_id', slugUnderscore);
+    persistOffers();
+  });
+  simpleTextField(cityCol, job.city, 'canton', 'canton', ()=>persistOffers());
+  const wmCol = el('div', {}); wmCol.appendChild(el('label', {text:'work mode'}));
+  simpleTextField(wmCol, job.work_mode, 'canonical_name', 'name', ()=>{
+    job.work_mode.work_mode_id = autoId(null, job.work_mode.canonical_name, null, slugUnderscore);
+    persistOffers();
+  });
+  const wlCol = el('div', {}); wlCol.appendChild(el('label', {text:'workload'}));
+  simpleTextField(wlCol, job.workload, 'canonical_name', 'name', ()=>{
+    job.workload.workload_id = autoId(null, job.workload.canonical_name, null, slugUnderscore);
+    persistOffers();
+  });
+  locGrid.appendChild(cityCol); locGrid.appendChild(wmCol); locGrid.appendChild(wlCol);
+  locSec.appendChild(locGrid);
+  formPane.appendChild(locSec);
+
+  // skills / languages / soft_skills — with "locate in text" + datalist suggestions from catalogs
+  renderArrayEditor(formPane, 'Skills', job.skills,
+    {skill_id:'', canonical_name:'', requirement:null},
+    [{key:'canonical_name', label:'name', rerenderRaw:true, list:'dl-skills'}, {key:'requirement', label:'requirement', list:'dl-requirement'}],
+    true, job, {nameField:'canonical_name', idField:'skill_id', catalogType:'skills', slugFn:slugConcat});
+
+  renderArrayEditor(formPane, 'Languages', job.languages,
+    {lang_id:'', canonical_name:'', requirement:null, level:null},
+    [{key:'canonical_name', label:'name', rerenderRaw:true, list:'dl-languages'}, {key:'requirement', label:'requirement', list:'dl-requirement'}, {key:'level', label:'level', list:'dl-cefr'}],
+    true, job, {nameField:'canonical_name', idField:'lang_id', catalogType:'languages', slugFn:slugConcat});
+
+  renderArrayEditor(formPane, 'Soft skills', job.soft_skills,
+    {soft_id:'', canonical_name:''},
+    [{key:'canonical_name', label:'name', rerenderRaw:true, list:'dl-soft'}],
+    true, job, {nameField:'canonical_name', idField:'soft_id', catalogType:'soft_skills', slugFn:slugConcat});
+
+  // contract / education / experience — structured key/value editor, raw JSON fallback for anything more complex
+  const otherSec = el('div', {class:'field-block'});
+  otherSec.appendChild(el('span', {class:'label', text:'Contract · Education · Experience'}));
+  formPane.appendChild(otherSec);
+  ['contract','education','experience'].forEach(k => renderDynamicField(formPane, job, k, k));
+
+  // any unknown extra top-level keys — never silently dropped
+  const known = new Set(['job_id','date_captured','company','role','industry_raw','source','raw_text','city','skills','languages','soft_skills','work_mode','workload','contract','education','experience']);
+  const extraKeys = Object.keys(job).filter(k => !known.has(k));
+  if (extraKeys.length){
+    const extraSec = el('div', {class:'field-block'});
+    extraSec.appendChild(el('span', {class:'label', text:'Extra fields detected in the JSON'}));
+    extraKeys.forEach(k => jsonField(extraSec, job, k, k));
+    formPane.appendChild(extraSec);
+  }
+
+  // notes (meta, not exported with job JSON)
+  const notesSec = el('div', {class:'field-block'});
+  notesSec.appendChild(el('span', {class:'label', text:'Notes (not exported in the offer JSON)'}));
+  const notes = el('textarea', {});
+  notes.value = m.notes || '';
+  notes.addEventListener('blur', ()=>{ m.notes = notes.value; persistMeta(); });
+  notesSec.appendChild(notes);
+  formPane.appendChild(notesSec);
+
+  // datalists for suggestions
+  formPane.appendChild(buildDatalist('dl-skills', catalogs.skills.map(r=>r.canonical_name)));
+  formPane.appendChild(buildDatalist('dl-languages', catalogs.languages.map(r=>r.canonical_name)));
+  formPane.appendChild(buildDatalist('dl-soft', catalogs.soft_skills.map(r=>r.canonical_name)));
+  formPane.appendChild(buildDatalist('dl-requirement', ['required','nice_to_have']));
+  formPane.appendChild(buildDatalist('dl-cefr', ['A1','A2','B1','B2','C1','C2','Native']));
+}
+function buildDatalist(id, values){
+  const dl = el('datalist', {id});
+  [...new Set(values.filter(Boolean))].forEach(v => dl.appendChild(el('option', {value:v})));
+  return dl;
+}
+
+// ============================================================
+// CATALOG EDITOR (import / edit / export CSV — for the parser's patterns)
+// ============================================================
+function renderCatalogTabs(){
+  const wrap = document.getElementById('catalogTabs');
+  wrap.innerHTML = Object.keys(CATALOG_SCHEMAS).map(type=>
+    `<button class="tab ${type===activeCatalogTab?'active':''}" data-type="${type}">${CATALOG_SCHEMAS[type].file}</button>`
+  ).join('');
+  wrap.querySelectorAll('.tab').forEach(b=>{
+    b.onclick = ()=>{ activeCatalogTab = b.dataset.type; renderCatalogTabs(); renderCatalogEditor(); };
+  });
+}
+function renderCatalogEditor(){
+  const schema = CATALOG_SCHEMAS[activeCatalogTab];
+  const rows = catalogs[activeCatalogTab];
+  const wrap = document.getElementById('catalogEditorBody');
+  if(!rows.length){
+    wrap.innerHTML = `<div class="empty-state">No rows for ${schema.file} — use "Import catalogs (CSV) ←" above, or add a row.</div>`;
+    return;
+  }
+  wrap.innerHTML = `
+    <table class="cat-table">
+      <thead><tr>${schema.fields.map(f=>`<th>${f}</th>`).join('')}<th></th></tr></thead>
+      <tbody>
+        ${rows.map((r,i)=>`
+          <tr data-i="${i}">
+            ${schema.fields.map(f=>`<td><input type="text" data-field="${f}" value="${escapeHtml(r[f]||'')}"></td>`).join('')}
+            <td class="del" data-i="${i}">✕</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+  wrap.querySelectorAll('input').forEach(inp=>{
+    inp.addEventListener('change', async (e)=>{
+      const tr = e.target.closest('tr');
+      rows[+tr.dataset.i][e.target.dataset.field] = e.target.value;
+      await persistCatalogs();
+      if (selectedJobId) renderDetail();
+    });
+  });
+  wrap.querySelectorAll('.del').forEach(d=>{
+    d.onclick = async ()=>{
+      rows.splice(+d.dataset.i, 1);
+      await persistCatalogs();
+      renderCatalogEditor();
+    };
+  });
+}
+document.getElementById('btnAddCatalogRow').onclick = async ()=>{
+  const schema = CATALOG_SCHEMAS[activeCatalogTab];
+  const blank = {}; schema.fields.forEach(f=> blank[f]='');
+  catalogs[activeCatalogTab].push(blank);
+  await persistCatalogs();
+  renderCatalogEditor();
+};
+document.getElementById('btnDownloadCatalog').onclick = ()=>{
+  const schema = CATALOG_SCHEMAS[activeCatalogTab];
+  const rows = catalogs[activeCatalogTab];
+  if(!rows.length){ showToast('This catalog is empty'); return; }
+  downloadBlob(writeCsv(rows, schema.fields), schema.file, 'text/csv');
+};
+document.getElementById('btnImportCatalogs').onclick = ()=> document.getElementById('fileImportCatalogs').click();
+document.getElementById('fileImportCatalogs').onchange = async (e)=>{
+  const files = [...e.target.files]; if(!files.length) return;
+  let loaded = [];
+  for(const file of files){
+    try{
+      const rows = parseCsv(await file.text());
+      if(!rows.length) continue;
+      const type = Object.keys(CATALOG_SCHEMAS).find(t => CATALOG_SCHEMAS[t].idField in rows[0]);
+      if(type){ catalogs[type] = rows; loaded.push(`${CATALOG_SCHEMAS[type].file} (${rows.length})`); }
+      else showToast(`Unrecognized CSV: ${file.name}`);
+    }catch(err){ console.error(err); showToast(`No se pudo leer ${file.name}`); }
+  }
+  await persistCatalogs();
+  renderCatalogTabs();
+  renderCatalogEditor();
+  if (selectedJobId) renderDetail();
+  showToast(loaded.length ? `Loaded: ${loaded.join(', ')}` : 'Nothing recognized in the selected files');
+  e.target.value = '';
+};
+
+// ============================================================
+// BATCH CSV EXPORT (all offers)
+// ============================================================
+document.getElementById('csvSkills').onclick = ()=>{
+  if(!offers.length){ showToast('No offers loaded'); return; }
+  const rows = [];
+  offers.forEach(o => (o.skills||[]).forEach(s => rows.push({job_id:o.job_id, skill_id:s.skill_id, canonical_name:s.canonical_name, requirement:s.requirement})));
+  downloadBlob(arrayToCSV(rows, ['job_id','skill_id','canonical_name','requirement']), 'skills.csv', 'text/csv');
+};
+document.getElementById('csvLanguages').onclick = ()=>{
+  if(!offers.length){ showToast('No offers loaded'); return; }
+  const rows = [];
+  offers.forEach(o => (o.languages||[]).forEach(l => rows.push({job_id:o.job_id, lang_id:l.lang_id, canonical_name:l.canonical_name, requirement:l.requirement, level:l.level})));
+  downloadBlob(arrayToCSV(rows, ['job_id','lang_id','canonical_name','requirement','level']), 'languages.csv', 'text/csv');
+};
+document.getElementById('csvSoft').onclick = ()=>{
+  if(!offers.length){ showToast('No offers loaded'); return; }
+  const rows = [];
+  offers.forEach(o => (o.soft_skills||[]).forEach(s => rows.push({job_id:o.job_id, soft_id:s.soft_id, canonical_name:s.canonical_name})));
+  downloadBlob(arrayToCSV(rows, ['job_id','soft_id','canonical_name']), 'soft_skills.csv', 'text/csv');
+};
+document.getElementById('csvMain').onclick = ()=>{
+  if(!offers.length){ showToast('No offers loaded'); return; }
+  const rows = offers.map(o=>({
+    job_id:o.job_id, date_captured:o.date_captured, company:o.company, role:o.role,
+    industry_raw:o.industry_raw, source:o.source,
+    city_id:o.city?o.city.city_id:null, city_canonical_name:o.city?o.city.canonical_name:null, canton:o.city?o.city.canton:null,
+    work_mode_id:o.work_mode?o.work_mode.work_mode_id:null, workload_id:o.workload?o.workload.workload_id:null,
+    contract:o.contract?JSON.stringify(o.contract):null, education:o.education?JSON.stringify(o.education):null, experience:o.experience?JSON.stringify(o.experience):null,
+  }));
+  downloadBlob(arrayToCSV(rows, Object.keys(rows[0])), 'job_main.csv', 'text/csv');
+};
+document.getElementById('csvMeta').onclick = ()=>{
+  if(!offers.length){ showToast('No offers loaded'); return; }
+  const rows = offers.map(o=>{ const m = metaFor(o.job_id||''); return {job_id:o.job_id, status:m.status, notes:(m.notes||'').replace(/\n/g,' ')}; });
+  downloadBlob(arrayToCSV(rows, ['job_id','status','notes']), 'estado_notas.csv', 'text/csv');
+};
+
+// ============================================================
+// collapsible sections (catalogs / csv)
+// ============================================================
+document.querySelectorAll('.section-num[data-section]').forEach(h=>{
+  const key = h.dataset.section;
+  if (key === 'offers') return;
+  h.addEventListener('click', ()=>{
+    const body = document.getElementById('section-' + key);
+    const isOpen = body.classList.toggle('open');
+    h.querySelector('.toggle').textContent = isOpen ? '▾ hide' : '▸ show';
+  });
+});
+
+loadState();
+</script>
+</body>
+</html>
