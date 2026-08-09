@@ -1,10 +1,3 @@
-# ---------------------------------------------------------------------------
-# Makefile
-#
-# All tools are called directly from .venv/bin/, so nothing here depends on
-# the virtual environment being "activated" in your shell.
-# ---------------------------------------------------------------------------
-
 VENV        := .venv
 PYTHON      := $(VENV)/bin/python3
 PIP         := $(VENV)/bin/pip
@@ -13,8 +6,6 @@ MYPY        := $(VENV)/bin/mypy
 
 SRCDIR      := src
 
-# Default input file for "make parse".
-# Override it like: make parse INPUT=other_file.json
 INPUT       := offer_raw_test.json
 
 RM          := rm -rf
