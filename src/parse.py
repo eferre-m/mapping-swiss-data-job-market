@@ -9,6 +9,8 @@ import src.soft_skill as soft
 import src.work_mode as mode
 import src.education as education
 import src.experience as experience
+import src.workload as workload
+import src.contract as contract
 
 from pathlib import Path
 from typing import TypedDict
@@ -29,6 +31,8 @@ class ParsedOffer(TypedDict):
     raw_text: str
     city: city.DetectedCity | None
     work_mode: mode.DetectedWorkMode | None
+    workload: workload.DetectedWorkload | None
+    contract: contract.DetectedContract | None
     education: education.DetectedEducation | None
     experience: experience.DetectedExperience | None
     skills: list[skill.DetectedSkill]
@@ -41,7 +45,9 @@ def parse_offer(offer: RawOffer, skills_catalog: list[skill.Skill],
                 lang_catalog: list[lang.Lang], soft_skills_catalog: list[soft.SoftSkill],
                 cities_catalog: list[city.City], req_catalog: list[skill.Requirement],
                 level_catalog: list[lang.Level], work_modes_catalog: list[mode.WorkMode],
-                educations_catalog: list[education.Education], experiences_catalog: list[experience.Experience]
+                educations_catalog: list[education.Education], experiences_catalog: list[experience.Experience],
+                workloads_catalog: list[workload.Workload], contracts_catalog: list[contract.Contract],
+                durations_catalog: list[contract.Duration]
             ) -> ParsedOffer:
     detected_skills = skill.detect_skills(offer["raw_text"], skills_catalog, req_catalog)
     detected_soft_skills = soft.detect_soft_skills(offer["raw_text"], soft_skills_catalog)
@@ -50,6 +56,8 @@ def parse_offer(offer: RawOffer, skills_catalog: list[skill.Skill],
     detected_work_mode = mode.detect_work_mode(offer["raw_text"], work_modes_catalog)
     detected_education = education.detect_education(offer["raw_text"], educations_catalog, req_catalog)
     detected_experience = experience.detect_experience(offer["raw_text"], experiences_catalog)
+    detected_workload = workload.detect_workload(offer["raw_text"], workloads_catalog)
+    detected_contract = contract.detect_contract(offer["raw_text"], contracts_catalog, durations_catalog)
 
 
     return {
@@ -63,6 +71,8 @@ def parse_offer(offer: RawOffer, skills_catalog: list[skill.Skill],
         "languages": detected_languages,
         "soft_skills": detected_soft_skills,
         "work_mode": detected_work_mode,
+        "workload": detected_workload,
+        "contract": detected_contract,
         "education": detected_education,
         "experience": detected_experience
     }
@@ -78,13 +88,17 @@ def load_catalogs():
     work_modes_catalog = load.load_work_modes_catalog()
     educations_catalog = load.load_educations_catalog()
     experiences_catalog = load.load_experiences_catalog()
+    workloads_catalog = load.load_workloads_catalog()
+    contracts_catalog = load.load_contracts_catalog()
+    durations_catalog = load.load_durations_catalog()
 
     return (
         skills_catalog, lang_catalog,
         req_catalog, level_catalog,
         cities_catalog, soft_skills_catalog,
         work_modes_catalog, educations_catalog,
-        experiences_catalog
+        experiences_catalog, workloads_catalog,
+        contracts_catalog, durations_catalog
     )
 
 
@@ -97,19 +111,17 @@ if __name__ == "__main__":
     (skills_catalog, lang_catalog, 
     req_catalog, level_catalog, 
     cities_catalog, soft_skills_catalog,
-    work_modes_catalog, educations_catalog, experiences_catalog) = load_catalogs()
+    work_modes_catalog, educations_catalog,
+    experiences_catalog, workloads_catalog,
+    contracts_catalog, durations_catalog) = load_catalogs()
 
     parsed_offer = parse_offer(
-    offer,
-    skills_catalog,
-    lang_catalog,
-    soft_skills_catalog,
-    cities_catalog,
-    req_catalog,
-    level_catalog,
-    work_modes_catalog,
-    educations_catalog,
-    experiences_catalog
+    offer, skills_catalog,
+    lang_catalog, soft_skills_catalog,
+    cities_catalog, req_catalog,
+    level_catalog, work_modes_catalog,
+    educations_catalog, experiences_catalog,
+    workloads_catalog, contracts_catalog, durations_catalog
     )
 
     Path("offer_parsed.json").write_text(json.dumps(parsed_offer, indent=2, ensure_ascii=False), encoding="utf-8")

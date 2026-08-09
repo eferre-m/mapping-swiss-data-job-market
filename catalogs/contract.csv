@@ -1,6 +1,0 @@
-contract_id,canonical_name,pattern
-permanent,Permanent,\b(permanent|indefinite|open[- ]ended|durée indéterminée|unbefristet)\b
-fixed_term,Fixed-term,\b(fixed[- ]term|temporary|CDD|durée déterminée|befristet)\b
-internship,Internship,\b(internship|intern|stage|praktikum)\b
-freelance,Freelance,\b(freelance|contractor|indépendant|indépendante|selbstständig)\b
-apprenticeship,Apprenticeship,\b(apprenticeship|apprentissage|Ausbildung)\b

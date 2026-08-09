@@ -141,3 +141,48 @@ def load_experiences_catalog():
             )
 
     return experience
+
+
+def load_workloads_catalog():
+    workload = []
+    with open(CATALOG_DIR / "workloads.csv", encoding="utf-8") as csv_file:
+        for row in csv.DictReader(csv_file):
+            workload.append(
+                {
+                    "workload_id": row["workload_id"],
+                    "canonical_name": row["canonical_name"],
+                    "pattern": re.compile(row["pattern"], re.I)
+                }
+            )
+
+    return workload
+
+
+def load_contracts_catalog():
+    contract = []
+    with open(CATALOG_DIR / "contracts.csv", encoding="utf-8") as csv_file:
+        for row in csv.DictReader(csv_file):
+            contract.append(
+                {
+                    "contract_id": row["contract_id"],
+                    "canonical_name": row["canonical_name"],
+                    "pattern": re.compile(row["pattern"], re.I)
+                }
+            )
+
+    return contract
+
+
+def load_durations_catalog():
+    duration = []
+    with open(CATALOG_DIR / "durations.csv", encoding="utf-8") as csv_file:
+        for row in csv.DictReader(csv_file):
+            duration.append(
+                {
+                    "duration_id": row["duration_id"],
+                    "canonical_name": row["canonical_name"],
+                    "pattern": re.compile(row["pattern"], re.I)
+                }
+            )
+
+    return duration
