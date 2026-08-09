@@ -144,6 +144,10 @@
       <div class="hint" id="industryHint"></div>
     </div>
     <div>
+      <label>City</label>
+      <input type="text" id="f_city" placeholder="Detected automatically — correct if wrong">
+    </div>
+    <div>
       <label>Source</label>
       <select id="f_source"><option>LinkedIn</option><option>Indeed</option><option>JobUp</option><option>Company website</option><option>Other</option></select>
     </div>
@@ -209,6 +213,27 @@ document.getElementById('rawtext').addEventListener('blur', ()=>{
   }
 });
 
+function guessCity(text){
+  const cityRx = /\b([A-ZÀ-ÖØ-Ý][A-Za-zÀ-ÖØ-Ýà-öø-ÿ'’\- ]+),\s*Switzerland\b/i;
+  const m = cityRx.exec(text);
+  return m ? m[1].trim() : '';
+}
+
+document.getElementById('rawtext').addEventListener('blur', ()=>{
+  const text = document.getElementById('rawtext').value;
+  const cityField = document.getElementById('f_city');
+
+  if(!text.trim()) return;
+  if(cityField.value.trim()) return;
+
+  const guess = guessCity(text);
+
+  if(guess){
+    cityField.value = guess;
+  }
+});
+
+
 // ---- Job ID ----
 function pad6(n){ return String(n).padStart(6,'0'); }
 
@@ -229,6 +254,7 @@ document.getElementById('btnSave').onclick = async ()=>{
   const company = document.getElementById('f_company').value.trim() || 'N/A';
   const role = document.getElementById('f_role').value;
   const industry = document.getElementById('f_industry').value.trim() || 'N/A';
+  const city = document.getElementById('f_city').value.trim() || 'N/A';
   const source = document.getElementById('f_source').value;
 
   const job_id = nextJobId();
@@ -238,6 +264,7 @@ document.getElementById('btnSave').onclick = async ()=>{
     company_raw: company,
     role,
     industry_raw: industry,
+    city_raw: city,
     source,
     raw_text: rawtext,
   };
@@ -258,6 +285,7 @@ function clearForm(){
   document.getElementById('f_industry').value = '';
   document.getElementById('companyHint').textContent = '';
   document.getElementById('industryHint').textContent = '';
+  document.getElementById('f_city').value = '';
   document.getElementById('f_role').selectedIndex = 0;
   document.getElementById('f_source').selectedIndex = 0;
 }
