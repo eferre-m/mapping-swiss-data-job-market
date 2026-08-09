@@ -1,0 +1,3 @@
+workload_id,canonical_name,pattern
+full_time,Full-time,\b(full[- ]time|temps plein|Vollzeit)\b
+part_time,Part-time,\b(part[- ]time|temps partiel|Teilzeit)\b

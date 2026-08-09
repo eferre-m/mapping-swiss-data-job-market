@@ -1,0 +1,5 @@
+experience_id,canonical_name,pattern
+none,None,\b(no experience|without experience|entry[- ]level)\b
+junior,Junior,\b(junior|entry[- ]level|débutant|débutante|Berufseinsteiger)\b
+mid,Mid-level,\b(mid[- ]level|intermediate|confirmé|confirmée)\b
+senior,Senior,\b(senior|experienced|expérimenté|expérimentée|erfahren)\b

@@ -1,0 +1,6 @@
+education_id,canonical_name,pattern
+high_school,High School,\b(high school|secondary school|lycée|maturité|matura)\b
+vocational,Vocational Education,\b(vocational|apprenticeship|apprentissage|formation professionnelle|Ausbildung)\b
+bachelor,Bachelor,\b(bachelor|bachelor's|licence|licenciatura)\b
+master,Master,\b(master|master's|maîtrise|grado de máster)\b
+phd,PhD,\b(phd|ph\.d\.|doctorate|doctoral|doctorat)\b
