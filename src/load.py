@@ -96,3 +96,48 @@ def load_levels_catalog():
             )
 
     return levels
+
+
+def load_work_modes_catalog():
+    work_mode = []
+    with open(CATALOG_DIR / "work_modes.csv", encoding="utf-8") as csv_file:
+        for row in csv.DictReader(csv_file):
+            work_mode.append(
+                {
+                    "work_mode_id": row["work_mode_id"],
+                    "canonical_name": row["canonical_name"],
+                    "pattern": re.compile(row["pattern"], re.I)
+                }
+            )
+
+    return work_mode
+
+
+def load_educations_catalog():
+    education = []
+    with open(CATALOG_DIR / "educations.csv", encoding="utf-8") as csv_file:
+        for row in csv.DictReader(csv_file):
+            education.append(
+                {
+                    "education_id": row["education_id"],
+                    "canonical_name": row["canonical_name"],
+                    "pattern": re.compile(row["pattern"], re.I)
+                }
+            )
+
+    return education
+
+
+def load_experiences_catalog():
+    experience = []
+    with open(CATALOG_DIR / "experiences.csv", encoding="utf-8") as csv_file:
+        for row in csv.DictReader(csv_file):
+            experience.append(
+                {
+                    "experience_id": row["experience_id"],
+                    "canonical_name": row["canonical_name"],
+                    "pattern": re.compile(row["pattern"], re.I)
+                }
+            )
+
+    return experience

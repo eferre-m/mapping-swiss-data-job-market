@@ -1,0 +1,3 @@
+"workload_id","canonical_name","pattern"
+"full_time","Full-time","(?i)\bfull[\s-]?time\b|\bvollzeit|\btemps\s+plein\b|\bà\s+temps\s+complet\b|\btempo\s+pieno\b|\b100\s*%|\b(4[0-5])\s*(hours|hrs|h|stunden|heures|ore)\b\s*(per|/|pro|par)?\s*(week|woche|semaine|settimana)?"
+"part_time","Part-time","(?i)\bpart[\s-]?time\b|\bteilzeit|\btemps\s+partiel\b|\btempo\s+parziale\b|\bpensum\b|\btaux\s+d[’']activit[ée]\b|\bgrado\s+di\s+occupazione\b|\b([1-9][0-9]?)\s*(-|bis|à|a)\s*(100)?\s*%|\b([1-9][0-9]?)\s*%|\b(1\d|2\d|3[0-9])\s*(hours|hrs|h|stunden|heures|ore)\b\s*(per|/|pro|par)?\s*(week|woche|semaine|settimana)?"

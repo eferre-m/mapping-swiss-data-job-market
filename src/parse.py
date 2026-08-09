@@ -6,6 +6,9 @@ import src.skill as skill
 import src.language as lang
 import src.city as city
 import src.soft_skill as soft
+import src.work_mode as mode
+import src.education as education
+import src.experience as experience
 
 from pathlib import Path
 from typing import TypedDict
@@ -25,16 +28,29 @@ class ParsedOffer(TypedDict):
     source: str
     raw_text: str
     city: city.DetectedCity | None
+    work_mode: mode.DetectedWorkMode | None
+    education: education.DetectedEducation | None
+    experience: experience.DetectedExperience | None
     skills: list[skill.DetectedSkill]
     languages: list[lang.DetectedLang]
     soft_skills: list[soft.DetectedSoftSkill]
 
 
-def parse_offer(offer: RawOffer, skills_catalog: list[skill.Skill], lang_catalog: list[lang.Lang], soft_skills_catalog: list[soft.SoftSkill], cities_catalog: list[city.City], req_catalog: list[skill.Requirement], level_catalog: list[lang.Level]) -> ParsedOffer:
+
+def parse_offer(offer: RawOffer, skills_catalog: list[skill.Skill],
+                lang_catalog: list[lang.Lang], soft_skills_catalog: list[soft.SoftSkill],
+                cities_catalog: list[city.City], req_catalog: list[skill.Requirement],
+                level_catalog: list[lang.Level], work_modes_catalog: list[mode.WorkMode],
+                educations_catalog: list[education.Education], experiences_catalog: list[experience.Experience]
+            ) -> ParsedOffer:
     detected_skills = skill.detect_skills(offer["raw_text"], skills_catalog, req_catalog)
     detected_soft_skills = soft.detect_soft_skills(offer["raw_text"], soft_skills_catalog)
     detected_languages = lang.detect_languages(offer["raw_text"], lang_catalog, req_catalog, level_catalog)
     detected_city = city.detect_city(offer["city_raw"], cities_catalog)
+    detected_work_mode = mode.detect_work_mode(offer["raw_text"], work_modes_catalog)
+    detected_education = education.detect_education(offer["raw_text"], educations_catalog, req_catalog)
+    detected_experience = experience.detect_experience(offer["raw_text"], experiences_catalog)
+
 
     return {
         "job_id": offer["job_id"],
@@ -46,6 +62,9 @@ def parse_offer(offer: RawOffer, skills_catalog: list[skill.Skill], lang_catalog
         "skills": detected_skills,
         "languages": detected_languages,
         "soft_skills": detected_soft_skills,
+        "work_mode": detected_work_mode,
+        "education": detected_education,
+        "experience": detected_experience
     }
 
 
@@ -56,8 +75,17 @@ def load_catalogs():
     soft_skills_catalog = load.load_soft_skills_catalog()
     req_catalog = load.load_requirements_catalog()
     level_catalog = load.load_levels_catalog()
+    work_modes_catalog = load.load_work_modes_catalog()
+    educations_catalog = load.load_educations_catalog()
+    experiences_catalog = load.load_experiences_catalog()
 
-    return skills_catalog, lang_catalog, req_catalog, level_catalog, cities_catalog, soft_skills_catalog
+    return (
+        skills_catalog, lang_catalog,
+        req_catalog, level_catalog,
+        cities_catalog, soft_skills_catalog,
+        work_modes_catalog, educations_catalog,
+        experiences_catalog
+    )
 
 
 if __name__ == "__main__":
@@ -68,7 +96,8 @@ if __name__ == "__main__":
 
     (skills_catalog, lang_catalog, 
     req_catalog, level_catalog, 
-    cities_catalog, soft_skills_catalog) = load_catalogs()
+    cities_catalog, soft_skills_catalog,
+    work_modes_catalog, educations_catalog, experiences_catalog) = load_catalogs()
 
     parsed_offer = parse_offer(
     offer,
@@ -77,7 +106,10 @@ if __name__ == "__main__":
     soft_skills_catalog,
     cities_catalog,
     req_catalog,
-    level_catalog
+    level_catalog,
+    work_modes_catalog,
+    educations_catalog,
+    experiences_catalog
     )
 
     Path("offer_parsed.json").write_text(json.dumps(parsed_offer, indent=2, ensure_ascii=False), encoding="utf-8")

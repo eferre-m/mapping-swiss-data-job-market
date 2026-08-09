@@ -1,0 +1,4 @@
+work_mode_id,canonical_name,pattern
+remote,Remote,\b(remote|fully\s+remote|remote\s+work|work\s+from\s+home|home\s+office|télétravail|à\s+distance|remote\s+arbeiten|homeoffice|remoto|lavoro\s+da\s+remoto)\b
+hybrid,Hybrid,\b(hybrid|hybrid\s+work|hybrid\s+working|hybride|hybrides\s+arbeiten|hybrid\s+arbeiten|hybrido|ibrido)\b
+onsite,On-site,\b(on[-\s]?site|on\s+location|office[-\s]?based|présentiel|sur\s+site|vor\s+ort|vor\s+dem\s+ort|presencial|in\s+presenza)\b
