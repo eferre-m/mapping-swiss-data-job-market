@@ -35,11 +35,12 @@ def detect_workload(text: str, workloads_catalog: list[Workload]) -> DetectedWor
         found, _ = detect_presence(text, workload["pattern"])
 
         if not found:
-            continue
+
+            return detect_workload
 
         detected_workload = {
             "workload_id": workload["workload_id"],
             "canonical_name": workload["canonical_name"],
         }
-
+  
     return detected_workload
