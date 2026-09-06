@@ -1,7 +1,7 @@
-education_id,canonical_name,pattern
-degree,University Degree,\b(university degree|academic degree|higher education degree|diplôme universitaire|universit[aä]tsabschluss)\b
-high_school,High School,\b(high school|secondary school|lycée|maturité|matura)\b
-vocational,Vocational Education,\b(vocational|apprenticeship|apprentissage|formation professionnelle|Ausbildung)\b
-bachelor,Bachelor,\b(bachelor|bachelor's|licence|licenciatura)\b
-master,Master,\b(master|master's|maîtrise|grado de máster)\b
-phd,PhD,\b(phd|ph\.d\.|doctorate|doctoral|doctorat)\b
+"education_id","canonical_name","pattern"
+"degree","University Degree","(?i)\b(degree|university\s+degree|academic\s+degree|higher\s+education\s+degree)\b|dipl[oô]me\s+universitaire|dipl[oô]me\s+d[’']études\s+sup[ée]rieures|\btitolo\s+di\s+laurea\b|\bdiploma\s+universitario\b|universit[aä]tsabschluss|hochschulabschluss"
+"high_school","High School","(?i)\bhigh\s+school\b|\bsecondary\s+school\b|\blyc[ée]e\b|\bmaturit[ée]\b|\bbaccalaur[ée]at\b|\bbac\b|\bmatura\b|maturit[àa]|\bscuola\s+superiore\b|diploma\s+di\s+maturit[àa]|\babitur\b|\bgymnasium\b"
+"vocational","Vocational Education","(?i)\bvocational\b|\bapprenticeship\b|apprentissage|formation\s+professionnelle|\bCFC\b|formazione\s+professionale|apprendistato|\bAFC\b|berufslehre|ausbildung|berufsausbildung|\bEFZ\b"
+"bachelor","Bachelor","(?i)\bbachelor'?s?\b|\blicence\b|laurea\s+triennale|laurea\s+di\s+primo\s+livello|bachelorabschluss"
+"master","Master","(?i)\bmaster'?s?\b|\bma[iî]trise\b|laurea\s+magistrale|laurea\s+specialistica|masterabschluss"
+"phd","PhD","(?i)\bphd\b|ph\.d\.|\bdoctorate\b|\bdoctoral\b|\bdoctorat\b|dottorato(\s+di\s+ricerca)?|\bdoktorat\b|\bpromotion\b|doktortitel"

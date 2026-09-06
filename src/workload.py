@@ -36,7 +36,7 @@ def detect_workload(text: str, workloads_catalog: list[Workload]) -> DetectedWor
 
         if not found:
 
-            return detect_workload
+            return detected_workload
 
         detected_workload = {
             "workload_id": workload["workload_id"],

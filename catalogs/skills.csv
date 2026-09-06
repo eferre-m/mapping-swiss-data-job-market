@@ -1,36 +1,36 @@
-skill_id,canonical_name,pattern
-sql,SQL,\bSQL\b
-python,Python,\bPython\b
-excel,Excel,\bExcel\b
-dashboards,Dashboards,\bdashboards?\b
-powerbi,Power BI,\bPower\s?BI\b
-databricks,Databricks,\bDatabricks\b
-tableau,Tableau,\bTableau\b
-git,Git,\bGit\b
-r,R,\b(R\s?(language|studio)|langage\sR)\b
-aiagent,AI Agent,\b(AI\s?agents?|agents?\sIA|prompting)\b
-sap,SAP,\bSAP\b
-snowflake,Snowflake,\bSnowflake\b
-azure,Azure,\bAzure\b
-aws,AWS,\bAWS\b
-gcp,Google Cloud,\b(GCP|Google\sCloud)\b
-looker,Looker,\bLooker\b
-qlik,Qlik,\bQlik(View|Sense)?\b
-spss,SPSS,\bSPSS\b
-sas,SAS,\bSAS\b
-alteryx,Alteryx,\bAlteryx\b
-dbt,dbt,\bdbt\b
-airflow,Airflow,\bAirflow\b
-spark,Spark,\bSpark\b
-vba,VBA,\bVBA\b
-docker,Docker,\bDocker\b
-kubernetes,Kubernetes,\bKubernetes\b
-packoffice,Pack Office,\b(Pack\s?Office|Microsoft\s?Office)\b
-word,Word,\bWord\b
-powerpoint,PowerPoint,\bPowerPoint\b
-typescript,TypeScript,\bType[Ss]cript\b
-javascript,JavaScript,\bJava[Ss]cript\b
-mongodb,MongoDB / NoSQL,\b(MongoDB|NoSQL)\b
-hadoop,Hadoop,\bHadoop\b
-bigquery,BigQuery / Redshift,\b(BigQuery|Redshift)\b
-java,Java,\bJava\b(?!Script)
+skill_id,canonical_name,category,pattern
+sql,SQL,Database,\bSQL\b
+python,Python,Programming Language,\bPython\b
+excel,Excel,Office Productivity,\bExcel\b
+dashboards,Dashboards,Business Intelligence / Visualization,\bdashboards?\b
+powerbi,Power BI,Business Intelligence / Visualization,\bPower\s?BI\b
+databricks,Databricks,Data Engineering / Big Data,\bDatabricks\b
+tableau,Tableau,Business Intelligence / Visualization,\bTableau\b
+git,Git,Version Control,\bGit\b
+r,R,Programming Language,\b(R\s?(language|studio)|langage\sR)\b
+aiagent,AI Agent,AI / Automation,\b(AI\s?agents?|agents?\sIA|prompting)\b
+sap,SAP,ERP,\bSAP\b
+snowflake,Snowflake,Cloud / Data Warehouse,\bSnowflake\b
+azure,Azure,Cloud / Infrastructure,\bAzure\b
+aws,AWS,Cloud / Infrastructure,\bAWS\b
+gcp,Google Cloud,Cloud / Infrastructure,\b(GCP|Google\sCloud)\b
+looker,Looker,Business Intelligence / Visualization,\bLooker\b
+qlik,Qlik,Business Intelligence / Visualization,\bQlik(View|Sense)?\b
+spss,SPSS,Statistical Software,\bSPSS\b
+sas,SAS,Statistical Software,\bSAS\b
+alteryx,Alteryx,Data Engineering / ETL,\bAlteryx\b
+dbt,dbt,Data Engineering / ETL,\bdbt\b
+airflow,Airflow,Data Engineering / Orchestration,\bAirflow\b
+spark,Spark,Data Engineering / Big Data,\bSpark\b
+vba,VBA,Programming Language / Automation,\bVBA\b
+docker,Docker,DevOps / Containers,\bDocker\b
+kubernetes,Kubernetes,DevOps / Containers,\bKubernetes\b
+packoffice,Pack Office,Office Productivity,\b(Pack\s?Office|Microsoft\s?Office)\b
+word,Word,Office Productivity,\bWord\b
+powerpoint,PowerPoint,Office Productivity,\bPowerPoint\b
+typescript,TypeScript,Programming Language,\bType[Ss]cript\b
+javascript,JavaScript,Programming Language,\bJava[Ss]cript\b
+mongodb,MongoDB / NoSQL,Database,\b(MongoDB|NoSQL)\b
+hadoop,Hadoop,Data Engineering / Big Data,\bHadoop\b
+bigquery,BigQuery / Redshift,Cloud / Data Warehouse,\b(BigQuery|Redshift)\b
+java,Java,Programming Language,\bJava\b(?!Script)

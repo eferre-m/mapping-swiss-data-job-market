@@ -24,6 +24,7 @@ CONTEXT_AFTER = 50
 
 def detect_presence(text: str, pattern: re.Pattern) -> tuple[bool, str | None]:
     match = pattern.search(text)
+
     if not match:
 
         return False, None
